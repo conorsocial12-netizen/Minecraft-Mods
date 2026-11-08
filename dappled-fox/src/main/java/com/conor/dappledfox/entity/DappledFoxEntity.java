@@ -3,6 +3,9 @@ package com.conor.dappledfox.entity;
 import com.conor.dappledfox.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -35,6 +38,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 /**
  * The Dappled Fox: a big, rideable fox from the Dappled Forest.
@@ -44,6 +49,7 @@ import net.minecraft.world.level.block.state.BlockState;
  *   <li>Tamed: put a saddle on it to ride and steer it (works like a horse, including jumping).</li>
  *   <li>Riding: your attack turns into the fox's bite, which hits harder than a fist.</li>
  *   <li>Sweet or glow berries heal it, grow babies, and make two tamed foxes breed.</li>
+ *   <li>Comes in three coats: orange (common), red (uncommon) and yellow (rare). Kits take after a parent.</li>
  * </ul>
  */
 public class DappledFoxEntity extends AbstractHorse {
@@ -52,11 +58,57 @@ public class DappledFoxEntity extends AbstractHorse {
 	public static final int BITE_COOLDOWN = 10;
 	private static final int TAME_CHANCE = 3; // 1 in 3 per berry
 
+	// Coat colours: 0 = orange, 1 = red, 2 = yellow
+	public static final int ORANGE = 0;
+	public static final int RED = 1;
+	public static final int YELLOW = 2;
+	public static final int VARIANT_COUNT = 3;
+	private static final EntityDataAccessor<Integer> DATA_VARIANT =
+			SynchedEntityData.defineId(DappledFoxEntity.class, EntityDataSerializers.INT);
+
 	private int biteCooldown;
 	private int biteAnimTicks;
 
 	public DappledFoxEntity(EntityType<? extends DappledFoxEntity> type, Level level) {
 		super(type, level);
+		if (!level.isClientSide()) {
+			this.setVariant(randomVariant(this.random.nextInt(100)));
+		}
+	}
+
+	/** 60% orange, 28% red, 12% yellow. */
+	private static int randomVariant(int roll) {
+		if (roll < 60) return ORANGE;
+		if (roll < 88) return RED;
+		return YELLOW;
+	}
+
+	// ---------------------------------------------------------------- Coat colour
+
+	@Override
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(DATA_VARIANT, ORANGE);
+	}
+
+	public int getVariant() {
+		return this.entityData.get(DATA_VARIANT);
+	}
+
+	public void setVariant(int variant) {
+		this.entityData.set(DATA_VARIANT, Mth.clamp(variant, 0, VARIANT_COUNT - 1));
+	}
+
+	@Override
+	protected void addAdditionalSaveData(ValueOutput output) {
+		super.addAdditionalSaveData(output);
+		output.putInt("Variant", this.getVariant());
+	}
+
+	@Override
+	protected void readAdditionalSaveData(ValueInput input) {
+		super.readAdditionalSaveData(input);
+		this.setVariant(input.getIntOr("Variant", ORANGE));
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
@@ -165,7 +217,15 @@ public class DappledFoxEntity extends AbstractHorse {
 
 	@Override
 	public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob partner) {
-		return ModEntities.DAPPLED_FOX.create(level, EntitySpawnReason.BREEDING);
+		DappledFoxEntity kit = ModEntities.DAPPLED_FOX.create(level, EntitySpawnReason.BREEDING);
+		if (kit != null && partner instanceof DappledFoxEntity other) {
+			// Usually takes after one parent; 10% of the time it's a surprise coat
+			int coat = this.random.nextInt(10) == 0
+					? randomVariant(this.random.nextInt(100))
+					: (this.random.nextBoolean() ? this.getVariant() : other.getVariant());
+			kit.setVariant(coat);
+		}
+		return kit;
 	}
 
 	@Override

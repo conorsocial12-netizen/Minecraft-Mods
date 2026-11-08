@@ -9,7 +9,11 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlot;
 
 public class DappledFoxRenderer extends MobRenderer<DappledFoxEntity, DappledFoxRenderState, DappledFoxModel> {
-	private static final Identifier TEXTURE = DappledFoxMod.id("textures/entity/dappled_fox.png");
+	private static final Identifier[] TEXTURES = {
+			DappledFoxMod.id("textures/entity/dappled_fox.png"),         // orange
+			DappledFoxMod.id("textures/entity/dappled_fox_red.png"),     // red
+			DappledFoxMod.id("textures/entity/dappled_fox_yellow.png"),  // yellow
+	};
 
 	public DappledFoxRenderer(EntityRendererProvider.Context context) {
 		super(context, new DappledFoxModel(context.bakeLayer(DappledFoxClient.DAPPLED_FOX_LAYER)), 0.75F);
@@ -25,6 +29,7 @@ public class DappledFoxRenderer extends MobRenderer<DappledFoxEntity, DappledFox
 		super.extractRenderState(fox, state, partialTick);
 		state.saddled = !fox.getItemBySlot(EquipmentSlot.SADDLE).isEmpty();
 		state.biteAmount = fox.getBiteAmount(partialTick);
+		state.variant = fox.getVariant();
 	}
 
 	@Override
@@ -36,6 +41,6 @@ public class DappledFoxRenderer extends MobRenderer<DappledFoxEntity, DappledFox
 
 	@Override
 	public Identifier getTextureLocation(DappledFoxRenderState state) {
-		return TEXTURE;
+		return TEXTURES[Math.floorMod(state.variant, TEXTURES.length)];
 	}
 }
