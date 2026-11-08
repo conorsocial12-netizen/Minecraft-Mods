@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "dappledforest:item/dappled_fox_spawn_egg"
+  }
+}

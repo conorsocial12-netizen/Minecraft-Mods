@@ -1,0 +1,6 @@
+{
+  "parent": "dappledforest:block/leaf_pile_template",
+  "textures": {
+    "leaf": "dappledforest:block/orange_leaf_pile"
+  }
+}

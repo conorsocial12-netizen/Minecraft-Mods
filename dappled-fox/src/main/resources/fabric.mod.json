@@ -1,0 +1,21 @@
+{
+	"schemaVersion": 1,
+	"id": "dappledfox",
+	"version": "${version}",
+	"name": "Dappled Fox",
+	"description": "A big, rideable fox that roams the Dappled Forest. Tame it with sweet berries, saddle it, and bite your way through the woods.",
+	"authors": ["Conor"],
+	"license": "MIT",
+	"icon": "assets/dappledfox/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": ["com.conor.dappledfox.DappledFoxMod"],
+		"client": ["com.conor.dappledfox.client.DappledFoxClient"]
+	},
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}

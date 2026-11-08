@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "minecraft:arrow",
+    "#dappledforest:poplar_leaves"
+  ],
+  "result": {
+    "id": "dappledforest:poplar_arrow",
+    "count": 1
+  }
+}

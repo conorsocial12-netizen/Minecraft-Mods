@@ -1,0 +1,11 @@
+{
+	"required": true,
+	"package": "com.conor.dappledforest.arrow.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"mixins": [
+		"SpawnPlacementsInvoker"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
