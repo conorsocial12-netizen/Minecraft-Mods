@@ -191,7 +191,6 @@ public class LeafTornado extends Entity {
 	/** Leave 2-4 Leaf Piles around where it died out, with a final burst of leaves. */
 	private void blowOut(ServerLevel level) {
 		int piles = 2 + this.random.nextInt(3);
-		int wanted = piles;
 		for (int i = 0; i < piles * 4 && piles > 0; i++) {
 			int x = Mth.floor(this.getX() + (this.random.nextFloat() - 0.5F) * 5.0F);
 			int z = Mth.floor(this.getZ() + (this.random.nextFloat() - 0.5F) * 5.0F);
@@ -203,8 +202,6 @@ public class LeafTornado extends Entity {
 				piles--;
 			}
 		}
-		com.conor.dappledforest.DappledForestPlus.LOGGER.info("[tornado-debug] blew out at {} {} {}: placed {} of {} leaf piles",
-				this.getX(), this.getY(), this.getZ(), wanted - piles, wanted);
 		for (SimpleParticleType leaf : LEAVES) {
 			level.sendParticles(leaf, this.getX(), this.getY() + 2.5, this.getZ(), 25, 1.5, 2.0, 1.5, 0.05);
 		}

@@ -55,7 +55,9 @@ execute positioned 4 0 -14 positioned over motion_blocking run summon minecraft:
 execute store result score #cy1 ci run data get entity @e[tag=ci_cow,limit=1] Pos[1] 10
 execute if entity @e[type=dappledforest:leaf_tornado,tag=ci_tornado] run say CI_PASS tornado-spawns
 execute unless entity @e[type=dappledforest:leaf_tornado,tag=ci_tornado] run say CI_FAIL tornado-spawns
-execute positioned 14 0 -4 positioned over motion_blocking run summon dappledforest:leaf_tornado ~ ~ ~ {Tags:["ci_tornado2"],Life:40}
+fill 10 120 -10 20 120 0 minecraft:grass_block
+fill 10 121 -10 20 124 0 minecraft:air
+summon dappledforest:leaf_tornado 15.5 121 -4.5 {Tags:["ci_tornado2"],Life:40}
 execute if entity @e[tag=ci_tornado2] run say CI_INFO tornado2-exists
 schedule function ci:check_tornado_lift 20t
 schedule function ci:check_tornado_end 120t
