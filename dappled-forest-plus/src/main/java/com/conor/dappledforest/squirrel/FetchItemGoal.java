@@ -51,7 +51,7 @@ public class FetchItemGoal extends Goal {
 
 	@Override
 	public boolean canUse() {
-		if (Boolean.getBoolean("dappledforest.debug") && ++this.debugTicks % 40 == 0) {
+		if (++this.debugTicks % 40 == 0) {
 			LivingEntity o = this.owner();
 			com.conor.dappledforest.DappledForestPlus.LOGGER.info("[squirrel-debug] tame={} sit={} owner={} baby={} hand={} cooldown={} nearbyItems={}",
 					this.squirrel.isTame(), this.squirrel.isOrderedToSit(), o, this.squirrel.isBaby(), this.squirrel.getMainHandItem(), this.cooldown,

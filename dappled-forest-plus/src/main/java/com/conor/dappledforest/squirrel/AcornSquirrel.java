@@ -129,6 +129,11 @@ public class AcornSquirrel extends TamableAnimal {
 	public void tick() {
 		super.tick();
 		if (this.level().isClientSide()) return;
+		if (this.tickCount % 60 == 0) {
+			com.conor.dappledforest.DappledForestPlus.LOGGER.info("[squirrel-debug] tick: noAi={} goals={} running={}",
+					this.isNoAi(), this.goalSelector.getAvailableGoals().size(),
+					this.goalSelector.getAvailableGoals().stream().filter(g -> g.isRunning()).map(g -> g.getGoal().getClass().getSimpleName()).toList());
+		}
 
 		this.entityData.set(DATA_CLIMBING, this.horizontalCollision && !this.isPassenger());
 
