@@ -1,37 +1,29 @@
-JARS=$(find ~/.gradle -name '*.jar' | grep -E 'minecraft-(common|clientonly)-deobf|fabric-rendering|fabric-entity|fabric-object-builder' | grep -v sources)
+JARS=$(find ~/.gradle -name '*.jar' | grep -E 'minecraft-(common|clientonly)-deobf|fabric-(rendering|lifecycle|command|networking|object-builder)' | grep -v sources)
 for j in $JARS; do unzip -Z1 "$j" | sed "s|^|$j!|"; done > /tmp/all.txt
-dump() { # $1 class simple name regex, $2 grep filter, $3 -c?
+dump() {
   for line in $(grep -E "/$1\.class$" /tmp/all.txt | head -2); do
     jar=${line%%!*}; cls=${line#*!}; cls=${cls%.class}; cls=${cls//\//.}
     echo "=== $cls"; javap -p $3 -cp "$jar" "$cls" | grep -v lambda | grep -E "${2:-.}" | head -${4:-80}
   done
 }
-dump TamableAnimal "public|protected" "" 90
-dump Wolf "mobInteract|isFood|tame|Goal" "" 40
-dump FollowOwnerGoal "public" ; dump SitWhenOrderedToGoal "public"; dump AvoidEntityGoal "public" ; dump TemptGoal "public"
-dump Entity "startRiding|stopRiding|canAddPassenger|positionRider|getPassengerAttachmentPoint|canRide|removePassenger|isPassenger|getVehicle|addPassenger|PassengerRidingPosition|getVehicleAttachmentPoint|ejectPassengers|rideTick" "" 60
-dump Player "canAddPassenger|positionRider|Passenger|removeEntitiesOnShoulder|ShoulderEntity|rideTick|ejectPassengers|startRiding" "" 40
-dump ServerPlayer "Passenger|startRiding|ejectPassengers|stopRiding" "" 30
-dump WallClimberNavigation "public"; dump Spider "Climb|createNavigation|onClimbable|DATA_FLAGS" "" 20
-dump Animal "isFood|checkAnimalSpawnRules|getBreedOffspring|mobInteract|usePlayerItem|canMate" "" 30
-dump Mob "spawnAtLocation|setItemSlot|getItemBySlot|canPickUpLoot|wantsToPickUp|pickUpItem|setPersistenceRequired|getNavigation|createNavigation" "" 40
-dump Chicken "eggTime|aiStep|spawnAtLocation" "" 20
-dump ItemEntity "public ItemEntity|setPickUpDelay|setDefaultPickUpDelay|getItem|hasPickUpDelay|setNoPickUpDelay|getOwner|setThrower" "" 30
-dump FoxHeldItemLayer "" "-c" 120
-dump FoxRenderer "public|extract" "" 30
-dump FoxRenderState "." "" 30
-dump HoldingEntityRenderState "." "" 30
-dump LivingEntityRenderState "public" "" 80
-dump EntityRenderState "public" "" 80
-dump LivingEntityRenderer "setupRotations|submit|scale|addLayer|extractRenderState|getRenderOffset|shouldShowName" "" 30
-dump EntityRenderer "getRenderOffset|submit|extractRenderState|finalizeRenderState" "" 30
-dump MobRenderer "public|protected" "" 20
-dump ParrotOnShoulderLayer "." "" 30
-dump ArmedModel "." "" 10
-dump RenderLayer "public|protected" "" 20
-dump Rabbit "Sound|createAttributes" "" 20
-dump SoundEvents "SQUIRREL|RABBIT_AMBIENT|FOX_AMBIENT|FOX_EAT|FOX_HURT|FOX_SCREECH|RABBIT_HURT|RABBIT_DEATH|RABBIT_JUMP|FOX_SNIFF|ARMADILLO" "" 30
-dump ShoulderRidingEntity "." "" 20
-dump FoodProperties "public" "" 30
-dump EntityDimensions "public static" "" 10
-dump EntityType\$Builder "public" "" 40
+dump Entity "abstract|protected Entity|public Entity\(|defineSynchedData|readAdditionalSaveData|addAdditionalSaveData|hurtServer|isPickable|noPhysics|setNoGravity|getHeight|spawnAtLocation|push\(|setDeltaMovement|hurtMarked|resetFallDistance|fallDistance|isPushedByFluid|shouldRender|isAttackable" "" 60
+dump ItemModelResolver "public" "" 20
+dump ItemDisplayContext "public static final" "" 20
+dump EntityRenderer "protected EntityRenderer|public EntityRenderer|submit|createRenderState|extractRenderState|shouldRender|affectedByCulling|getBoundingBoxForCulling" "" 20
+dump ItemStackRenderState "public" "" 20
+dump ClientboundSetEntityMotionPacket "public" "" 10
+dump ServerPlayer "connection|hurtMarked|resetFallDistance" "" 10
+dump CommandSourceStack "hasPermission|permissions|getPlayer|sendSuccess|getLevel|getPosition" "" 20
+dump Commands "public static|LEVEL_" "" 40
+dump CommandRegistrationCallback "." "" 10
+dump ServerTickEvents "." "" 20
+dump ServerLevel "isRaining|players\(|getHeight|sendParticles|getBiome|getGameTime|isDay" "" 20
+dump Heightmap\$Types "public static final" "" 10
+dump ParticleTypes "public static final" "" 200 | grep -iE "leaf|leaves|poplar|cloud|gust|dust_plume|small_gust|white_ash|tinted"
+dump MobEffects "SLOW_FALLING|LEVITATION" "" 5
+dump SoundEvents "WIND|BREEZE|GUST|ELYTRA|AZALEA_LEAVES|LEAF_LITTER|WEATHER" "" 30
+dump Gui "setOverlayMessage|setTitle" "" 5
+dump ServerPlayer "sendSystemMessage|displayClientMessage" "" 5
+dump Player "displayClientMessage|sendOverlayMessage" "" 5
+dump SubmitNodeCollector "public" "" 20
+dump AbstractArrowRenderer "." "" 10
