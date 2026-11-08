@@ -11,7 +11,7 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 /**
  * Adds the leaf pile patches to the Dappled Forest. The patch itself is data-driven:
- * worldgen/configured_feature/leaf_piles.json (shape of a patch) and placed_feature/leaf_piles.json (how often).
+ * worldgen/feature/leaf_piles.json (shape of a patch) and placed_feature/leaf_piles.json (how often).
  */
 public final class ModWorldgen {
 	private ModWorldgen() {
