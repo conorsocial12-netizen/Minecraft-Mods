@@ -17,6 +17,6 @@ To build locally instead: JDK 25 + Gradle, then `gradle build` in this folder.
 
 ## Tweaking
 
-- **Drop chance:** edit `"chance"` in `src/main/resources/data/sourcandyapple/loot_table/dappled_poplar_leaves_bonus.json` (0.001 = 0.1%).
-- **Hunger / effect:** `src/main/java/com/sourcandyapple/ModItems.java`.
+- **Drop chance:** edit `DROP_CHANCE` in `src/main/java/com/conor/sourcandyapple/ModLoot.java` (0.001 = 0.1%).
+- **Hunger / effect:** `src/main/java/com/conor/sourcandyapple/ModItems.java`.
 - **Versions:** if Gradle can't find a dependency, grab the latest numbers from https://fabricmc.net/develop and update `gradle.properties` (and the Loom version in `build.gradle`).
