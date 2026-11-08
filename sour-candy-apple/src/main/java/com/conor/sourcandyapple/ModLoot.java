@@ -33,7 +33,7 @@ public final class ModLoot {
 
 	/** Same format as a vanilla loot table / predicate JSON condition. */
 	private static final String IN_DAPPLED_FOREST = """
-			{"condition": "minecraft:location_check", "predicate": {"biomes": "minecraft:dappled_forest"}}
+			{"type": "minecraft:location_check", "predicate": {"biomes": "minecraft:dappled_forest"}}
 			""";
 
 	private static ResourceKey<LootTable> vanillaBlockTable(String block) {
