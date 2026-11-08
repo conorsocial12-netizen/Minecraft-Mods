@@ -1,5 +1,7 @@
 {
   "item.poplararrow.poplar_arrow": "Poplar Arrow",
   "entity.poplararrow.poplar_arrow": "Poplar Arrow",
-  "effect.poplararrow.leaf_blind": "Leaf Blind"
+  "effect.poplararrow.leaf_blind": "Leaf Blind",
+  "entity.poplararrow.dappled_skeleton": "Dappled Skeleton",
+  "item.poplararrow.dappled_skeleton_spawn_egg": "Dappled Skeleton Spawn Egg"
 }

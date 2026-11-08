@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "dappledleafpiles",
+  "version": "${version}",
+  "name": "Dappled Leaf Piles",
+  "description": "Chunky red, orange and yellow leaf piles that generate in the Dappled Forest. They float without support, and anything that steps on one over a gap slowly sinks through - perfect for traps.",
+  "authors": [
+    "Conor"
+  ],
+  "license": "MIT",
+  "icon": "assets/dappledleafpiles/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.conor.dappledleafpiles.DappledLeafPiles"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~26.3",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}

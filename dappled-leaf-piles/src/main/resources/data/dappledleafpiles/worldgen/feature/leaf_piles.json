@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:simple_block",
+  "to_place": {
+    "type": "minecraft:weighted",
+    "entries": [
+      {
+        "data": "dappledleafpiles:red_leaf_pile",
+        "weight": 1
+      },
+      {
+        "data": "dappledleafpiles:orange_leaf_pile",
+        "weight": 1
+      },
+      {
+        "data": "dappledleafpiles:yellow_leaf_pile",
+        "weight": 1
+      }
+    ]
+  }
+}

@@ -1,0 +1,53 @@
+name: Server test
+
+# Boots a real dedicated server with each mod. If a mod folder has a ci-test/ data pack,
+# it is loaded into the world and its CI_PASS / CI_FAIL checks must all pass.
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  server:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        mod: [poplar-arrow, sour-candy-apple, dappled-leaf-piles]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '9.8.2'
+      - name: Run server with ${{ matrix.mod }}
+        working-directory: ${{ matrix.mod }}
+        run: |
+          mkdir -p run
+          echo "eula=true" > run/eula.txt
+          printf "online-mode=false\nlevel-seed=12345\n" > run/server.properties
+          DONE_MARK="Done ("
+          if [ -d ci-test ]; then
+            mkdir -p run/world/datapacks
+            cp -r ci-test run/world/datapacks/ci-test
+            echo "initial-enabled-packs=vanilla,file/ci-test" >> run/server.properties
+            DONE_MARK="CI_DONE"
+          fi
+          (gradle runServer --no-daemon > server.log 2>&1) &
+          for i in $(seq 1 180); do
+            grep -q "$DONE_MARK" server.log && break
+            grep -qiE "Failed to load datapacks|Exception in server tick|crash report" server.log && break
+            sleep 5
+          done
+          echo "----- mod checks -----"
+          grep -E "CI_(PASS|FAIL|LOAD|DONE|INFO)" server.log || echo "(no in-game checks ran)"
+          echo "----- errors / warnings -----"
+          grep -nE "ERROR|Exception|Caused by|Failed" server.log | head -60 || true
+          echo "----- tail -----"
+          tail -30 server.log
+          pkill -f runServer || true
+          grep -q "$DONE_MARK" server.log
+          ! grep -q "CI_FAIL" server.log

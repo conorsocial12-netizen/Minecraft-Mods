@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "dappledleafpiles:block/yellow_leaf_pile"
+      },
+      {
+        "model": "dappledleafpiles:block/yellow_leaf_pile",
+        "y": 90
+      },
+      {
+        "model": "dappledleafpiles:block/yellow_leaf_pile",
+        "y": 180
+      },
+      {
+        "model": "dappledleafpiles:block/yellow_leaf_pile",
+        "y": 270
+      }
+    ]
+  }
+}
