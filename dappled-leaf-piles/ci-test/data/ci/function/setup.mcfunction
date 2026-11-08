@@ -20,7 +20,7 @@ execute unless score #gen ci matches 1.. run say CI_FAIL worldgen-feature
 setblock 0 205 0 dappledleafpiles:yellow_leaf_pile
 loot spawn 0 230 0 mine 0 205 0
 function ci:diag
-execute if entity @e[type=item,nbt={Item:{id:"dappledleafpiles:yellow_leaf_pile"}}] run say CI_PASS loot
-execute unless entity @e[type=item,nbt={Item:{id:"dappledleafpiles:yellow_leaf_pile"}}] run say CI_FAIL loot
+execute if entity @e[type=item,name="Yellow Leaf Pile"] run say CI_PASS loot
+execute unless entity @e[type=item,name="Yellow Leaf Pile"] run say CI_FAIL loot
 schedule function ci:check_slow 30t
 schedule function ci:check_end 300t
