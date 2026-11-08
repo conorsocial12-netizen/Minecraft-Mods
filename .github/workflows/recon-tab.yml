@@ -1,0 +1,27 @@
+name: Recon tab
+on:
+  push:
+    branches: [recon-tab]
+permissions:
+  contents: write
+jobs:
+  r:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '25' }
+      - uses: gradle/actions/setup-gradle@v4
+        with: { gradle-version: '9.8.2' }
+      - run: cd dappled-forest-plus && gradle build --no-daemon -q
+      - name: Dump
+        run: |
+          {
+          for j in $(find ~/.gradle -name '*.jar' | grep -iE 'creative|item-group|minecraft-(common|merged)-deobf' | grep -v sources); do
+            for c in $(unzip -Z1 "$j" | grep -iE '(creativetab|itemgroup).*\.class$|/CreativeModeTab(\$Builder|\$Row)?\.class$' | grep -v '\$\$' ); do
+              c=${c%.class}; echo "=== $c ($j)"; javap -p -cp "$j" "${c//\//.}" | grep -v lambda | head -60
+            done
+          done
+          } > out.txt 2>&1
+          git config user.name bot; git config user.email bot@users.noreply.github.com
+          mkdir -p recon-out && mv out.txt recon-out/ && git add recon-out && git commit -m "out [skip ci]" && git push
