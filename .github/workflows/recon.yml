@@ -38,8 +38,18 @@ jobs:
           execute if entity @e[type=item,nbt={Item:{id:"minecraft:bone"}}] run say LOOT-BONE
           time set midnight
           schedule function test:check 300t
+          schedule function test:early 60t
+          MC
+          cat > run/world/datapacks/test/data/test/function/early.mcfunction <<'MC'
+          execute as @e[type=iron_golem,tag=v] unless data entity @s {Health:100.0f} run say EARLY-GOLEM-DAMAGED
+          execute as @e[type=iron_golem,tag=v] if data entity @s active_effects run say EARLY-GOLEM-HAS-EFFECTS
+          execute as @e[type=poplararrow:dappled_skeleton] if data entity @s {} run say SKEL-ALIVE
+          execute as @e[type=poplararrow:poplar_arrow] run say AN-ARROW
+          effect give @e[type=iron_golem,tag=v] poplararrow:leaf_blind 30 0
+          execute as @e[type=iron_golem,tag=v] if data entity @s active_effects run say MANUAL-EFFECT-OK
           MC
           cat > run/world/datapacks/test/data/test/function/check.mcfunction <<'MC'
+          effect clear @e[type=iron_golem,tag=v]
           execute if entity @e[type=poplararrow:poplar_arrow] run say ARROWS-FLYING-OR-STUCK
           execute as @e[type=iron_golem,tag=v] if data entity @s active_effects run say GOLEM-HAS-EFFECTS
           execute as @e[type=iron_golem,tag=v] run say GOLEM-ALIVE
@@ -49,7 +59,12 @@ jobs:
           execute as @e[type=iron_golem,tag=v] if data entity @s active_effects[{id:"poplararrow:leaf_blind"}] run say GOLEM-HAS-LEAF-BLIND
           execute if entity @e[type=poplararrow:poplar_arrow] run say POPLAR-ARROWS-PRESENT
           execute if entity @e[type=minecraft:arrow] run say PLAIN-ARROWS-PRESENT
+          execute as @e[type=iron_golem,tag=v] unless data entity @s {Health:100.0f} run say GOLEM-DAMAGED
+          schedule function test:late 60t
           say CHECK-DONE
+          MC
+          cat > run/world/datapacks/test/data/test/function/late.mcfunction <<'MC'
+          execute as @e[type=iron_golem,tag=v] if data entity @s active_effects run say LATE-GOLEM-HAS-EFFECTS
           MC
           sed -i 's/^          //' run/world/datapacks/test/data/test/function/load.mcfunction
       - name: Run server
