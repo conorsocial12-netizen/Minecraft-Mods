@@ -7,7 +7,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -15,7 +14,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.material.PushReaction;
 
 public final class ModBlocks {
 	private ModBlocks() {
@@ -27,10 +25,6 @@ public final class ModBlocks {
 
 	public static final List<Block> ALL = List.of(RED_LEAF_PILE, ORANGE_LEAF_PILE, YELLOW_LEAF_PILE);
 
-	public static Block random(RandomSource random) {
-		return ALL.get(random.nextInt(ALL.size()));
-	}
-
 	private static Block register(String name, MapColor color) {
 		ResourceKey<Block> blockKey = ResourceKey.create(Registries.BLOCK, DappledLeafPiles.id(name));
 		Block block = Registry.register(BuiltInRegistries.BLOCK, blockKey, new LeafPileBlock(
@@ -40,8 +34,7 @@ public final class ModBlocks {
 						.strength(0.1f)
 						.sound(SoundType.GRASS)
 						.noOcclusion()
-						.ignitedByLava()
-						.pushReaction(PushReaction.DESTROY)));
+						.ignitedByLava()));
 
 		ResourceKey<Item> itemKey = ResourceKey.create(Registries.ITEM, DappledLeafPiles.id(name));
 		Registry.register(BuiltInRegistries.ITEM, itemKey,
