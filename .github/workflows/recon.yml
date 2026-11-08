@@ -22,21 +22,38 @@ jobs:
           echo '{"values":["test:load"]}' > run/world/datapacks/test/data/minecraft/tags/function/load.json
           cat > run/world/datapacks/test/data/test/function/load.mcfunction <<'MC'
           say TEST-START
-          forceload add 0 0
-          summon poplararrow:dappled_skeleton 0 120 0 {Tags:["t1"]}
-          summon poplararrow:poplar_arrow 0 130 0
-          summon minecraft:villager 3 120 0 {NoAI:1b}
-          execute as @e[tag=t1] run say I-AM-DAPPLED-SKELETON
-          execute store result score #c test run loot spawn 0 125 0 loot poplararrow:entities/dappled_skeleton
+          forceload add -16 -16 16 16
+          schedule function test:run 100t
+          MC
+          cat > run/world/datapacks/test/data/test/function/run.mcfunction <<'MC'
+          say RUN-START
+          execute positioned 0 0 0 positioned over motion_blocking run summon poplararrow:dappled_skeleton ~ ~1 ~ {Tags:["t1"],PersistenceRequired:1b}
+          execute positioned 6 0 0 positioned over motion_blocking run summon minecraft:villager ~ ~1 ~ {NoAI:1b,Tags:["v"],Invulnerable:0b}
+          execute positioned 0 0 0 positioned over motion_blocking run summon poplararrow:poplar_arrow ~ ~5 ~
           execute if entity @e[type=poplararrow:dappled_skeleton] run say SKELETON-EXISTS
+          execute if entity @e[type=poplararrow:poplar_arrow] run say ARROW-EXISTS
           execute if items entity @e[tag=t1,limit=1] weapon.mainhand minecraft:bow run say HAS-BOW
-          locate biome minecraft:dappled_forest
+          execute positioned 0 0 0 positioned over motion_blocking run loot spawn ~ ~2 ~ loot poplararrow:entities/dappled_skeleton
+          execute if entity @e[type=item,nbt={Item:{id:"poplararrow:poplar_arrow"}}] run say LOOT-ARROW
+          execute if entity @e[type=item,nbt={Item:{id:"minecraft:bone"}}] run say LOOT-BONE
+          give @e[tag=t1] minecraft:diamond
+          time set midnight
+          schedule function test:check 200t
+          MC
+          cat > run/world/datapacks/test/data/test/function/check.mcfunction <<'MC'
+          execute if entity @e[type=poplararrow:poplar_arrow] run say ARROWS-FLYING-OR-STUCK
+          execute as @e[type=villager,tag=v] if data entity @s active_effects run say VILLAGER-HAS-EFFECTS
+          execute as @e[type=villager,tag=v] run say VILLAGER-ALIVE
+          execute unless entity @e[type=villager,tag=v] run say VILLAGER-DEAD
+          execute as @e[type=villager,tag=v] run data get entity @s active_effects
+          execute as @e[type=villager,tag=v] run data get entity @s Health
+          say CHECK-DONE
           MC
           sed -i 's/^          //' run/world/datapacks/test/data/test/function/load.mcfunction
       - name: Run server
         run: |
           cd poplar-arrow
-          timeout 240 gradle runServer --no-daemon --args="nogui" > ../server.log 2>&1 || true
+          timeout 200 gradle runServer --no-daemon --args="nogui" > ../server.log 2>&1 || true
       - name: Save output to repo
         if: always()
         run: |
