@@ -56,6 +56,7 @@ execute store result score #cy1 ci run data get entity @e[tag=ci_cow,limit=1] Po
 execute if entity @e[type=dappledforest:leaf_tornado,tag=ci_tornado] run say CI_PASS tornado-spawns
 execute unless entity @e[type=dappledforest:leaf_tornado,tag=ci_tornado] run say CI_FAIL tornado-spawns
 execute positioned 14 0 -4 positioned over motion_blocking run summon dappledforest:leaf_tornado ~ ~ ~ {Tags:["ci_tornado2"],Life:40}
+execute if entity @e[tag=ci_tornado2] run say CI_INFO tornado2-exists
 schedule function ci:check_tornado_lift 20t
 schedule function ci:check_tornado_end 120t
 function ci:wind
