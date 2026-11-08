@@ -20,10 +20,10 @@ public class SquirrelHeldItemLayer extends RenderLayer<SquirrelRenderState, Squi
 		var head = this.getParentModel().head;
 		poseStack.pushPose();
 		poseStack.translate(head.x / 16.0F, head.y / 16.0F, head.z / 16.0F);
-		poseStack.mulPose(Axis.YP.rotation(head.yRot));
-		poseStack.mulPose(Axis.XP.rotation(head.xRot));
+		poseStack.rotate(Axis.YP, head.yRot);
+		poseStack.rotate(Axis.XP, head.xRot);
 		poseStack.translate(0.0F, 0.08F, -0.3F);  // in front of the muzzle
-		poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
+		poseStack.rotateDegrees(Axis.XP, 90.0F);
 		poseStack.scale(0.5F, 0.5F, 0.5F);
 		state.heldItem.submit(poseStack, collector, light, OverlayTexture.NO_OVERLAY, state.outlineColor);
 		poseStack.popPose();
