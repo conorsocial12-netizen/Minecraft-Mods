@@ -1,0 +1,40 @@
+name: Build mods
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '9.8.2'
+
+      # Builds every mod folder (any top-level folder with a build.gradle)
+      - name: Build all mods
+        run: |
+          set -e
+          mkdir -p jars
+          for dir in */; do
+            if [ -f "$dir/build.gradle" ]; then
+              echo "::group::Building $dir"
+              (cd "$dir" && gradle build --no-daemon --stacktrace)
+              find "$dir/build/libs" -name '*.jar' ! -name '*-sources.jar' -exec cp {} jars/ \;
+              echo "::endgroup::"
+            fi
+          done
+          ls -la jars
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mod-jars
+          path: jars/*.jar
