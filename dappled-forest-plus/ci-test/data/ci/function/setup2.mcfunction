@@ -33,3 +33,18 @@ execute positioned -12 231 -12 run loot spawn ~ ~ ~ loot dappledforest:entities/
 execute positioned -12 231 -12 run loot spawn ~ ~ ~ loot dappledforest:entities/dappled_skeleton
 schedule function ci:check_combat 100t
 schedule function ci:check_late 200t
+# 9) Acorn Squirrel: spawns, acorn exists, loot works, and a tamed squirrel fetches a stick to its owner
+summon minecraft:item 8.5 240 8.5 {Tags:["ci_acorn"],NoGravity:1b,PickupDelay:32767,Item:{id:"dappledforest:acorn",count:1}}
+execute if entity @e[type=item,tag=ci_acorn] run say CI_PASS acorn-item
+execute unless entity @e[type=item,tag=ci_acorn] run say CI_FAIL acorn-item
+fill 20 100 -30 40 100 -10 minecraft:stone
+fill 20 101 -30 40 104 -10 minecraft:air
+summon minecraft:armor_stand 22.5 101 -20.5 {UUID:[I;11,22,33,44],Tags:["ci_owner"],NoGravity:1b}
+summon dappledforest:acorn_squirrel 24.5 101 -20.5 {Owner:[I;11,22,33,44],Tags:["ci_sq"],PersistenceRequired:1b}
+summon minecraft:item 32.5 101 -20.5 {Tags:["ci_fetch"],Item:{id:"minecraft:stick",count:1}}
+execute if entity @e[type=dappledforest:acorn_squirrel,tag=ci_sq] run say CI_PASS squirrel-spawns
+execute unless entity @e[type=dappledforest:acorn_squirrel,tag=ci_sq] run say CI_FAIL squirrel-spawns
+execute as @e[type=dappledforest:acorn_squirrel,tag=ci_sq] if data entity @s Owner run say CI_INFO squirrel-is-tamed
+fill -6 220 -6 -18 220 -18 minecraft:glass
+execute positioned -12 221 -12 run loot spawn ~ ~ ~ loot dappledforest:entities/acorn_squirrel
+schedule function ci:check_squirrel 240t
