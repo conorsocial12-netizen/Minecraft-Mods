@@ -36,7 +36,6 @@ jobs:
           execute positioned 0 0 0 positioned over motion_blocking run loot spawn ~ ~2 ~ loot poplararrow:entities/dappled_skeleton
           execute if entity @e[type=item,nbt={Item:{id:"poplararrow:poplar_arrow"}}] run say LOOT-ARROW
           execute if entity @e[type=item,nbt={Item:{id:"minecraft:bone"}}] run say LOOT-BONE
-          give @e[tag=t1] minecraft:diamond
           time set midnight
           schedule function test:check 200t
           MC
