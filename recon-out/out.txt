@@ -1,443 +1,205 @@
-=== net.minecraft.world.entity.TamableAnimal
-public abstract class net.minecraft.world.entity.TamableAnimal extends net.minecraft.world.entity.animal.Animal implements net.minecraft.world.entity.OwnableEntity {
-  public static final int TELEPORT_WHEN_DISTANCE_IS_SQ;
-  protected static final net.minecraft.network.syncher.EntityDataAccessor<java.lang.Byte> DATA_FLAGS_ID;
-  protected static final net.minecraft.network.syncher.EntityDataAccessor<java.util.Optional<net.minecraft.world.entity.EntityReference<net.minecraft.world.entity.LivingEntity>>> DATA_OWNERUUID_ID;
-  protected net.minecraft.world.entity.TamableAnimal(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.TamableAnimal>, net.minecraft.world.level.Level);
-  protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData$Builder);
-  protected void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput);
-  protected void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput);
-  public boolean canBeLeashed();
-  protected void spawnTamingParticles(boolean);
-  public void handleEntityEvent(byte);
-  public boolean isTame();
-  public void setTame(boolean, boolean);
-  protected void applyTamingSideEffects();
-  protected void feed(net.minecraft.world.entity.player.Player, net.minecraft.world.InteractionHand, net.minecraft.world.item.ItemStack, float, float);
-  public boolean isInSittingPose();
-  public void setInSittingPose(boolean);
-  public net.minecraft.world.entity.EntityReference<net.minecraft.world.entity.LivingEntity> getOwnerReference();
-  public void setOwner(net.minecraft.world.entity.LivingEntity);
-  public void setOwnerReference(net.minecraft.world.entity.EntityReference<net.minecraft.world.entity.LivingEntity>);
-  public void tame(net.minecraft.world.entity.player.Player);
-  public boolean canAttack(net.minecraft.world.entity.LivingEntity);
-  public boolean isOwnedBy(net.minecraft.world.entity.LivingEntity);
-  public boolean wantsToAttack(net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.LivingEntity);
-  public net.minecraft.world.scores.PlayerTeam getTeam();
-  protected boolean considersEntityAsAlly(net.minecraft.world.entity.Entity);
-  public void die(net.minecraft.world.damagesource.DamageSource);
-  public boolean isOrderedToSit();
-  public void setOrderedToSit(boolean);
-  public void tryToTeleportToOwner();
-  public boolean shouldTryTeleportToOwner();
-  public final boolean unableToMoveToOwner();
-  protected boolean canFlyToOwner();
-=== net.minecraft.world.entity.animal.wolf.Wolf
-  protected void registerGoals();
-  public net.minecraft.world.InteractionResult mobInteract(net.minecraft.world.entity.player.Player, net.minecraft.world.InteractionHand);
-  public boolean isFood(net.minecraft.world.item.ItemStack);
-=== net.minecraft.world.entity.ai.goal.FollowOwnerGoal
-public class net.minecraft.world.entity.ai.goal.FollowOwnerGoal extends net.minecraft.world.entity.ai.goal.Goal {
-  public net.minecraft.world.entity.ai.goal.FollowOwnerGoal(net.minecraft.world.entity.TamableAnimal, double, float, float);
-  public boolean canUse();
-  public boolean canContinueToUse();
-  public void start();
-  public void stop();
-  public void tick();
-=== net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal
-public class net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal extends net.minecraft.world.entity.ai.goal.Goal {
-  public net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal(net.minecraft.world.entity.TamableAnimal);
-  public boolean canContinueToUse();
-  public boolean canUse();
-  public void start();
-  public void stop();
-=== net.minecraft.world.entity.ai.goal.AvoidEntityGoal
-public class net.minecraft.world.entity.ai.goal.AvoidEntityGoal<T extends net.minecraft.world.entity.LivingEntity> extends net.minecraft.world.entity.ai.goal.Goal {
-  public net.minecraft.world.entity.ai.goal.AvoidEntityGoal(net.minecraft.world.entity.PathfinderMob, java.lang.Class<T>, float, double, double);
-  public net.minecraft.world.entity.ai.goal.AvoidEntityGoal(net.minecraft.world.entity.PathfinderMob, java.lang.Class<T>, java.util.function.Predicate<net.minecraft.world.entity.LivingEntity>, float, double, double, java.util.function.Predicate<? super net.minecraft.world.entity.LivingEntity>);
-  public net.minecraft.world.entity.ai.goal.AvoidEntityGoal(net.minecraft.world.entity.PathfinderMob, java.lang.Class<T>, float, double, double, java.util.function.Predicate<? super net.minecraft.world.entity.LivingEntity>);
-  public boolean canUse();
-  public boolean canContinueToUse();
-  public void start();
-  public void stop();
-  public void tick();
-=== net.minecraft.world.entity.ai.goal.TemptGoal
-public class net.minecraft.world.entity.ai.goal.TemptGoal extends net.minecraft.world.entity.ai.goal.Goal {
-  public net.minecraft.world.entity.ai.goal.TemptGoal(net.minecraft.world.entity.PathfinderMob, double, java.util.function.Predicate<net.minecraft.world.item.ItemStack>, boolean);
-  public net.minecraft.world.entity.ai.goal.TemptGoal(net.minecraft.world.entity.PathfinderMob, double, java.util.function.Predicate<net.minecraft.world.item.ItemStack>, boolean, double);
-  public boolean canUse();
-  public boolean canContinueToUse();
-  public void start();
-  public void stop();
-  public void tick();
-  public boolean isRunning();
 === net.minecraft.world.entity.Entity
-  public void rideTick();
-  public final void positionRider(net.minecraft.world.entity.Entity);
-  protected void positionRider(net.minecraft.world.entity.Entity, net.minecraft.world.entity.Entity$MoveFunction);
-  public net.minecraft.world.phys.Vec3 getVehicleAttachmentPoint(net.minecraft.world.entity.Entity);
-  public net.minecraft.world.phys.Vec3 getPassengerRidingPosition(net.minecraft.world.entity.Entity);
-  protected net.minecraft.world.phys.Vec3 getPassengerAttachmentPoint(net.minecraft.world.entity.Entity, net.minecraft.world.entity.EntityDimensions, float);
-  public final boolean startRiding(net.minecraft.world.entity.Entity);
-  public boolean startRiding(net.minecraft.world.entity.Entity, boolean, boolean);
-  protected boolean canRide(net.minecraft.world.entity.Entity);
-  public void ejectPassengers();
-  public void stopRiding();
-  protected void addPassenger(net.minecraft.world.entity.Entity);
-  protected void removePassenger(net.minecraft.world.entity.Entity);
-  protected boolean canAddPassenger(net.minecraft.world.entity.Entity);
-  public boolean isPassenger();
-  public boolean isPassengerOfSameVehicle(net.minecraft.world.entity.Entity);
-  public net.minecraft.world.entity.Entity getVehicle();
-=== net.minecraft.world.entity.player.Player
-  public void rideTick();
-  protected void removeEntitiesOnShoulder();
-=== net.minecraft.server.level.ServerPlayer
-  public boolean startRiding(net.minecraft.world.entity.Entity, boolean, boolean);
-=== net.minecraft.world.entity.ai.navigation.WallClimberNavigation
-public class net.minecraft.world.entity.ai.navigation.WallClimberNavigation extends net.minecraft.world.entity.ai.navigation.GroundPathNavigation {
-  public net.minecraft.world.entity.ai.navigation.WallClimberNavigation(net.minecraft.world.entity.Mob, net.minecraft.world.level.Level);
-  public net.minecraft.world.level.pathfinder.Path createPath(net.minecraft.core.BlockPos, int);
-  public net.minecraft.world.level.pathfinder.Path createPath(net.minecraft.world.entity.Entity, int);
-  public boolean moveTo(net.minecraft.world.entity.Entity, double);
-  public void tick();
-=== net.minecraft.world.entity.monster.spider.Spider
-  private static final net.minecraft.network.syncher.EntityDataAccessor<java.lang.Byte> DATA_FLAGS_ID;
-  protected net.minecraft.world.entity.ai.navigation.PathNavigation createNavigation(net.minecraft.world.level.Level);
-  public boolean onClimbable();
-  public boolean isClimbing();
-  public void setClimbing(boolean);
-=== net.minecraft.world.entity.animal.Animal
-  public static boolean checkAnimalSpawnRules(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.animal.Animal>, net.minecraft.world.level.LevelAccessor, net.minecraft.world.entity.EntitySpawnReason, net.minecraft.core.BlockPos, net.minecraft.util.RandomSource);
-  public abstract boolean isFood(net.minecraft.world.item.ItemStack);
-  public net.minecraft.world.InteractionResult mobInteract(net.minecraft.world.entity.player.Player, net.minecraft.world.InteractionHand);
-  public boolean canMate(net.minecraft.world.entity.animal.Animal);
-=== net.minecraft.world.entity.Mob
-  private boolean canPickUpLoot;
-  protected net.minecraft.world.entity.ai.navigation.PathNavigation createNavigation(net.minecraft.world.level.Level);
-  public net.minecraft.world.entity.ai.navigation.PathNavigation getNavigation();
-  protected void pickUpItem(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.item.ItemEntity);
-  protected void setItemSlotAndDropWhenKilled(net.minecraft.world.entity.EquipmentSlot, net.minecraft.world.item.ItemStack);
-  public boolean wantsToPickUp(net.minecraft.server.level.ServerLevel, net.minecraft.world.item.ItemStack);
-  public void setPersistenceRequired();
-  public boolean canPickUpLoot();
-=== net.minecraft.world.entity.animal.chicken.Chicken
-  public int eggTime;
-  public void aiStep();
-=== net.minecraft.world.entity.item.ItemEntity
-  public net.minecraft.world.entity.Entity getOwner();
-  public net.minecraft.world.item.ItemStack getItem();
-  public void setThrower(net.minecraft.world.entity.Entity);
-  public void setDefaultPickUpDelay();
-  public void setNoPickUpDelay();
-  public void setPickUpDelay(int);
-  public boolean hasPickUpDelay();
-=== net.minecraft.client.renderer.entity.layers.FoxHeldItemLayer
-Compiled from "FoxHeldItemLayer.java"
-public class net.minecraft.client.renderer.entity.layers.FoxHeldItemLayer extends net.minecraft.client.renderer.entity.layers.RenderLayer<net.minecraft.client.renderer.entity.state.FoxRenderState, net.minecraft.client.model.animal.fox.FoxModel> {
-  public net.minecraft.client.renderer.entity.layers.FoxHeldItemLayer(net.minecraft.client.renderer.entity.RenderLayerParent<net.minecraft.client.renderer.entity.state.FoxRenderState, net.minecraft.client.model.animal.fox.FoxModel>);
-    Code:
-         0: aload_0
-         1: aload_1
-         2: invokespecial #1                  // Method net/minecraft/client/renderer/entity/layers/RenderLayer."<init>":(Lnet/minecraft/client/renderer/entity/RenderLayerParent;)V
-         5: return
-  public void submit(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, net.minecraft.client.renderer.entity.state.FoxRenderState, float, float);
-    Code:
-         0: aload         4
-         2: getfield      #7                  // Field net/minecraft/client/renderer/entity/state/FoxRenderState.heldItem:Lnet/minecraft/client/renderer/item/ItemStackRenderState;
-         5: astore        7
-         7: aload         7
-         9: invokevirtual #13                 // Method net/minecraft/client/renderer/item/ItemStackRenderState.isEmpty:()Z
-        12: ifeq          16
-        15: return
-        16: aload         4
-        18: getfield      #19                 // Field net/minecraft/client/renderer/entity/state/FoxRenderState.isSleeping:Z
-        21: istore        8
-        23: aload         4
-        25: getfield      #23                 // Field net/minecraft/client/renderer/entity/state/FoxRenderState.isBaby:Z
-        28: istore        9
-        30: aload_1
-        31: invokevirtual #26                 // Method com/mojang/blaze3d/vertex/PoseStack.pushPose:()V
-        34: aload_1
-        35: aload_0
-        36: invokevirtual #32                 // Method getParentModel:()Lnet/minecraft/client/model/EntityModel;
-        39: checkcast     #38                 // class net/minecraft/client/model/animal/fox/FoxModel
-        42: getfield      #40                 // Field net/minecraft/client/model/animal/fox/FoxModel.head:Lnet/minecraft/client/model/geom/ModelPart;
-        45: getfield      #44                 // Field net/minecraft/client/model/geom/ModelPart.x:F
-        48: ldc           #50                 // float 16.0f
-        50: fdiv
-        51: aload_0
-        52: invokevirtual #32                 // Method getParentModel:()Lnet/minecraft/client/model/EntityModel;
-        55: checkcast     #38                 // class net/minecraft/client/model/animal/fox/FoxModel
-        58: getfield      #40                 // Field net/minecraft/client/model/animal/fox/FoxModel.head:Lnet/minecraft/client/model/geom/ModelPart;
-        61: getfield      #51                 // Field net/minecraft/client/model/geom/ModelPart.y:F
-        64: ldc           #50                 // float 16.0f
-        66: fdiv
-        67: aload_0
-        68: invokevirtual #32                 // Method getParentModel:()Lnet/minecraft/client/model/EntityModel;
-        71: checkcast     #38                 // class net/minecraft/client/model/animal/fox/FoxModel
-        74: getfield      #40                 // Field net/minecraft/client/model/animal/fox/FoxModel.head:Lnet/minecraft/client/model/geom/ModelPart;
-        77: getfield      #54                 // Field net/minecraft/client/model/geom/ModelPart.z:F
-        80: ldc           #50                 // float 16.0f
-        82: fdiv
-        83: invokevirtual #57                 // Method com/mojang/blaze3d/vertex/PoseStack.translate:(FFF)V
-        86: iload         9
-        88: ifeq          105
-        91: ldc           #61                 // float 0.75f
-        93: fstore        10
-        95: aload_1
-        96: ldc           #61                 // float 0.75f
-        98: ldc           #61                 // float 0.75f
-       100: ldc           #61                 // float 0.75f
-       102: invokevirtual #62                 // Method com/mojang/blaze3d/vertex/PoseStack.scale:(FFF)V
-       105: aload_1
-       106: getstatic     #65                 // Field com/mojang/math/Axis.ZP:Lcom/mojang/math/Axis;
-       109: aload         4
-       111: getfield      #71                 // Field net/minecraft/client/renderer/entity/state/FoxRenderState.headRollAngle:F
-       114: invokevirtual #74                 // Method com/mojang/blaze3d/vertex/PoseStack.rotate:(Lcom/mojang/math/Axis;F)V
-       117: aload_1
-       118: getstatic     #78                 // Field com/mojang/math/Axis.YP:Lcom/mojang/math/Axis;
-       121: fload         5
-       123: invokevirtual #81                 // Method com/mojang/blaze3d/vertex/PoseStack.rotateDegrees:(Lcom/mojang/math/Axis;F)V
-       126: aload_1
-       127: getstatic     #84                 // Field com/mojang/math/Axis.XP:Lcom/mojang/math/Axis;
-       130: fload         6
-       132: invokevirtual #81                 // Method com/mojang/blaze3d/vertex/PoseStack.rotateDegrees:(Lcom/mojang/math/Axis;F)V
-       135: aload         4
-       137: getfield      #23                 // Field net/minecraft/client/renderer/entity/state/FoxRenderState.isBaby:Z
-       140: ifeq          174
-       143: iload         8
-       145: ifeq          161
-       148: aload_1
-       149: ldc           #87                 // float 0.4f
-       151: ldc           #88                 // float 0.26f
-       153: ldc           #89                 // float 0.15f
-       155: invokevirtual #57                 // Method com/mojang/blaze3d/vertex/PoseStack.translate:(FFF)V
-       158: goto          202
-       161: aload_1
-       162: ldc           #90                 // float 0.06f
-       164: ldc           #88                 // float 0.26f
-       166: ldc           #91                 // float -0.5f
-       168: invokevirtual #57                 // Method com/mojang/blaze3d/vertex/PoseStack.translate:(FFF)V
-       171: goto          202
-       174: iload         8
-       176: ifeq          192
-       179: aload_1
-       180: ldc           #92                 // float 0.46f
-       182: ldc           #88                 // float 0.26f
-       184: ldc           #93                 // float 0.22f
-       186: invokevirtual #57                 // Method com/mojang/blaze3d/vertex/PoseStack.translate:(FFF)V
-       189: goto          202
-       192: aload_1
-       193: ldc           #90                 // float 0.06f
-       195: ldc           #94                 // float 0.27f
-       197: ldc           #91                 // float -0.5f
-       199: invokevirtual #57                 // Method com/mojang/blaze3d/vertex/PoseStack.translate:(FFF)V
-       202: aload_1
-       203: getstatic     #84                 // Field com/mojang/math/Axis.XP:Lcom/mojang/math/Axis;
-       206: ldc           #95                 // float 90.0f
-       208: invokevirtual #81                 // Method com/mojang/blaze3d/vertex/PoseStack.rotateDegrees:(Lcom/mojang/math/Axis;F)V
-       211: iload         8
-       213: ifeq          225
-       216: aload_1
-       217: getstatic     #65                 // Field com/mojang/math/Axis.ZP:Lcom/mojang/math/Axis;
-       220: ldc           #95                 // float 90.0f
-       222: invokevirtual #81                 // Method com/mojang/blaze3d/vertex/PoseStack.rotateDegrees:(Lcom/mojang/math/Axis;F)V
-       225: aload         7
-       227: aload_1
-       228: aload_2
-       229: iload_3
-       230: getstatic     #96                 // Field net/minecraft/client/renderer/texture/OverlayTexture.NO_OVERLAY:I
-       233: aload         4
-       235: getfield      #102                // Field net/minecraft/client/renderer/entity/state/FoxRenderState.outlineColor:I
-       238: invokevirtual #105                // Method net/minecraft/client/renderer/item/ItemStackRenderState.submit:(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;III)V
-       241: aload_1
-       242: invokevirtual #109                // Method com/mojang/blaze3d/vertex/PoseStack.popPose:()V
-=== net.minecraft.client.renderer.entity.FoxRenderer
-public class net.minecraft.client.renderer.entity.FoxRenderer extends net.minecraft.client.renderer.entity.AgeableMobRenderer<net.minecraft.world.entity.animal.fox.Fox, net.minecraft.client.renderer.entity.state.FoxRenderState, net.minecraft.client.model.animal.fox.FoxModel> {
-  public net.minecraft.client.renderer.entity.FoxRenderer(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
-  public net.minecraft.resources.Identifier getTextureLocation(net.minecraft.client.renderer.entity.state.FoxRenderState);
-  public net.minecraft.client.renderer.entity.state.FoxRenderState createRenderState();
-  public void extractRenderState(net.minecraft.world.entity.animal.fox.Fox, net.minecraft.client.renderer.entity.state.FoxRenderState, float);
-  public void extractRenderState(net.minecraft.world.entity.LivingEntity, net.minecraft.client.renderer.entity.state.LivingEntityRenderState, float);
-  public net.minecraft.resources.Identifier getTextureLocation(net.minecraft.client.renderer.entity.state.LivingEntityRenderState);
-  public void extractRenderState(net.minecraft.world.entity.Entity, net.minecraft.client.renderer.entity.state.EntityRenderState, float);
-  public net.minecraft.client.renderer.entity.state.EntityRenderState createRenderState();
-=== net.minecraft.client.renderer.entity.state.FoxRenderState
-Compiled from "FoxRenderState.java"
-public class net.minecraft.client.renderer.entity.state.FoxRenderState extends net.minecraft.client.renderer.entity.state.HoldingEntityRenderState {
-  public float headRollAngle;
-  public float crouchAmount;
-  public boolean isCrouching;
-  public boolean isSleeping;
-  public boolean isSitting;
-  public boolean isFaceplanted;
-  public boolean isPouncing;
-  public net.minecraft.world.entity.animal.fox.Fox$Variant variant;
-  public net.minecraft.client.renderer.entity.state.FoxRenderState();
-}
-=== net.minecraft.client.renderer.entity.state.HoldingEntityRenderState
-Compiled from "HoldingEntityRenderState.java"
-public class net.minecraft.client.renderer.entity.state.HoldingEntityRenderState extends net.minecraft.client.renderer.entity.state.LivingEntityRenderState {
-  public final net.minecraft.client.renderer.item.ItemStackRenderState heldItem;
-  public net.minecraft.client.renderer.entity.state.HoldingEntityRenderState();
-  public static void extractHoldingEntityRenderState(net.minecraft.world.entity.LivingEntity, net.minecraft.client.renderer.entity.state.HoldingEntityRenderState, net.minecraft.client.renderer.item.ItemModelResolver);
-}
-=== net.minecraft.client.renderer.entity.state.LivingEntityRenderState
-public class net.minecraft.client.renderer.entity.state.LivingEntityRenderState extends net.minecraft.client.renderer.entity.state.EntityRenderState {
-  public float bodyRot;
-  public float yRot;
-  public float xRot;
-  public float deathTime;
-  public float walkAnimationPos;
-  public float walkAnimationSpeed;
-  public float scale;
-  public float ageScale;
-  public float ticksSinceKineticHitFeedback;
-  public boolean isUpsideDown;
-  public boolean isFullyFrozen;
-  public boolean isBaby;
-  public boolean isInWater;
-  public boolean isAutoSpinAttack;
-  public boolean hasRedOverlay;
-  public boolean isInvisibleToPlayer;
-  public net.minecraft.core.Direction bedOrientation;
-  public net.minecraft.world.entity.Pose pose;
-  public final net.minecraft.client.renderer.item.ItemStackRenderState headItem;
-  public float wornHeadAnimationPos;
-  public net.minecraft.world.level.block.SkullBlock$Type wornHeadType;
-  public net.minecraft.world.item.component.ResolvableProfile wornHeadProfile;
-  public net.minecraft.client.renderer.entity.state.LivingEntityRenderState();
-  public boolean hasPose(net.minecraft.world.entity.Pose);
-=== net.minecraft.client.renderer.entity.state.EntityRenderState
-public class net.minecraft.client.renderer.entity.state.EntityRenderState {
-  public static final int NO_OUTLINE;
-  public net.minecraft.world.entity.EntityType<?> entityType;
-  public double x;
-  public double y;
-  public double z;
-  public float ageInTicks;
-  public float boundingBoxWidth;
-  public float boundingBoxHeight;
-  public float eyeHeight;
-  public double distanceToCameraSq;
-  public boolean isInvisible;
-  public boolean isDiscrete;
-  public boolean displayFireAnimation;
-  public int lightCoords;
-  public int outlineColor;
-  public net.minecraft.world.phys.Vec3 passengerOffset;
-  public net.minecraft.network.chat.Component nameTag;
-  public net.minecraft.network.chat.Component scoreText;
-  public net.minecraft.world.phys.Vec3 nameTagAttachment;
-  public java.util.List<net.minecraft.client.renderer.entity.state.EntityRenderState$LeashState> leashStates;
-  public float shadowRadius;
-  public final java.util.List<net.minecraft.client.renderer.entity.state.EntityRenderState$ShadowPiece> shadowPieces;
-  public net.minecraft.client.renderer.entity.state.EntityRenderState();
-  public boolean appearsGlowing();
-  public void fillCrashReportCategory(net.minecraft.CrashReportCategory);
-=== net.minecraft.client.renderer.entity.LivingEntityRenderer
-  protected final boolean addLayer(net.minecraft.client.renderer.entity.layers.RenderLayer<S, M>);
-  public void submit(S, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState);
-  protected void setupRotations(S, com.mojang.blaze3d.vertex.PoseStack, float, float);
-  protected void scale(S, com.mojang.blaze3d.vertex.PoseStack);
-  protected boolean shouldShowName(T, double);
-  public void extractRenderState(T, S, float);
-  public void extractRenderState(net.minecraft.world.entity.Entity, net.minecraft.client.renderer.entity.state.EntityRenderState, float);
-  protected boolean shouldShowName(net.minecraft.world.entity.Entity, double);
-  public void submit(net.minecraft.client.renderer.entity.state.EntityRenderState, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState);
+public abstract class net.minecraft.world.entity.Entity implements net.minecraft.world.Nameable, net.minecraft.world.level.entity.EntityAccess, net.minecraft.world.scores.ScoreHolder, net.minecraft.network.syncher.SyncedDataHolder, net.minecraft.core.component.DataComponentGetter, net.minecraft.world.entity.ItemOwner, net.minecraft.world.entity.SlotProvider, net.minecraft.util.debug.DebugValueSource, net.minecraft.core.TypedInstance<net.minecraft.world.entity.EntityType<?>> {
+  public double fallDistance;
+  public boolean noPhysics;
+  protected abstract void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData$Builder);
+  public void setNoGravity(boolean);
+  public void push(net.minecraft.world.entity.Entity);
+  public void push(net.minecraft.world.phys.Vec3);
+  public void push(double, double, double);
+  public abstract boolean hurtServer(net.minecraft.server.level.ServerLevel, net.minecraft.world.damagesource.DamageSource, float);
+  public boolean isPickable();
+  public boolean shouldRender(double, double, double);
+  public boolean shouldRenderAtSqrDistance(double);
+  protected abstract void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput);
+  protected abstract void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput);
+  public net.minecraft.world.entity.item.ItemEntity spawnAtLocation(net.minecraft.server.level.ServerLevel, net.minecraft.world.level.ItemLike);
+  public net.minecraft.world.entity.item.ItemEntity spawnAtLocation(net.minecraft.server.level.ServerLevel, net.minecraft.world.item.ItemStack);
+  public net.minecraft.world.entity.item.ItemEntity spawnAtLocation(net.minecraft.server.level.ServerLevel, net.minecraft.world.item.ItemStack, net.minecraft.world.phys.Vec3);
+  public net.minecraft.world.entity.item.ItemEntity spawnAtLocation(net.minecraft.server.level.ServerLevel, net.minecraft.world.item.ItemStack, float);
+  public void resetFallDistance();
+  public boolean isAttackable();
+  public boolean isPushedByFluid();
+  public void setDeltaMovement(net.minecraft.world.phys.Vec3);
+  public void setDeltaMovement(double, double, double);
+=== net.minecraft.client.renderer.item.ItemModelResolver
+public class net.minecraft.client.renderer.item.ItemModelResolver {
+  public net.minecraft.client.renderer.item.ItemModelResolver(net.minecraft.client.resources.model.ModelManager);
+  public void updateForLiving(net.minecraft.client.renderer.item.ItemStackRenderState, net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemDisplayContext, net.minecraft.world.entity.LivingEntity);
+  public void updateForNonLiving(net.minecraft.client.renderer.item.ItemStackRenderState, net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemDisplayContext, net.minecraft.world.entity.Entity);
+  public void updateForTopItem(net.minecraft.client.renderer.item.ItemStackRenderState, net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemDisplayContext, net.minecraft.world.level.Level, net.minecraft.world.entity.ItemOwner, int);
+  public void appendItemLayers(net.minecraft.client.renderer.item.ItemStackRenderState, net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemDisplayContext, net.minecraft.world.level.Level, net.minecraft.world.entity.ItemOwner, int);
+  public boolean shouldPlaySwapAnimation(net.minecraft.world.item.ItemStack);
+  public float swapAnimationScale(net.minecraft.world.item.ItemStack);
+=== net.minecraft.world.item.ItemDisplayContext
+  public static final net.minecraft.world.item.ItemDisplayContext NONE;
+  public static final net.minecraft.world.item.ItemDisplayContext THIRD_PERSON_LEFT_HAND;
+  public static final net.minecraft.world.item.ItemDisplayContext THIRD_PERSON_RIGHT_HAND;
+  public static final net.minecraft.world.item.ItemDisplayContext FIRST_PERSON_LEFT_HAND;
+  public static final net.minecraft.world.item.ItemDisplayContext FIRST_PERSON_RIGHT_HAND;
+  public static final net.minecraft.world.item.ItemDisplayContext HEAD;
+  public static final net.minecraft.world.item.ItemDisplayContext GUI;
+  public static final net.minecraft.world.item.ItemDisplayContext GROUND;
+  public static final net.minecraft.world.item.ItemDisplayContext FIXED;
+  public static final net.minecraft.world.item.ItemDisplayContext ON_SHELF;
+  public static final com.mojang.serialization.Codec<net.minecraft.world.item.ItemDisplayContext> CODEC;
+  public static final java.util.function.IntFunction<net.minecraft.world.item.ItemDisplayContext> BY_ID;
 === net.minecraft.client.renderer.entity.EntityRenderer
-  public net.minecraft.world.phys.Vec3 getRenderOffset(S);
+  public boolean shouldRender(T, net.minecraft.client.renderer.culling.Frustum, double, double, double, float);
+  protected net.minecraft.world.phys.AABB getBoundingBoxForCulling(T, float);
+  protected boolean affectedByCulling(T);
   public void submit(S, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState);
   protected void submitNameDisplay(S, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState);
   protected final <S extends net.minecraft.client.renderer.entity.state.EntityRenderState> void submitNameDisplay(S, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState, int);
+  public abstract S createRenderState();
+  public final S createRenderState(T, float);
   public void extractRenderState(T, S, float);
-  protected void finalizeRenderState(T, S);
-=== net.minecraft.client.renderer.entity.MobRenderer
-public abstract class net.minecraft.client.renderer.entity.MobRenderer<T extends net.minecraft.world.entity.Mob, S extends net.minecraft.client.renderer.entity.state.LivingEntityRenderState, M extends net.minecraft.client.model.EntityModel<? super S>> extends net.minecraft.client.renderer.entity.LivingEntityRenderer<T, S, M> {
-  public net.minecraft.client.renderer.entity.MobRenderer(net.minecraft.client.renderer.entity.EntityRendererProvider$Context, M, float);
-  protected boolean shouldShowName(T, double);
-  protected float getShadowRadius(S);
-  protected static boolean checkMagicName(net.minecraft.world.entity.Entity, java.lang.String);
-  protected boolean shouldShowName(net.minecraft.world.entity.LivingEntity, double);
-  protected float getShadowRadius(net.minecraft.client.renderer.entity.state.EntityRenderState);
-  protected boolean shouldShowName(net.minecraft.world.entity.Entity, double);
-=== net.minecraft.client.renderer.entity.layers.ParrotOnShoulderLayer
-Compiled from "ParrotOnShoulderLayer.java"
-public class net.minecraft.client.renderer.entity.layers.ParrotOnShoulderLayer extends net.minecraft.client.renderer.entity.layers.RenderLayer<net.minecraft.client.renderer.entity.state.AvatarRenderState, net.minecraft.client.model.player.PlayerModel> {
-  private final net.minecraft.client.model.animal.parrot.ParrotModel model;
-  public net.minecraft.client.renderer.entity.layers.ParrotOnShoulderLayer(net.minecraft.client.renderer.entity.RenderLayerParent<net.minecraft.client.renderer.entity.state.AvatarRenderState, net.minecraft.client.model.player.PlayerModel>, net.minecraft.client.model.geom.EntityModelSet);
-  public void submit(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, net.minecraft.client.renderer.entity.state.AvatarRenderState, float, float);
-  private void submitOnShoulder(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, net.minecraft.client.renderer.entity.state.AvatarRenderState, net.minecraft.world.entity.animal.parrot.Parrot$Variant, float, float, boolean);
-  public void submit(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, net.minecraft.client.renderer.entity.state.EntityRenderState, float, float);
-}
-=== net.minecraft.client.model.ArmedModel
-Compiled from "ArmedModel.java"
-public interface net.minecraft.client.model.ArmedModel<T extends net.minecraft.client.renderer.entity.state.EntityRenderState> {
-  public abstract void translateToHand(T, net.minecraft.world.entity.HumanoidArm, com.mojang.blaze3d.vertex.PoseStack);
-}
-=== net.minecraft.client.renderer.entity.layers.RenderLayer
-public abstract class net.minecraft.client.renderer.entity.layers.RenderLayer<S extends net.minecraft.client.renderer.entity.state.EntityRenderState, M extends net.minecraft.client.model.EntityModel<? super S>> {
-  public net.minecraft.client.renderer.entity.layers.RenderLayer(net.minecraft.client.renderer.entity.RenderLayerParent<S, M>);
-  protected static <S extends net.minecraft.client.renderer.entity.state.LivingEntityRenderState> void coloredCutoutModelCopyLayerRender(net.minecraft.client.model.Model<? super S>, net.minecraft.resources.Identifier, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, S, int, int);
-  protected static <S extends net.minecraft.client.renderer.entity.state.LivingEntityRenderState> void renderColoredCutoutModel(net.minecraft.client.model.Model<? super S>, net.minecraft.resources.Identifier, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, S, int, int);
-  public M getParentModel();
-  public abstract void submit(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, S, float, float);
-=== net.minecraft.world.entity.animal.rabbit.Rabbit
-  public static net.minecraft.world.entity.ai.attributes.AttributeSupplier$Builder createAttributes();
-  protected net.minecraft.sounds.SoundEvent getJumpSound();
-  protected net.minecraft.sounds.SoundEvent getAmbientSound();
-  protected net.minecraft.sounds.SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource);
-  protected net.minecraft.sounds.SoundEvent getDeathSound();
-  public void playAttackSound();
-  public net.minecraft.sounds.SoundSource getSoundSource();
-=== net.minecraft.sounds.SoundEvents
-  public static final net.minecraft.sounds.SoundEvent ARMADILLO_EAT;
-  public static final net.minecraft.sounds.SoundEvent ARMADILLO_HURT;
-  public static final net.minecraft.sounds.SoundEvent ARMADILLO_HURT_REDUCED;
-  public static final net.minecraft.sounds.SoundEvent ARMADILLO_AMBIENT;
-  public static final net.minecraft.sounds.SoundEvent ARMADILLO_STEP;
-  public static final net.minecraft.sounds.SoundEvent ARMADILLO_DEATH;
-  public static final net.minecraft.sounds.SoundEvent ARMADILLO_ROLL;
-  public static final net.minecraft.sounds.SoundEvent ARMADILLO_LAND;
-  public static final net.minecraft.sounds.SoundEvent ARMADILLO_SCUTE_DROP;
-  public static final net.minecraft.sounds.SoundEvent ARMADILLO_UNROLL_FINISH;
-  public static final net.minecraft.sounds.SoundEvent ARMADILLO_PEEK;
-  public static final net.minecraft.sounds.SoundEvent ARMADILLO_UNROLL_START;
-  public static final net.minecraft.sounds.SoundEvent ARMADILLO_BRUSH;
-  public static final net.minecraft.sounds.SoundEvent FOX_AMBIENT;
-  public static final net.minecraft.sounds.SoundEvent FOX_EAT;
-  public static final net.minecraft.sounds.SoundEvent FOX_HURT;
-  public static final net.minecraft.sounds.SoundEvent FOX_SCREECH;
-  public static final net.minecraft.sounds.SoundEvent FOX_SNIFF;
-  public static final net.minecraft.sounds.SoundEvent RABBIT_AMBIENT;
-  public static final net.minecraft.sounds.SoundEvent RABBIT_DEATH;
-  public static final net.minecraft.sounds.SoundEvent RABBIT_HURT;
-  public static final net.minecraft.sounds.SoundEvent RABBIT_JUMP;
-=== net.minecraft.world.entity.animal.parrot.ShoulderRidingEntity
-Compiled from "ShoulderRidingEntity.java"
-public abstract class net.minecraft.world.entity.animal.parrot.ShoulderRidingEntity extends net.minecraft.world.entity.TamableAnimal {
-  private static final org.slf4j.Logger LOGGER;
-  private static final int RIDE_COOLDOWN;
-  private int rideCooldownCounter;
-  protected net.minecraft.world.entity.animal.parrot.ShoulderRidingEntity(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.animal.parrot.ShoulderRidingEntity>, net.minecraft.world.level.Level);
-  public boolean setEntityOnShoulder(net.minecraft.server.level.ServerPlayer);
-  public void tick();
-  public boolean canSitOnShoulder();
-  static {};
-}
-=== net.minecraft.world.food.FoodProperties
-public final class net.minecraft.world.food.FoodProperties extends java.lang.Record implements net.minecraft.world.item.component.ConsumableListener {
-  public static final com.mojang.serialization.Codec<net.minecraft.world.food.FoodProperties> DIRECT_CODEC;
-  public static final net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, net.minecraft.world.food.FoodProperties> DIRECT_STREAM_CODEC;
-  public net.minecraft.world.food.FoodProperties(int, float, boolean);
-  public void onConsume(net.minecraft.world.level.Level, net.minecraft.world.entity.LivingEntity, net.minecraft.world.item.ItemStack, net.minecraft.world.item.component.Consumable);
+=== net.minecraft.client.renderer.item.ItemStackRenderState
+public class net.minecraft.client.renderer.item.ItemStackRenderState {
+  public net.minecraft.client.renderer.item.ItemStackRenderState();
+  public void ensureCapacity(int);
+  public net.minecraft.client.renderer.item.ItemStackRenderState$LayerRenderState newLayer();
+  public void clear();
+  public void setAnimated();
+  public boolean isAnimated();
+  public void appendModelIdentityElement(java.lang.Object);
+  public boolean isEmpty();
+  public boolean usesBlockLight();
+  public net.minecraft.client.resources.model.sprite.Material$Baked pickParticleMaterial(net.minecraft.util.RandomSource);
+  public void visitExtents(java.util.function.Consumer<org.joml.Vector3fc>);
+  public void submit(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, int, int);
+  public net.minecraft.world.phys.AABB getModelBoundingBox();
+  public void setOversizedInGui(boolean);
+  public boolean isOversizedInGui();
+=== net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket
+public final class net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket extends java.lang.Record implements net.minecraft.network.protocol.Packet<net.minecraft.network.protocol.game.ClientGamePacketListener> {
+  public static final net.minecraft.network.codec.StreamCodec<io.netty.buffer.ByteBuf, net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket> STREAM_CODEC;
+  public net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket(net.minecraft.world.entity.Entity);
+  public net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket(int, net.minecraft.world.phys.Vec3);
+  public net.minecraft.network.protocol.PacketType<net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket> type();
+  public void handle(net.minecraft.network.protocol.game.ClientGamePacketListener);
   public final java.lang.String toString();
   public final int hashCode();
   public final boolean equals(java.lang.Object);
-  public int nutrition();
-  public float saturation();
-  public boolean canAlwaysEat();
-=== net.minecraft.world.entity.EntityDimensions
-  public static net.minecraft.world.entity.EntityDimensions scalable(float, float);
-  public static net.minecraft.world.entity.EntityDimensions fixed(float, float);
+  public int id();
+=== net.minecraft.server.level.ServerPlayer
+  public net.minecraft.server.network.ServerGamePacketListenerImpl connection;
+  public void resetFallDistance();
+=== net.minecraft.commands.CommandSourceStack
+  private final net.minecraft.server.permissions.PermissionSet permissions;
+  public net.minecraft.commands.CommandSourceStack(net.minecraft.commands.CommandSource, net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec2, net.minecraft.server.level.ServerLevel, net.minecraft.server.permissions.PermissionSet, net.minecraft.server.MinecraftServer, net.minecraft.world.entity.Entity);
+  public net.minecraft.commands.CommandSourceStack(net.minecraft.commands.CommandSource, net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec2, net.minecraft.server.level.ServerLevel, net.minecraft.server.permissions.PermissionSet, net.minecraft.network.chat.Component, net.minecraft.server.MinecraftServer);
+  private net.minecraft.commands.CommandSourceStack(net.minecraft.commands.CommandSource, net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec2, net.minecraft.server.level.ServerLevel, net.minecraft.server.permissions.PermissionSet, net.minecraft.commands.CommandSourceStack$NamesProvider, net.minecraft.server.MinecraftServer, net.minecraft.world.entity.Entity);
+  private net.minecraft.commands.CommandSourceStack(net.minecraft.commands.CommandSource, net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec2, net.minecraft.server.level.ServerLevel, net.minecraft.server.permissions.PermissionSet, net.minecraft.commands.CommandSourceStack$NamesProvider, net.minecraft.server.MinecraftServer, net.minecraft.world.entity.Entity, boolean, net.minecraft.commands.CommandResultCallback, net.minecraft.commands.arguments.EntityAnchorArgument$Anchor, net.minecraft.commands.CommandSigningContext, net.minecraft.util.TaskChainer);
+  public net.minecraft.commands.CommandSourceStack withPermission(net.minecraft.server.permissions.PermissionSet);
+  public net.minecraft.commands.CommandSourceStack withMaximumPermission(net.minecraft.server.permissions.PermissionSet);
+  public net.minecraft.server.permissions.PermissionSet permissions();
+  public net.minecraft.world.phys.Vec3 getPosition();
+  public net.minecraft.server.level.ServerLevel getLevel();
+  public net.minecraft.server.level.ServerPlayer getPlayerOrException() throws com.mojang.brigadier.exceptions.CommandSyntaxException;
+  public net.minecraft.server.level.ServerPlayer getPlayer();
+  public void sendSuccess(java.util.function.Supplier<net.minecraft.network.chat.Component>, boolean);
+=== net.minecraft.commands.Commands
+  public static final java.lang.String COMMAND_PREFIX;
+  public static final net.minecraft.server.permissions.PermissionCheck LEVEL_ALL;
+  public static final net.minecraft.server.permissions.PermissionCheck LEVEL_MODERATORS;
+  public static final net.minecraft.server.permissions.PermissionCheck LEVEL_GAMEMASTERS;
+  public static final net.minecraft.server.permissions.PermissionCheck LEVEL_ADMINS;
+  public static final net.minecraft.server.permissions.PermissionCheck LEVEL_OWNERS;
+  public static <S> com.mojang.brigadier.ParseResults<S> mapSource(com.mojang.brigadier.ParseResults<S>, java.util.function.UnaryOperator<S>);
+  public static java.lang.String trimOptionalPrefix(java.lang.String);
+  public static void executeCommandInContext(net.minecraft.commands.CommandSourceStack, java.util.function.Consumer<net.minecraft.commands.execution.ExecutionContext<net.minecraft.commands.CommandSourceStack>>);
+  public static com.mojang.brigadier.builder.LiteralArgumentBuilder<net.minecraft.commands.CommandSourceStack> literal(java.lang.String);
+  public static <T> com.mojang.brigadier.builder.RequiredArgumentBuilder<net.minecraft.commands.CommandSourceStack, T> argument(java.lang.String, com.mojang.brigadier.arguments.ArgumentType<T>);
+  public static java.util.function.Predicate<java.lang.String> createValidator(net.minecraft.commands.Commands$ParseFunction);
+  public static <S> void validateParseResults(com.mojang.brigadier.ParseResults<S>) throws com.mojang.brigadier.exceptions.CommandSyntaxException;
+  public static <S> com.mojang.brigadier.exceptions.CommandSyntaxException getParseException(com.mojang.brigadier.ParseResults<S>);
+  public static net.minecraft.commands.CommandBuildContext createValidationContext(net.minecraft.core.HolderLookup$Provider);
+  public static void validate();
+  public static <T extends net.minecraft.server.permissions.PermissionSetSupplier> net.minecraft.server.permissions.PermissionProviderCheck<T> hasPermission(net.minecraft.server.permissions.PermissionCheck);
+  public static net.minecraft.commands.CommandSourceStack createCompilationContext(net.minecraft.server.permissions.PermissionSet);
+=== net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
+Compiled from "CommandRegistrationCallback.java"
+public interface net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback {
+  public static final net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback> EVENT;
+  public abstract void register(com.mojang.brigadier.CommandDispatcher<net.minecraft.commands.CommandSourceStack>, net.minecraft.commands.CommandBuildContext, net.minecraft.commands.Commands$CommandSelection);
+  static {};
+}
+=== net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
+Compiled from "ServerTickEvents.java"
+public final class net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents {
+  public static final net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents$StartTick> START_SERVER_TICK;
+  public static final net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents$EndTick> END_SERVER_TICK;
+  public static final net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents$StartLevelTick> START_LEVEL_TICK;
+  public static final net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents$EndLevelTick> END_LEVEL_TICK;
+  private net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents();
+  static {};
+}
+=== net.minecraft.server.level.ServerLevel
+  public <T extends net.minecraft.core.particles.ParticleOptions> int sendParticles(T, double, double, double, int, double, double, double, double);
+  public <T extends net.minecraft.core.particles.ParticleOptions> int sendParticles(T, double, double, double, int, double, double, double, double, net.minecraft.network.protocol.game.ClientboundLevelParticlesPacket$RandomizationType);
+  public <T extends net.minecraft.core.particles.ParticleOptions> int sendParticles(T, double, double, double, int, double, double, double, double, double, double);
+  public <T extends net.minecraft.core.particles.ParticleOptions> int sendParticles(T, double, double, double, int, double, double, double, double, double, double, net.minecraft.network.protocol.game.ClientboundLevelParticlesPacket$RandomizationType);
+  public <T extends net.minecraft.core.particles.ParticleOptions> int sendParticles(T, boolean, boolean, double, double, double, int, double, double, double, double);
+  public <T extends net.minecraft.core.particles.ParticleOptions> int sendParticles(T, boolean, boolean, double, double, double, int, double, double, double, double, net.minecraft.network.protocol.game.ClientboundLevelParticlesPacket$RandomizationType);
+  public <T extends net.minecraft.core.particles.ParticleOptions> int sendParticles(T, boolean, boolean, double, double, double, int, double, double, double, double, double, double, net.minecraft.network.protocol.game.ClientboundLevelParticlesPacket$RandomizationType);
+  public <T extends net.minecraft.core.particles.ParticleOptions> boolean sendParticles(net.minecraft.server.level.ServerPlayer, T, boolean, boolean, double, double, double, int, double, double, double, double);
+  private boolean sendParticles(net.minecraft.server.level.ServerPlayer, boolean, double, double, double, net.minecraft.network.protocol.Packet<?>);
+  public java.util.List<net.minecraft.server.level.ServerPlayer> players();
+  public static final net.minecraft.core.particles.SimpleParticleType NOXIOUS_GAS_CLOUD;
+  public static final net.minecraft.core.particles.SimpleParticleType CLOUD;
+  public static final net.minecraft.core.particles.SimpleParticleType GUST;
+  public static final net.minecraft.core.particles.SimpleParticleType SMALL_GUST;
+  public static final net.minecraft.core.particles.SimpleParticleType GUST_EMITTER_LARGE;
+  public static final net.minecraft.core.particles.SimpleParticleType GUST_EMITTER_SMALL;
+  public static final net.minecraft.core.particles.SimpleParticleType CHERRY_LEAVES;
+  public static final net.minecraft.core.particles.SimpleParticleType PALE_OAK_LEAVES;
+  public static final net.minecraft.core.particles.SimpleParticleType RED_POPLAR_LEAVES;
+  public static final net.minecraft.core.particles.SimpleParticleType ORANGE_POPLAR_LEAVES;
+  public static final net.minecraft.core.particles.SimpleParticleType YELLOW_POPLAR_LEAVES;
+  public static final net.minecraft.core.particles.ParticleType<net.minecraft.core.particles.ColorParticleOption> TINTED_LEAVES;
+  public static final net.minecraft.core.particles.SimpleParticleType WHITE_ASH;
+  public static final net.minecraft.core.particles.SimpleParticleType DUST_PLUME;
+=== net.minecraft.world.effect.MobEffects
+  public static final net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> LEVITATION;
+  public static final net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> SLOW_FALLING;
+=== net.minecraft.sounds.SoundEvents
+  public static final net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent> ARMOR_EQUIP_ELYTRA;
+  public static final net.minecraft.sounds.SoundEvent AZALEA_LEAVES_BREAK;
+  public static final net.minecraft.sounds.SoundEvent AZALEA_LEAVES_FALL;
+  public static final net.minecraft.sounds.SoundEvent AZALEA_LEAVES_HIT;
+  public static final net.minecraft.sounds.SoundEvent AZALEA_LEAVES_PLACE;
+  public static final net.minecraft.sounds.SoundEvent AZALEA_LEAVES_STEP;
+  public static final net.minecraft.sounds.SoundEvent BREEZE_CHARGE;
+  public static final net.minecraft.sounds.SoundEvent BREEZE_DEFLECT;
+  public static final net.minecraft.sounds.SoundEvent BREEZE_INHALE;
+  public static final net.minecraft.sounds.SoundEvent BREEZE_IDLE_GROUND;
+  public static final net.minecraft.sounds.SoundEvent BREEZE_IDLE_AIR;
+  public static final net.minecraft.sounds.SoundEvent BREEZE_SHOOT;
+  public static final net.minecraft.sounds.SoundEvent BREEZE_JUMP;
+  public static final net.minecraft.sounds.SoundEvent BREEZE_LAND;
+  public static final net.minecraft.sounds.SoundEvent BREEZE_SLIDE;
+  public static final net.minecraft.sounds.SoundEvent BREEZE_DEATH;
+  public static final net.minecraft.sounds.SoundEvent BREEZE_HURT;
+  public static final net.minecraft.sounds.SoundEvent BREEZE_WHIRL;
+  public static final net.minecraft.core.Holder$Reference<net.minecraft.sounds.SoundEvent> BREEZE_WIND_CHARGE_BURST;
+  public static final net.minecraft.sounds.SoundEvent COPPER_CHEST_WEATHERED_CLOSE;
+  public static final net.minecraft.sounds.SoundEvent COPPER_CHEST_WEATHERED_OPEN;
+  public static final net.minecraft.sounds.SoundEvent COPPER_GOLEM_WEATHERED_STEP;
+  public static final net.minecraft.sounds.SoundEvent COPPER_GOLEM_WEATHERED_HURT;
+  public static final net.minecraft.sounds.SoundEvent COPPER_GOLEM_WEATHERED_DEATH;
+  public static final net.minecraft.sounds.SoundEvent COPPER_GOLEM_WEATHERED_SPIN;
+  public static final net.minecraft.sounds.SoundEvent ELYTRA_FLYING;
+  public static final net.minecraft.sounds.SoundEvent LEAF_LITTER_BREAK;
+  public static final net.minecraft.sounds.SoundEvent LEAF_LITTER_STEP;
+  public static final net.minecraft.sounds.SoundEvent LEAF_LITTER_PLACE;
+  public static final net.minecraft.sounds.SoundEvent LEAF_LITTER_HIT;
+=== net.minecraft.client.gui.Gui
+=== net.minecraft.server.level.ServerPlayer
+  public void sendSystemMessage(net.minecraft.network.chat.Component);
+  public void sendSystemMessage(net.minecraft.network.chat.Component, boolean);
+=== net.minecraft.world.entity.player.Player
+  public void sendOverlayMessage(net.minecraft.network.chat.Component);
+=== net.minecraft.client.renderer.SubmitNodeCollector
+public interface net.minecraft.client.renderer.SubmitNodeCollector extends net.minecraft.client.renderer.OrderedSubmitNodeCollector {
+  public abstract net.minecraft.client.renderer.OrderedSubmitNodeCollector order(int);
