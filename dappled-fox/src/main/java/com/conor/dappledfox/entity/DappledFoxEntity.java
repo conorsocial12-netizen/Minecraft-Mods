@@ -192,7 +192,9 @@ public class DappledFoxEntity extends AbstractHorse {
 		boolean hit = target.hurtServer(level, source, damage);
 		if (hit && target instanceof LivingEntity living) {
 			float yaw = this.getYRot() * Mth.DEG_TO_RAD;
-			living.knockback(0.6, Mth.sin(yaw), -Mth.cos(yaw));
+			// Shove the target away from the fox's snout
+			living.push(-Mth.sin(yaw) * 0.6, 0.15, Mth.cos(yaw) * 0.6);
+			living.hurtMarked = true;
 		}
 		this.playSound(SoundEvents.FOX_BITE, 1.0F, 0.8F + this.random.nextFloat() * 0.3F);
 		level.broadcastEntityEvent(this, BITE_EVENT);
@@ -265,7 +267,7 @@ public class DappledFoxEntity extends AbstractHorse {
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState state) {
 		if (!state.liquid()) {
-			this.playSound(SoundEvents.WOLF_STEP, 0.2F, 0.9F);
+			this.playSound(SoundEvents.WOLF_STEP.value(), 0.2F, 0.9F);
 		}
 	}
 
