@@ -3,7 +3,7 @@
 	"id": "dappledforest",
 	"version": "${version}",
 	"name": "Dappled Forest Plus",
-	"description": "Everything for the Dappled Forest in one mod: Poplar Arrows that bury your screen in autumn leaves, the leaf-covered Dappled Skeleton, the rideable Dappled Fox, trap-ready leaf piles and the ultra-rare Sour Candy Apple.",
+	"description": "Everything for the Dappled Forest in one mod: Poplar Arrows that bury your screen in autumn leaves, the leaf-covered Dappled Skeleton, the rideable Dappled Fox, the fetching Acorn Squirrel, trap-ready leaf piles and the ultra-rare Sour Candy Apple.",
 	"authors": [
 		"Conor"
 	],
@@ -16,11 +16,13 @@
 			"com.conor.dappledforest.apple.SourCandyApple",
 			"com.conor.dappledforest.leafpiles.DappledLeafPiles",
 			"com.conor.dappledforest.fox.DappledFoxMod",
+			"com.conor.dappledforest.squirrel.SquirrelMod",
 			"com.conor.dappledforest.DappledForestPlus"
 		],
 		"client": [
 			"com.conor.dappledforest.arrow.client.PoplarArrowClient",
-			"com.conor.dappledforest.fox.client.DappledFoxClient"
+			"com.conor.dappledforest.fox.client.DappledFoxClient",
+			"com.conor.dappledforest.squirrel.client.SquirrelClient"
 		]
 	},
 	"mixins": [

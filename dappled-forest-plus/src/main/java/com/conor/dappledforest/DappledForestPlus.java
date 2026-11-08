@@ -56,8 +56,10 @@ public class DappledForestPlus implements ModInitializer {
 					for (var block : com.conor.dappledforest.leafpiles.ModBlocks.ALL) {
 						output.accept(block);
 					}
+					output.accept(com.conor.dappledforest.squirrel.SquirrelMod.ACORN);
 					output.accept(com.conor.dappledforest.arrow.ModItems.DAPPLED_SKELETON_SPAWN_EGG);
 					output.accept(DAPPLED_FOX_SPAWN_EGG);
+					output.accept(com.conor.dappledforest.squirrel.SquirrelMod.ACORN_SQUIRREL_SPAWN_EGG);
 				})
 				.build());
 

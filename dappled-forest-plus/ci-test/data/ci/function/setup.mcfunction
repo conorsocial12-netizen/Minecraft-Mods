@@ -20,5 +20,5 @@ setblock 0 205 0 dappledforest:yellow_leaf_pile
 fill 6 230 6 18 230 18 minecraft:glass
 loot spawn 12.5 231 12.5 mine 0 205 0
 schedule function ci:check_slow 30t
-schedule function ci:check_end 300t
+schedule function ci:check_end 400t
 schedule function ci:setup2 60t
