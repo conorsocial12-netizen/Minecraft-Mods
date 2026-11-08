@@ -1,0 +1,22 @@
+{
+	"schemaVersion": 1,
+	"id": "sourcandyapple",
+	"version": "${version}",
+	"name": "Sour Candy Apple",
+	"description": "Adds an extremely rare Sour Candy Apple that drops from poplar leaves in the Dappled Forest. Eat it for a burst of Swiftness.",
+	"authors": ["Conor"],
+	"license": "MIT",
+	"icon": "assets/sourcandyapple/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.conor.sourcandyapple.SourCandyApple"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
