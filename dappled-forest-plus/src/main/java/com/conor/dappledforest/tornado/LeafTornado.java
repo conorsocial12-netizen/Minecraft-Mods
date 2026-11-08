@@ -195,7 +195,8 @@ public class LeafTornado extends Entity {
 			int x = Mth.floor(this.getX() + (this.random.nextFloat() - 0.5F) * 5.0F);
 			int z = Mth.floor(this.getZ() + (this.random.nextFloat() - 0.5F) * 5.0F);
 			BlockPos pos = new BlockPos(x, level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z), z);
-			if (level.getBlockState(pos).isAir() && level.getBlockState(pos.below()).isFaceSturdy(level, pos.below(), Direction.UP)) {
+			if (level.getBlockState(pos).canBeReplaced() && level.getFluidState(pos).isEmpty()
+					&& level.getBlockState(pos.below()).isFaceSturdy(level, pos.below(), Direction.UP)) {
 				Block pile = ModBlocks.ALL.get(this.random.nextInt(ModBlocks.ALL.size()));
 				level.setBlockAndUpdate(pos, pile.defaultBlockState());
 				piles--;
