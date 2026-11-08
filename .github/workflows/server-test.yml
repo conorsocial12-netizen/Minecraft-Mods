@@ -43,7 +43,7 @@ jobs:
             sleep 5
           done
           echo "----- mod checks -----"
-          grep -E "CI_(PASS|FAIL|LOAD|DONE)" server.log || echo "(no in-game checks ran)"
+          grep -E "CI_(PASS|FAIL|LOAD|DONE|INFO)" server.log || echo "(no in-game checks ran)"
           echo "----- errors / warnings -----"
           grep -nE "ERROR|Exception|Caused by|Failed" server.log | head -60 || true
           echo "----- tail -----"
