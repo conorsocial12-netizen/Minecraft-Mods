@@ -194,7 +194,6 @@ public class DappledFoxEntity extends AbstractHorse {
 			float yaw = this.getYRot() * Mth.DEG_TO_RAD;
 			// Shove the target away from the fox's snout
 			living.push(-Mth.sin(yaw) * 0.6, 0.15, Mth.cos(yaw) * 0.6);
-			living.hurtMarked = true;
 		}
 		this.playSound(SoundEvents.FOX_BITE, 1.0F, 0.8F + this.random.nextFloat() * 0.3F);
 		level.broadcastEntityEvent(this, BITE_EVENT);
