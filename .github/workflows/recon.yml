@@ -27,25 +27,28 @@ jobs:
           MC
           cat > run/world/datapacks/test/data/test/function/run.mcfunction <<'MC'
           say RUN-START
-          execute positioned 0 0 0 positioned over motion_blocking run summon poplararrow:dappled_skeleton ~ ~1 ~ {Tags:["t1"],PersistenceRequired:1b}
-          execute positioned 6 0 0 positioned over motion_blocking run summon minecraft:villager ~ ~1 ~ {NoAI:1b,Tags:["v"],Invulnerable:0b}
-          execute positioned 0 0 0 positioned over motion_blocking run summon poplararrow:poplar_arrow ~ ~5 ~
+          execute positioned 0 0 0 positioned over motion_blocking run summon poplararrow:dappled_skeleton ~ ~1 ~
+          execute positioned 6 0 0 positioned over motion_blocking run summon minecraft:iron_golem ~ ~1 ~ {NoAI:1b,Tags:["v"]}
+          execute positioned 0 0 0 positioned over motion_blocking run time set midnight
           execute if entity @e[type=poplararrow:dappled_skeleton] run say SKELETON-EXISTS
           execute if entity @e[type=poplararrow:poplar_arrow] run say ARROW-EXISTS
-          execute if items entity @e[tag=t1,limit=1] weapon.mainhand minecraft:bow run say HAS-BOW
+          execute if items entity @e[type=poplararrow:dappled_skeleton,limit=1] weapon.mainhand minecraft:bow run say HAS-BOW
           execute positioned 0 0 0 positioned over motion_blocking run loot spawn ~ ~2 ~ loot poplararrow:entities/dappled_skeleton
           execute if entity @e[type=item,nbt={Item:{id:"poplararrow:poplar_arrow"}}] run say LOOT-ARROW
           execute if entity @e[type=item,nbt={Item:{id:"minecraft:bone"}}] run say LOOT-BONE
           time set midnight
-          schedule function test:check 200t
+          schedule function test:check 300t
           MC
           cat > run/world/datapacks/test/data/test/function/check.mcfunction <<'MC'
           execute if entity @e[type=poplararrow:poplar_arrow] run say ARROWS-FLYING-OR-STUCK
-          execute as @e[type=villager,tag=v] if data entity @s active_effects run say VILLAGER-HAS-EFFECTS
-          execute as @e[type=villager,tag=v] run say VILLAGER-ALIVE
-          execute unless entity @e[type=villager,tag=v] run say VILLAGER-DEAD
-          execute as @e[type=villager,tag=v] run data get entity @s active_effects
-          execute as @e[type=villager,tag=v] run data get entity @s Health
+          execute as @e[type=iron_golem,tag=v] if data entity @s active_effects run say GOLEM-HAS-EFFECTS
+          execute as @e[type=iron_golem,tag=v] run say GOLEM-ALIVE
+          execute unless entity @e[type=iron_golem,tag=v] run say GOLEM-DEAD
+          execute as @e[type=iron_golem,tag=v] run data get entity @s active_effects
+          execute as @e[type=iron_golem,tag=v] run data get entity @s Health
+          execute as @e[type=iron_golem,tag=v] if data entity @s active_effects[{id:"poplararrow:leaf_blind"}] run say GOLEM-HAS-LEAF-BLIND
+          execute if entity @e[type=poplararrow:poplar_arrow] run say POPLAR-ARROWS-PRESENT
+          execute if entity @e[type=minecraft:arrow] run say PLAIN-ARROWS-PRESENT
           say CHECK-DONE
           MC
           sed -i 's/^          //' run/world/datapacks/test/data/test/function/load.mcfunction
