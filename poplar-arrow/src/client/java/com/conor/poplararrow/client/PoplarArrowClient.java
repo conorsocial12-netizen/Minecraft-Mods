@@ -11,6 +11,7 @@ public class PoplarArrowClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		EntityRendererRegistry.register(ModEntities.POPLAR_ARROW, PoplarArrowRenderer::new);
+		EntityRendererRegistry.register(ModEntities.DAPPLED_SKELETON, DappledSkeletonRenderer::new);
 
 		// Drawn with the pumpkin/powder-snow overlays, so the hotbar & chat stay readable on top
 		HudElementRegistry.attachElementAfter(

@@ -3,18 +3,27 @@
 	"id": "poplararrow",
 	"version": "${version}",
 	"name": "Poplar Arrow",
-	"description": "An arrow fletched with poplar leaves. Hit someone with it and autumn leaves pile up around their screen.",
-	"authors": ["Conor"],
+	"description": "Poplar Arrows that cover your screen in autumn leaves, and the Dappled Skeleton that shoots them in dappled forests at night.",
+	"authors": [
+		"Conor"
+	],
 	"license": "MIT",
 	"environment": "*",
 	"entrypoints": {
-		"main": ["com.conor.poplararrow.PoplarArrowMod"],
-		"client": ["com.conor.poplararrow.client.PoplarArrowClient"]
+		"main": [
+			"com.conor.poplararrow.PoplarArrowMod"
+		],
+		"client": [
+			"com.conor.poplararrow.client.PoplarArrowClient"
+		]
 	},
 	"depends": {
 		"fabricloader": ">=0.19.5",
 		"minecraft": "~26.3",
 		"java": ">=25",
 		"fabric-api": "*"
-	}
+	},
+	"mixins": [
+		"poplararrow.mixins.json"
+	]
 }
