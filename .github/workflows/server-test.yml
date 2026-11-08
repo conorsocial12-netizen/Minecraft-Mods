@@ -23,18 +23,6 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '9.8.2'
-      - name: Debug - show vanilla patch features
-        if: matrix.mod == 'dappled-leaf-piles'
-        working-directory: ${{ matrix.mod }}
-        continue-on-error: true
-        run: |
-          gradle dependencies --no-daemon -q > /dev/null 2>&1 || true
-          JAR=""
-          for j in $(find ~/.gradle . -name '*.jar' 2>/dev/null | grep -i minecraft); do
-            if unzip -l "$j" 2>/dev/null | grep -q 'data/minecraft/worldgen/feature/'; then JAR=$j; break; fi
-          done
-          echo "JAR=$JAR"
-          for f in feature/red_shrub feature/red_poplar_leaf_litter placed_feature/red_poplar_leaf_litter; do echo "== $f"; unzip -p "$JAR" "data/minecraft/worldgen/$f.json"; echo; done
       - name: Run server with ${{ matrix.mod }}
         working-directory: ${{ matrix.mod }}
         run: |

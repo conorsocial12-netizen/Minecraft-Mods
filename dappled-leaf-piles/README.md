@@ -14,8 +14,7 @@ Actions tab → latest green **Build mods** run → Artifacts → `mod-jars` →
 
 ## Tweaking
 
-- **How many patches spawn:** `"count"` in `src/main/resources/data/dappledleafpiles/worldgen/placed_feature/leaf_piles.json` (patches per chunk).
-- **Piles per patch / spread:** `tries` and `xz_spread` in `worldgen/feature/leaf_piles.json`.
+- **How many spawn / how spread out:** `"count"` (piles per chunk) and the `offset` ranges in `src/main/resources/data/dappledleafpiles/worldgen/placed_feature/leaf_piles.json`.
 - **How slowly you sink:** `SINKING` in `LeafPileBlock.java` (lower Y = slower).
 
 `ci-test/` is a test data pack used by GitHub Actions only. It isn't part of the mod.

@@ -1,61 +1,20 @@
 {
-  "type": "minecraft:random_patch",
-  "config": {
-    "tries": 14,
-    "xz_spread": 4,
-    "y_spread": 2,
-    "feature": {
-      "feature": {
-        "type": "minecraft:simple_block",
-        "config": {
-          "to_place": {
-            "type": "minecraft:weighted_state_provider",
-            "entries": [
-              {
-                "weight": 1,
-                "data": {
-                  "Name": "dappledleafpiles:red_leaf_pile"
-                }
-              },
-              {
-                "weight": 1,
-                "data": {
-                  "Name": "dappledleafpiles:orange_leaf_pile"
-                }
-              },
-              {
-                "weight": 1,
-                "data": {
-                  "Name": "dappledleafpiles:yellow_leaf_pile"
-                }
-              }
-            ]
-          }
-        }
+  "type": "minecraft:simple_block",
+  "to_place": {
+    "type": "minecraft:weighted",
+    "entries": [
+      {
+        "data": "dappledleafpiles:red_leaf_pile",
+        "weight": 1
       },
-      "placement": [
-        {
-          "type": "minecraft:block_predicate_filter",
-          "predicate": {
-            "type": "minecraft:all_of",
-            "predicates": [
-              {
-                "type": "minecraft:matching_blocks",
-                "blocks": "minecraft:air"
-              },
-              {
-                "type": "minecraft:has_sturdy_face",
-                "offset": [
-                  0,
-                  -1,
-                  0
-                ],
-                "direction": "up"
-              }
-            ]
-          }
-        }
-      ]
-    }
+      {
+        "data": "dappledleafpiles:orange_leaf_pile",
+        "weight": 1
+      },
+      {
+        "data": "dappledleafpiles:yellow_leaf_pile",
+        "weight": 1
+      }
+    ]
   }
 }
