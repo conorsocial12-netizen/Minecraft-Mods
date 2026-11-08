@@ -13,11 +13,33 @@ jobs:
         with: { distribution: temurin, java-version: '25' }
       - uses: gradle/actions/setup-gradle@v4
         with: { gradle-version: '9.8.2' }
-      - run: cd poplar-arrow && gradle build --no-daemon -q
-      - name: Dump
-        run: bash .github/recon.sh > recon.txt 2>&1 || true
+      - name: Prepare server run dir
+        run: |
+          cd poplar-arrow && mkdir -p run/world/datapacks/test/data/test/function run/world/datapacks/test/data/minecraft/tags/function
+          echo "eula=true" > run/eula.txt
+          printf "online-mode=false\nlevel-seed=1\nspawn-protection=0\n" > run/server.properties
+          echo '{"pack":{"description":"test","pack_format":200,"supported_formats":[1,999],"min_format":1,"max_format":999}}' > run/world/datapacks/test/pack.mcmeta
+          echo '{"values":["test:load"]}' > run/world/datapacks/test/data/minecraft/tags/function/load.json
+          cat > run/world/datapacks/test/data/test/function/load.mcfunction <<'MC'
+          say TEST-START
+          forceload add 0 0
+          summon poplararrow:dappled_skeleton 0 120 0 {Tags:["t1"]}
+          summon poplararrow:poplar_arrow 0 130 0
+          summon minecraft:villager 3 120 0 {NoAI:1b}
+          execute as @e[tag=t1] run say I-AM-DAPPLED-SKELETON
+          execute store result score #c test run loot spawn 0 125 0 loot poplararrow:entities/dappled_skeleton
+          execute if entity @e[type=poplararrow:dappled_skeleton] run say SKELETON-EXISTS
+          execute if items entity @e[tag=t1,limit=1] weapon.mainhand minecraft:bow run say HAS-BOW
+          locate biome minecraft:dappled_forest
+          MC
+          sed -i 's/^          //' run/world/datapacks/test/data/test/function/load.mcfunction
+      - name: Run server
+        run: |
+          cd poplar-arrow
+          timeout 240 gradle runServer --no-daemon --args="nogui" > ../server.log 2>&1 || true
       - name: Save output to repo
+        if: always()
         run: |
           git config user.name "recon-bot"; git config user.email "recon@users.noreply.github.com"
-          mkdir -p recon-out && mv recon.txt recon-out/
-          git add recon-out && git commit -m "recon output [skip ci]" && git push
+          mkdir -p recon-out && grep -v "^\s*at \|Download\|%" server.log | tail -400 > recon-out/server.log || true
+          git add recon-out && git commit -m "server output [skip ci]" && git push
