@@ -17,6 +17,7 @@ execute if score #gen ci matches 1.. run say CI_PASS worldgen-feature
 execute unless score #gen ci matches 1.. run say CI_FAIL worldgen-feature
 # 4) Breaking a pile drops the pile item
 setblock 0 205 0 dappledleafpiles:yellow_leaf_pile
-loot spawn 0 230 0 mine 0 205 0
+setblock 12 230 12 minecraft:glass
+loot spawn 12.5 231 12.5 mine 0 205 0
 schedule function ci:check_slow 30t
 schedule function ci:check_end 300t
