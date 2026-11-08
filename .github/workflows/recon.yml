@@ -2,6 +2,8 @@ name: Recon
 on:
   push:
     branches: [recon]
+permissions:
+  contents: write
 jobs:
   recon:
     runs-on: ubuntu-latest
@@ -14,5 +16,8 @@ jobs:
       - run: cd poplar-arrow && gradle build --no-daemon -q
       - name: Dump
         run: bash .github/recon.sh > recon.txt 2>&1 || true
-      - uses: actions/upload-artifact@v4
-        with: { name: recon, path: recon.txt }
+      - name: Save output to repo
+        run: |
+          git config user.name "recon-bot"; git config user.email "recon@users.noreply.github.com"
+          mkdir -p recon-out && mv recon.txt recon-out/
+          git add recon-out && git commit -m "recon output [skip ci]" && git push
