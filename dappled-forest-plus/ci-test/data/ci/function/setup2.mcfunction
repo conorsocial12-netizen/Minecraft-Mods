@@ -19,10 +19,8 @@ execute if entity @e[type=dappledforest:dappled_fox,tag=ci_fox] run say CI_PASS 
 execute unless entity @e[type=dappledforest:dappled_fox,tag=ci_fox] run say CI_FAIL fox-spawns
 # 7) Dappled Skeleton spawns with a bow, shoots Poplar Arrows, and they apply Leaf Blind
 time set midnight
-fill -40 120 -10 -20 120 10 minecraft:stone
-fill -40 121 -10 -20 125 10 minecraft:air
-summon dappledforest:dappled_skeleton -36 121 0
-summon minecraft:iron_golem -28 121 0 {NoAI:1b,Tags:["ci_golem"]}
+execute positioned -8 0 -8 positioned over motion_blocking run summon dappledforest:dappled_skeleton ~ ~1 ~
+execute positioned -2 0 -8 positioned over motion_blocking run summon minecraft:iron_golem ~ ~1 ~ {NoAI:1b,Tags:["ci_golem"]}
 execute if items entity @e[type=dappledforest:dappled_skeleton,limit=1] weapon.mainhand minecraft:bow run say CI_PASS skeleton-has-bow
 execute unless items entity @e[type=dappledforest:dappled_skeleton,limit=1] weapon.mainhand minecraft:bow run say CI_FAIL skeleton-has-bow
 # 8) Dappled Skeleton loot table drops Poplar Arrows or bones (6 rolls so it can't come up empty)
