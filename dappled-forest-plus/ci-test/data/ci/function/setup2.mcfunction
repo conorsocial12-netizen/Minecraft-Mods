@@ -48,3 +48,4 @@ execute as @e[type=dappledforest:acorn_squirrel,tag=ci_sq] if data entity @s Own
 fill -6 220 -6 -18 220 -18 minecraft:glass
 execute positioned -12 221 -12 run loot spawn ~ ~ ~ loot dappledforest:entities/acorn_squirrel
 schedule function ci:check_squirrel 240t
+schedule function ci:check_squirrel_early 60t
