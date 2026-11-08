@@ -1,388 +1,443 @@
-=== net/fabricmc/fabric/api/creativetab/v1/CreativeModeTabEvents$ModifyOutput (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "CreativeModeTabEvents.java"
-public interface net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutput {
-  public abstract void modifyOutput(net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTabOutput);
+=== net.minecraft.world.entity.TamableAnimal
+public abstract class net.minecraft.world.entity.TamableAnimal extends net.minecraft.world.entity.animal.Animal implements net.minecraft.world.entity.OwnableEntity {
+  public static final int TELEPORT_WHEN_DISTANCE_IS_SQ;
+  protected static final net.minecraft.network.syncher.EntityDataAccessor<java.lang.Byte> DATA_FLAGS_ID;
+  protected static final net.minecraft.network.syncher.EntityDataAccessor<java.util.Optional<net.minecraft.world.entity.EntityReference<net.minecraft.world.entity.LivingEntity>>> DATA_OWNERUUID_ID;
+  protected net.minecraft.world.entity.TamableAnimal(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.TamableAnimal>, net.minecraft.world.level.Level);
+  protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData$Builder);
+  protected void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput);
+  protected void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput);
+  public boolean canBeLeashed();
+  protected void spawnTamingParticles(boolean);
+  public void handleEntityEvent(byte);
+  public boolean isTame();
+  public void setTame(boolean, boolean);
+  protected void applyTamingSideEffects();
+  protected void feed(net.minecraft.world.entity.player.Player, net.minecraft.world.InteractionHand, net.minecraft.world.item.ItemStack, float, float);
+  public boolean isInSittingPose();
+  public void setInSittingPose(boolean);
+  public net.minecraft.world.entity.EntityReference<net.minecraft.world.entity.LivingEntity> getOwnerReference();
+  public void setOwner(net.minecraft.world.entity.LivingEntity);
+  public void setOwnerReference(net.minecraft.world.entity.EntityReference<net.minecraft.world.entity.LivingEntity>);
+  public void tame(net.minecraft.world.entity.player.Player);
+  public boolean canAttack(net.minecraft.world.entity.LivingEntity);
+  public boolean isOwnedBy(net.minecraft.world.entity.LivingEntity);
+  public boolean wantsToAttack(net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.LivingEntity);
+  public net.minecraft.world.scores.PlayerTeam getTeam();
+  protected boolean considersEntityAsAlly(net.minecraft.world.entity.Entity);
+  public void die(net.minecraft.world.damagesource.DamageSource);
+  public boolean isOrderedToSit();
+  public void setOrderedToSit(boolean);
+  public void tryToTeleportToOwner();
+  public boolean shouldTryTeleportToOwner();
+  public final boolean unableToMoveToOwner();
+  protected boolean canFlyToOwner();
+=== net.minecraft.world.entity.animal.wolf.Wolf
+  protected void registerGoals();
+  public net.minecraft.world.InteractionResult mobInteract(net.minecraft.world.entity.player.Player, net.minecraft.world.InteractionHand);
+  public boolean isFood(net.minecraft.world.item.ItemStack);
+=== net.minecraft.world.entity.ai.goal.FollowOwnerGoal
+public class net.minecraft.world.entity.ai.goal.FollowOwnerGoal extends net.minecraft.world.entity.ai.goal.Goal {
+  public net.minecraft.world.entity.ai.goal.FollowOwnerGoal(net.minecraft.world.entity.TamableAnimal, double, float, float);
+  public boolean canUse();
+  public boolean canContinueToUse();
+  public void start();
+  public void stop();
+  public void tick();
+=== net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal
+public class net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal extends net.minecraft.world.entity.ai.goal.Goal {
+  public net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal(net.minecraft.world.entity.TamableAnimal);
+  public boolean canContinueToUse();
+  public boolean canUse();
+  public void start();
+  public void stop();
+=== net.minecraft.world.entity.ai.goal.AvoidEntityGoal
+public class net.minecraft.world.entity.ai.goal.AvoidEntityGoal<T extends net.minecraft.world.entity.LivingEntity> extends net.minecraft.world.entity.ai.goal.Goal {
+  public net.minecraft.world.entity.ai.goal.AvoidEntityGoal(net.minecraft.world.entity.PathfinderMob, java.lang.Class<T>, float, double, double);
+  public net.minecraft.world.entity.ai.goal.AvoidEntityGoal(net.minecraft.world.entity.PathfinderMob, java.lang.Class<T>, java.util.function.Predicate<net.minecraft.world.entity.LivingEntity>, float, double, double, java.util.function.Predicate<? super net.minecraft.world.entity.LivingEntity>);
+  public net.minecraft.world.entity.ai.goal.AvoidEntityGoal(net.minecraft.world.entity.PathfinderMob, java.lang.Class<T>, float, double, double, java.util.function.Predicate<? super net.minecraft.world.entity.LivingEntity>);
+  public boolean canUse();
+  public boolean canContinueToUse();
+  public void start();
+  public void stop();
+  public void tick();
+=== net.minecraft.world.entity.ai.goal.TemptGoal
+public class net.minecraft.world.entity.ai.goal.TemptGoal extends net.minecraft.world.entity.ai.goal.Goal {
+  public net.minecraft.world.entity.ai.goal.TemptGoal(net.minecraft.world.entity.PathfinderMob, double, java.util.function.Predicate<net.minecraft.world.item.ItemStack>, boolean);
+  public net.minecraft.world.entity.ai.goal.TemptGoal(net.minecraft.world.entity.PathfinderMob, double, java.util.function.Predicate<net.minecraft.world.item.ItemStack>, boolean, double);
+  public boolean canUse();
+  public boolean canContinueToUse();
+  public void start();
+  public void stop();
+  public void tick();
+  public boolean isRunning();
+=== net.minecraft.world.entity.Entity
+  public void rideTick();
+  public final void positionRider(net.minecraft.world.entity.Entity);
+  protected void positionRider(net.minecraft.world.entity.Entity, net.minecraft.world.entity.Entity$MoveFunction);
+  public net.minecraft.world.phys.Vec3 getVehicleAttachmentPoint(net.minecraft.world.entity.Entity);
+  public net.minecraft.world.phys.Vec3 getPassengerRidingPosition(net.minecraft.world.entity.Entity);
+  protected net.minecraft.world.phys.Vec3 getPassengerAttachmentPoint(net.minecraft.world.entity.Entity, net.minecraft.world.entity.EntityDimensions, float);
+  public final boolean startRiding(net.minecraft.world.entity.Entity);
+  public boolean startRiding(net.minecraft.world.entity.Entity, boolean, boolean);
+  protected boolean canRide(net.minecraft.world.entity.Entity);
+  public void ejectPassengers();
+  public void stopRiding();
+  protected void addPassenger(net.minecraft.world.entity.Entity);
+  protected void removePassenger(net.minecraft.world.entity.Entity);
+  protected boolean canAddPassenger(net.minecraft.world.entity.Entity);
+  public boolean isPassenger();
+  public boolean isPassengerOfSameVehicle(net.minecraft.world.entity.Entity);
+  public net.minecraft.world.entity.Entity getVehicle();
+=== net.minecraft.world.entity.player.Player
+  public void rideTick();
+  protected void removeEntitiesOnShoulder();
+=== net.minecraft.server.level.ServerPlayer
+  public boolean startRiding(net.minecraft.world.entity.Entity, boolean, boolean);
+=== net.minecraft.world.entity.ai.navigation.WallClimberNavigation
+public class net.minecraft.world.entity.ai.navigation.WallClimberNavigation extends net.minecraft.world.entity.ai.navigation.GroundPathNavigation {
+  public net.minecraft.world.entity.ai.navigation.WallClimberNavigation(net.minecraft.world.entity.Mob, net.minecraft.world.level.Level);
+  public net.minecraft.world.level.pathfinder.Path createPath(net.minecraft.core.BlockPos, int);
+  public net.minecraft.world.level.pathfinder.Path createPath(net.minecraft.world.entity.Entity, int);
+  public boolean moveTo(net.minecraft.world.entity.Entity, double);
+  public void tick();
+=== net.minecraft.world.entity.monster.spider.Spider
+  private static final net.minecraft.network.syncher.EntityDataAccessor<java.lang.Byte> DATA_FLAGS_ID;
+  protected net.minecraft.world.entity.ai.navigation.PathNavigation createNavigation(net.minecraft.world.level.Level);
+  public boolean onClimbable();
+  public boolean isClimbing();
+  public void setClimbing(boolean);
+=== net.minecraft.world.entity.animal.Animal
+  public static boolean checkAnimalSpawnRules(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.animal.Animal>, net.minecraft.world.level.LevelAccessor, net.minecraft.world.entity.EntitySpawnReason, net.minecraft.core.BlockPos, net.minecraft.util.RandomSource);
+  public abstract boolean isFood(net.minecraft.world.item.ItemStack);
+  public net.minecraft.world.InteractionResult mobInteract(net.minecraft.world.entity.player.Player, net.minecraft.world.InteractionHand);
+  public boolean canMate(net.minecraft.world.entity.animal.Animal);
+=== net.minecraft.world.entity.Mob
+  private boolean canPickUpLoot;
+  protected net.minecraft.world.entity.ai.navigation.PathNavigation createNavigation(net.minecraft.world.level.Level);
+  public net.minecraft.world.entity.ai.navigation.PathNavigation getNavigation();
+  protected void pickUpItem(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.item.ItemEntity);
+  protected void setItemSlotAndDropWhenKilled(net.minecraft.world.entity.EquipmentSlot, net.minecraft.world.item.ItemStack);
+  public boolean wantsToPickUp(net.minecraft.server.level.ServerLevel, net.minecraft.world.item.ItemStack);
+  public void setPersistenceRequired();
+  public boolean canPickUpLoot();
+=== net.minecraft.world.entity.animal.chicken.Chicken
+  public int eggTime;
+  public void aiStep();
+=== net.minecraft.world.entity.item.ItemEntity
+  public net.minecraft.world.entity.Entity getOwner();
+  public net.minecraft.world.item.ItemStack getItem();
+  public void setThrower(net.minecraft.world.entity.Entity);
+  public void setDefaultPickUpDelay();
+  public void setNoPickUpDelay();
+  public void setPickUpDelay(int);
+  public boolean hasPickUpDelay();
+=== net.minecraft.client.renderer.entity.layers.FoxHeldItemLayer
+Compiled from "FoxHeldItemLayer.java"
+public class net.minecraft.client.renderer.entity.layers.FoxHeldItemLayer extends net.minecraft.client.renderer.entity.layers.RenderLayer<net.minecraft.client.renderer.entity.state.FoxRenderState, net.minecraft.client.model.animal.fox.FoxModel> {
+  public net.minecraft.client.renderer.entity.layers.FoxHeldItemLayer(net.minecraft.client.renderer.entity.RenderLayerParent<net.minecraft.client.renderer.entity.state.FoxRenderState, net.minecraft.client.model.animal.fox.FoxModel>);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokespecial #1                  // Method net/minecraft/client/renderer/entity/layers/RenderLayer."<init>":(Lnet/minecraft/client/renderer/entity/RenderLayerParent;)V
+         5: return
+  public void submit(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, net.minecraft.client.renderer.entity.state.FoxRenderState, float, float);
+    Code:
+         0: aload         4
+         2: getfield      #7                  // Field net/minecraft/client/renderer/entity/state/FoxRenderState.heldItem:Lnet/minecraft/client/renderer/item/ItemStackRenderState;
+         5: astore        7
+         7: aload         7
+         9: invokevirtual #13                 // Method net/minecraft/client/renderer/item/ItemStackRenderState.isEmpty:()Z
+        12: ifeq          16
+        15: return
+        16: aload         4
+        18: getfield      #19                 // Field net/minecraft/client/renderer/entity/state/FoxRenderState.isSleeping:Z
+        21: istore        8
+        23: aload         4
+        25: getfield      #23                 // Field net/minecraft/client/renderer/entity/state/FoxRenderState.isBaby:Z
+        28: istore        9
+        30: aload_1
+        31: invokevirtual #26                 // Method com/mojang/blaze3d/vertex/PoseStack.pushPose:()V
+        34: aload_1
+        35: aload_0
+        36: invokevirtual #32                 // Method getParentModel:()Lnet/minecraft/client/model/EntityModel;
+        39: checkcast     #38                 // class net/minecraft/client/model/animal/fox/FoxModel
+        42: getfield      #40                 // Field net/minecraft/client/model/animal/fox/FoxModel.head:Lnet/minecraft/client/model/geom/ModelPart;
+        45: getfield      #44                 // Field net/minecraft/client/model/geom/ModelPart.x:F
+        48: ldc           #50                 // float 16.0f
+        50: fdiv
+        51: aload_0
+        52: invokevirtual #32                 // Method getParentModel:()Lnet/minecraft/client/model/EntityModel;
+        55: checkcast     #38                 // class net/minecraft/client/model/animal/fox/FoxModel
+        58: getfield      #40                 // Field net/minecraft/client/model/animal/fox/FoxModel.head:Lnet/minecraft/client/model/geom/ModelPart;
+        61: getfield      #51                 // Field net/minecraft/client/model/geom/ModelPart.y:F
+        64: ldc           #50                 // float 16.0f
+        66: fdiv
+        67: aload_0
+        68: invokevirtual #32                 // Method getParentModel:()Lnet/minecraft/client/model/EntityModel;
+        71: checkcast     #38                 // class net/minecraft/client/model/animal/fox/FoxModel
+        74: getfield      #40                 // Field net/minecraft/client/model/animal/fox/FoxModel.head:Lnet/minecraft/client/model/geom/ModelPart;
+        77: getfield      #54                 // Field net/minecraft/client/model/geom/ModelPart.z:F
+        80: ldc           #50                 // float 16.0f
+        82: fdiv
+        83: invokevirtual #57                 // Method com/mojang/blaze3d/vertex/PoseStack.translate:(FFF)V
+        86: iload         9
+        88: ifeq          105
+        91: ldc           #61                 // float 0.75f
+        93: fstore        10
+        95: aload_1
+        96: ldc           #61                 // float 0.75f
+        98: ldc           #61                 // float 0.75f
+       100: ldc           #61                 // float 0.75f
+       102: invokevirtual #62                 // Method com/mojang/blaze3d/vertex/PoseStack.scale:(FFF)V
+       105: aload_1
+       106: getstatic     #65                 // Field com/mojang/math/Axis.ZP:Lcom/mojang/math/Axis;
+       109: aload         4
+       111: getfield      #71                 // Field net/minecraft/client/renderer/entity/state/FoxRenderState.headRollAngle:F
+       114: invokevirtual #74                 // Method com/mojang/blaze3d/vertex/PoseStack.rotate:(Lcom/mojang/math/Axis;F)V
+       117: aload_1
+       118: getstatic     #78                 // Field com/mojang/math/Axis.YP:Lcom/mojang/math/Axis;
+       121: fload         5
+       123: invokevirtual #81                 // Method com/mojang/blaze3d/vertex/PoseStack.rotateDegrees:(Lcom/mojang/math/Axis;F)V
+       126: aload_1
+       127: getstatic     #84                 // Field com/mojang/math/Axis.XP:Lcom/mojang/math/Axis;
+       130: fload         6
+       132: invokevirtual #81                 // Method com/mojang/blaze3d/vertex/PoseStack.rotateDegrees:(Lcom/mojang/math/Axis;F)V
+       135: aload         4
+       137: getfield      #23                 // Field net/minecraft/client/renderer/entity/state/FoxRenderState.isBaby:Z
+       140: ifeq          174
+       143: iload         8
+       145: ifeq          161
+       148: aload_1
+       149: ldc           #87                 // float 0.4f
+       151: ldc           #88                 // float 0.26f
+       153: ldc           #89                 // float 0.15f
+       155: invokevirtual #57                 // Method com/mojang/blaze3d/vertex/PoseStack.translate:(FFF)V
+       158: goto          202
+       161: aload_1
+       162: ldc           #90                 // float 0.06f
+       164: ldc           #88                 // float 0.26f
+       166: ldc           #91                 // float -0.5f
+       168: invokevirtual #57                 // Method com/mojang/blaze3d/vertex/PoseStack.translate:(FFF)V
+       171: goto          202
+       174: iload         8
+       176: ifeq          192
+       179: aload_1
+       180: ldc           #92                 // float 0.46f
+       182: ldc           #88                 // float 0.26f
+       184: ldc           #93                 // float 0.22f
+       186: invokevirtual #57                 // Method com/mojang/blaze3d/vertex/PoseStack.translate:(FFF)V
+       189: goto          202
+       192: aload_1
+       193: ldc           #90                 // float 0.06f
+       195: ldc           #94                 // float 0.27f
+       197: ldc           #91                 // float -0.5f
+       199: invokevirtual #57                 // Method com/mojang/blaze3d/vertex/PoseStack.translate:(FFF)V
+       202: aload_1
+       203: getstatic     #84                 // Field com/mojang/math/Axis.XP:Lcom/mojang/math/Axis;
+       206: ldc           #95                 // float 90.0f
+       208: invokevirtual #81                 // Method com/mojang/blaze3d/vertex/PoseStack.rotateDegrees:(Lcom/mojang/math/Axis;F)V
+       211: iload         8
+       213: ifeq          225
+       216: aload_1
+       217: getstatic     #65                 // Field com/mojang/math/Axis.ZP:Lcom/mojang/math/Axis;
+       220: ldc           #95                 // float 90.0f
+       222: invokevirtual #81                 // Method com/mojang/blaze3d/vertex/PoseStack.rotateDegrees:(Lcom/mojang/math/Axis;F)V
+       225: aload         7
+       227: aload_1
+       228: aload_2
+       229: iload_3
+       230: getstatic     #96                 // Field net/minecraft/client/renderer/texture/OverlayTexture.NO_OVERLAY:I
+       233: aload         4
+       235: getfield      #102                // Field net/minecraft/client/renderer/entity/state/FoxRenderState.outlineColor:I
+       238: invokevirtual #105                // Method net/minecraft/client/renderer/item/ItemStackRenderState.submit:(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;III)V
+       241: aload_1
+       242: invokevirtual #109                // Method com/mojang/blaze3d/vertex/PoseStack.popPose:()V
+=== net.minecraft.client.renderer.entity.FoxRenderer
+public class net.minecraft.client.renderer.entity.FoxRenderer extends net.minecraft.client.renderer.entity.AgeableMobRenderer<net.minecraft.world.entity.animal.fox.Fox, net.minecraft.client.renderer.entity.state.FoxRenderState, net.minecraft.client.model.animal.fox.FoxModel> {
+  public net.minecraft.client.renderer.entity.FoxRenderer(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+  public net.minecraft.resources.Identifier getTextureLocation(net.minecraft.client.renderer.entity.state.FoxRenderState);
+  public net.minecraft.client.renderer.entity.state.FoxRenderState createRenderState();
+  public void extractRenderState(net.minecraft.world.entity.animal.fox.Fox, net.minecraft.client.renderer.entity.state.FoxRenderState, float);
+  public void extractRenderState(net.minecraft.world.entity.LivingEntity, net.minecraft.client.renderer.entity.state.LivingEntityRenderState, float);
+  public net.minecraft.resources.Identifier getTextureLocation(net.minecraft.client.renderer.entity.state.LivingEntityRenderState);
+  public void extractRenderState(net.minecraft.world.entity.Entity, net.minecraft.client.renderer.entity.state.EntityRenderState, float);
+  public net.minecraft.client.renderer.entity.state.EntityRenderState createRenderState();
+=== net.minecraft.client.renderer.entity.state.FoxRenderState
+Compiled from "FoxRenderState.java"
+public class net.minecraft.client.renderer.entity.state.FoxRenderState extends net.minecraft.client.renderer.entity.state.HoldingEntityRenderState {
+  public float headRollAngle;
+  public float crouchAmount;
+  public boolean isCrouching;
+  public boolean isSleeping;
+  public boolean isSitting;
+  public boolean isFaceplanted;
+  public boolean isPouncing;
+  public net.minecraft.world.entity.animal.fox.Fox$Variant variant;
+  public net.minecraft.client.renderer.entity.state.FoxRenderState();
 }
-=== net/fabricmc/fabric/api/creativetab/v1/CreativeModeTabEvents$ModifyOutputAll (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "CreativeModeTabEvents.java"
-public interface net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutputAll {
-  public abstract void modifyOutput(net.minecraft.world.item.CreativeModeTab, net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTabOutput);
+=== net.minecraft.client.renderer.entity.state.HoldingEntityRenderState
+Compiled from "HoldingEntityRenderState.java"
+public class net.minecraft.client.renderer.entity.state.HoldingEntityRenderState extends net.minecraft.client.renderer.entity.state.LivingEntityRenderState {
+  public final net.minecraft.client.renderer.item.ItemStackRenderState heldItem;
+  public net.minecraft.client.renderer.entity.state.HoldingEntityRenderState();
+  public static void extractHoldingEntityRenderState(net.minecraft.world.entity.LivingEntity, net.minecraft.client.renderer.entity.state.HoldingEntityRenderState, net.minecraft.client.renderer.item.ItemModelResolver);
 }
-=== net/fabricmc/fabric/api/creativetab/v1/CreativeModeTabEvents (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "CreativeModeTabEvents.java"
-public final class net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents {
-  public static final net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutputAll> MODIFY_OUTPUT_ALL;
-  private net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents();
-  public static net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutput> modifyOutputEvent(net.minecraft.resources.ResourceKey<net.minecraft.world.item.CreativeModeTab>);
+=== net.minecraft.client.renderer.entity.state.LivingEntityRenderState
+public class net.minecraft.client.renderer.entity.state.LivingEntityRenderState extends net.minecraft.client.renderer.entity.state.EntityRenderState {
+  public float bodyRot;
+  public float yRot;
+  public float xRot;
+  public float deathTime;
+  public float walkAnimationPos;
+  public float walkAnimationSpeed;
+  public float scale;
+  public float ageScale;
+  public float ticksSinceKineticHitFeedback;
+  public boolean isUpsideDown;
+  public boolean isFullyFrozen;
+  public boolean isBaby;
+  public boolean isInWater;
+  public boolean isAutoSpinAttack;
+  public boolean hasRedOverlay;
+  public boolean isInvisibleToPlayer;
+  public net.minecraft.core.Direction bedOrientation;
+  public net.minecraft.world.entity.Pose pose;
+  public final net.minecraft.client.renderer.item.ItemStackRenderState headItem;
+  public float wornHeadAnimationPos;
+  public net.minecraft.world.level.block.SkullBlock$Type wornHeadType;
+  public net.minecraft.world.item.component.ResolvableProfile wornHeadProfile;
+  public net.minecraft.client.renderer.entity.state.LivingEntityRenderState();
+  public boolean hasPose(net.minecraft.world.entity.Pose);
+=== net.minecraft.client.renderer.entity.state.EntityRenderState
+public class net.minecraft.client.renderer.entity.state.EntityRenderState {
+  public static final int NO_OUTLINE;
+  public net.minecraft.world.entity.EntityType<?> entityType;
+  public double x;
+  public double y;
+  public double z;
+  public float ageInTicks;
+  public float boundingBoxWidth;
+  public float boundingBoxHeight;
+  public float eyeHeight;
+  public double distanceToCameraSq;
+  public boolean isInvisible;
+  public boolean isDiscrete;
+  public boolean displayFireAnimation;
+  public int lightCoords;
+  public int outlineColor;
+  public net.minecraft.world.phys.Vec3 passengerOffset;
+  public net.minecraft.network.chat.Component nameTag;
+  public net.minecraft.network.chat.Component scoreText;
+  public net.minecraft.world.phys.Vec3 nameTagAttachment;
+  public java.util.List<net.minecraft.client.renderer.entity.state.EntityRenderState$LeashState> leashStates;
+  public float shadowRadius;
+  public final java.util.List<net.minecraft.client.renderer.entity.state.EntityRenderState$ShadowPiece> shadowPieces;
+  public net.minecraft.client.renderer.entity.state.EntityRenderState();
+  public boolean appearsGlowing();
+  public void fillCrashReportCategory(net.minecraft.CrashReportCategory);
+=== net.minecraft.client.renderer.entity.LivingEntityRenderer
+  protected final boolean addLayer(net.minecraft.client.renderer.entity.layers.RenderLayer<S, M>);
+  public void submit(S, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState);
+  protected void setupRotations(S, com.mojang.blaze3d.vertex.PoseStack, float, float);
+  protected void scale(S, com.mojang.blaze3d.vertex.PoseStack);
+  protected boolean shouldShowName(T, double);
+  public void extractRenderState(T, S, float);
+  public void extractRenderState(net.minecraft.world.entity.Entity, net.minecraft.client.renderer.entity.state.EntityRenderState, float);
+  protected boolean shouldShowName(net.minecraft.world.entity.Entity, double);
+  public void submit(net.minecraft.client.renderer.entity.state.EntityRenderState, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState);
+=== net.minecraft.client.renderer.entity.EntityRenderer
+  public net.minecraft.world.phys.Vec3 getRenderOffset(S);
+  public void submit(S, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState);
+  protected void submitNameDisplay(S, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState);
+  protected final <S extends net.minecraft.client.renderer.entity.state.EntityRenderState> void submitNameDisplay(S, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState, int);
+  public void extractRenderState(T, S, float);
+  protected void finalizeRenderState(T, S);
+=== net.minecraft.client.renderer.entity.MobRenderer
+public abstract class net.minecraft.client.renderer.entity.MobRenderer<T extends net.minecraft.world.entity.Mob, S extends net.minecraft.client.renderer.entity.state.LivingEntityRenderState, M extends net.minecraft.client.model.EntityModel<? super S>> extends net.minecraft.client.renderer.entity.LivingEntityRenderer<T, S, M> {
+  public net.minecraft.client.renderer.entity.MobRenderer(net.minecraft.client.renderer.entity.EntityRendererProvider$Context, M, float);
+  protected boolean shouldShowName(T, double);
+  protected float getShadowRadius(S);
+  protected static boolean checkMagicName(net.minecraft.world.entity.Entity, java.lang.String);
+  protected boolean shouldShowName(net.minecraft.world.entity.LivingEntity, double);
+  protected float getShadowRadius(net.minecraft.client.renderer.entity.state.EntityRenderState);
+  protected boolean shouldShowName(net.minecraft.world.entity.Entity, double);
+=== net.minecraft.client.renderer.entity.layers.ParrotOnShoulderLayer
+Compiled from "ParrotOnShoulderLayer.java"
+public class net.minecraft.client.renderer.entity.layers.ParrotOnShoulderLayer extends net.minecraft.client.renderer.entity.layers.RenderLayer<net.minecraft.client.renderer.entity.state.AvatarRenderState, net.minecraft.client.model.player.PlayerModel> {
+  private final net.minecraft.client.model.animal.parrot.ParrotModel model;
+  public net.minecraft.client.renderer.entity.layers.ParrotOnShoulderLayer(net.minecraft.client.renderer.entity.RenderLayerParent<net.minecraft.client.renderer.entity.state.AvatarRenderState, net.minecraft.client.model.player.PlayerModel>, net.minecraft.client.model.geom.EntityModelSet);
+  public void submit(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, net.minecraft.client.renderer.entity.state.AvatarRenderState, float, float);
+  private void submitOnShoulder(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, net.minecraft.client.renderer.entity.state.AvatarRenderState, net.minecraft.world.entity.animal.parrot.Parrot$Variant, float, float, boolean);
+  public void submit(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, net.minecraft.client.renderer.entity.state.EntityRenderState, float, float);
+}
+=== net.minecraft.client.model.ArmedModel
+Compiled from "ArmedModel.java"
+public interface net.minecraft.client.model.ArmedModel<T extends net.minecraft.client.renderer.entity.state.EntityRenderState> {
+  public abstract void translateToHand(T, net.minecraft.world.entity.HumanoidArm, com.mojang.blaze3d.vertex.PoseStack);
+}
+=== net.minecraft.client.renderer.entity.layers.RenderLayer
+public abstract class net.minecraft.client.renderer.entity.layers.RenderLayer<S extends net.minecraft.client.renderer.entity.state.EntityRenderState, M extends net.minecraft.client.model.EntityModel<? super S>> {
+  public net.minecraft.client.renderer.entity.layers.RenderLayer(net.minecraft.client.renderer.entity.RenderLayerParent<S, M>);
+  protected static <S extends net.minecraft.client.renderer.entity.state.LivingEntityRenderState> void coloredCutoutModelCopyLayerRender(net.minecraft.client.model.Model<? super S>, net.minecraft.resources.Identifier, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, S, int, int);
+  protected static <S extends net.minecraft.client.renderer.entity.state.LivingEntityRenderState> void renderColoredCutoutModel(net.minecraft.client.model.Model<? super S>, net.minecraft.resources.Identifier, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, S, int, int);
+  public M getParentModel();
+  public abstract void submit(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, S, float, float);
+=== net.minecraft.world.entity.animal.rabbit.Rabbit
+  public static net.minecraft.world.entity.ai.attributes.AttributeSupplier$Builder createAttributes();
+  protected net.minecraft.sounds.SoundEvent getJumpSound();
+  protected net.minecraft.sounds.SoundEvent getAmbientSound();
+  protected net.minecraft.sounds.SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource);
+  protected net.minecraft.sounds.SoundEvent getDeathSound();
+  public void playAttackSound();
+  public net.minecraft.sounds.SoundSource getSoundSource();
+=== net.minecraft.sounds.SoundEvents
+  public static final net.minecraft.sounds.SoundEvent ARMADILLO_EAT;
+  public static final net.minecraft.sounds.SoundEvent ARMADILLO_HURT;
+  public static final net.minecraft.sounds.SoundEvent ARMADILLO_HURT_REDUCED;
+  public static final net.minecraft.sounds.SoundEvent ARMADILLO_AMBIENT;
+  public static final net.minecraft.sounds.SoundEvent ARMADILLO_STEP;
+  public static final net.minecraft.sounds.SoundEvent ARMADILLO_DEATH;
+  public static final net.minecraft.sounds.SoundEvent ARMADILLO_ROLL;
+  public static final net.minecraft.sounds.SoundEvent ARMADILLO_LAND;
+  public static final net.minecraft.sounds.SoundEvent ARMADILLO_SCUTE_DROP;
+  public static final net.minecraft.sounds.SoundEvent ARMADILLO_UNROLL_FINISH;
+  public static final net.minecraft.sounds.SoundEvent ARMADILLO_PEEK;
+  public static final net.minecraft.sounds.SoundEvent ARMADILLO_UNROLL_START;
+  public static final net.minecraft.sounds.SoundEvent ARMADILLO_BRUSH;
+  public static final net.minecraft.sounds.SoundEvent FOX_AMBIENT;
+  public static final net.minecraft.sounds.SoundEvent FOX_EAT;
+  public static final net.minecraft.sounds.SoundEvent FOX_HURT;
+  public static final net.minecraft.sounds.SoundEvent FOX_SCREECH;
+  public static final net.minecraft.sounds.SoundEvent FOX_SNIFF;
+  public static final net.minecraft.sounds.SoundEvent RABBIT_AMBIENT;
+  public static final net.minecraft.sounds.SoundEvent RABBIT_DEATH;
+  public static final net.minecraft.sounds.SoundEvent RABBIT_HURT;
+  public static final net.minecraft.sounds.SoundEvent RABBIT_JUMP;
+=== net.minecraft.world.entity.animal.parrot.ShoulderRidingEntity
+Compiled from "ShoulderRidingEntity.java"
+public abstract class net.minecraft.world.entity.animal.parrot.ShoulderRidingEntity extends net.minecraft.world.entity.TamableAnimal {
+  private static final org.slf4j.Logger LOGGER;
+  private static final int RIDE_COOLDOWN;
+  private int rideCooldownCounter;
+  protected net.minecraft.world.entity.animal.parrot.ShoulderRidingEntity(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.animal.parrot.ShoulderRidingEntity>, net.minecraft.world.level.Level);
+  public boolean setEntityOnShoulder(net.minecraft.server.level.ServerPlayer);
+  public void tick();
+  public boolean canSitOnShoulder();
   static {};
 }
-=== net/fabricmc/fabric/api/creativetab/v1/FabricCreativeModeTab (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "FabricCreativeModeTab.java"
-public final class net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab {
-  private net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab();
-  public static net.minecraft.world.item.CreativeModeTab$Builder builder();
-}
-=== net/fabricmc/fabric/api/creativetab/v1/FabricCreativeModeTabOutput$1 (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "FabricCreativeModeTabOutput.java"
-class net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTabOutput$1 {
-  static final int[] $SwitchMap$net$minecraft$world$item$CreativeModeTab$TabVisibility;
-  static {};
-}
-=== net/fabricmc/fabric/api/creativetab/v1/FabricCreativeModeTabOutput (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "FabricCreativeModeTabOutput.java"
-public class net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTabOutput implements net.minecraft.world.item.CreativeModeTab$Output {
-  private final net.minecraft.world.item.CreativeModeTab$ItemDisplayParameters context;
-  private final java.util.List<net.minecraft.world.item.ItemStack> displayStacks;
-  private final java.util.List<net.minecraft.world.item.ItemStack> searchTabStacks;
-  public net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTabOutput(net.minecraft.world.item.CreativeModeTab$ItemDisplayParameters, java.util.List<net.minecraft.world.item.ItemStack>, java.util.List<net.minecraft.world.item.ItemStack>);
-  public net.minecraft.world.item.CreativeModeTab$ItemDisplayParameters getContext();
-  public net.minecraft.world.flag.FeatureFlagSet getEnabledFeatures();
-  public boolean shouldShowOpRestrictedItems();
-  public java.util.List<net.minecraft.world.item.ItemStack> getDisplayStacks();
-  public java.util.List<net.minecraft.world.item.ItemStack> getSearchTabStacks();
-  public void accept(net.minecraft.world.item.ItemStack, net.minecraft.world.item.CreativeModeTab$TabVisibility);
-  public void prepend(net.minecraft.world.item.ItemStack);
-  public void prepend(net.minecraft.world.item.ItemStack, net.minecraft.world.item.CreativeModeTab$TabVisibility);
-  public void prepend(net.minecraft.world.level.ItemLike);
-  public void prepend(net.minecraft.world.level.ItemLike, net.minecraft.world.item.CreativeModeTab$TabVisibility);
-  public void insertAfter(net.minecraft.world.level.ItemLike, net.minecraft.world.item.ItemStack...);
-  public void insertAfter(net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemStack...);
-  public void insertAfter(net.minecraft.world.level.ItemLike, net.minecraft.world.level.ItemLike...);
-  public void insertAfter(net.minecraft.world.item.ItemStack, net.minecraft.world.level.ItemLike...);
-  public void insertAfter(net.minecraft.world.level.ItemLike, java.util.Collection<net.minecraft.world.item.ItemStack>);
-  public void insertAfter(net.minecraft.world.item.ItemStack, java.util.Collection<net.minecraft.world.item.ItemStack>);
-  public void insertAfter(net.minecraft.world.level.ItemLike, java.util.Collection<net.minecraft.world.item.ItemStack>, net.minecraft.world.item.CreativeModeTab$TabVisibility);
-  public void insertAfter(net.minecraft.world.item.ItemStack, java.util.Collection<net.minecraft.world.item.ItemStack>, net.minecraft.world.item.CreativeModeTab$TabVisibility);
-  public void insertAfter(java.util.function.Predicate<net.minecraft.world.item.ItemStack>, java.util.Collection<net.minecraft.world.item.ItemStack>, net.minecraft.world.item.CreativeModeTab$TabVisibility);
-  public void insertBefore(net.minecraft.world.level.ItemLike, net.minecraft.world.item.ItemStack...);
-  public void insertBefore(net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemStack...);
-  public void insertBefore(net.minecraft.world.level.ItemLike, net.minecraft.world.level.ItemLike...);
-  public void insertBefore(net.minecraft.world.item.ItemStack, net.minecraft.world.level.ItemLike...);
-  public void insertBefore(net.minecraft.world.level.ItemLike, java.util.Collection<net.minecraft.world.item.ItemStack>);
-  public void insertBefore(net.minecraft.world.item.ItemStack, java.util.Collection<net.minecraft.world.item.ItemStack>);
-  public void insertBefore(net.minecraft.world.level.ItemLike, java.util.Collection<net.minecraft.world.item.ItemStack>, net.minecraft.world.item.CreativeModeTab$TabVisibility);
-  public void insertBefore(net.minecraft.world.item.ItemStack, java.util.Collection<net.minecraft.world.item.ItemStack>, net.minecraft.world.item.CreativeModeTab$TabVisibility);
-  public void insertBefore(java.util.function.Predicate<net.minecraft.world.item.ItemStack>, java.util.Collection<net.minecraft.world.item.ItemStack>, net.minecraft.world.item.CreativeModeTab$TabVisibility);
-  private boolean isEnabled(net.minecraft.world.item.ItemStack);
-  private java.util.Collection<net.minecraft.world.item.ItemStack> getEnabledStacks(java.util.Collection<net.minecraft.world.item.ItemStack>);
-  private static void insertBefore(java.util.function.Predicate<net.minecraft.world.item.ItemStack>, java.util.Collection<net.minecraft.world.item.ItemStack>, java.util.List<net.minecraft.world.item.ItemStack>);
-  private static void insertAfter(java.util.function.Predicate<net.minecraft.world.item.ItemStack>, java.util.Collection<net.minecraft.world.item.ItemStack>, java.util.List<net.minecraft.world.item.ItemStack>);
-  private static void insertBefore(net.minecraft.world.item.ItemStack, java.util.Collection<net.minecraft.world.item.ItemStack>, java.util.List<net.minecraft.world.item.ItemStack>);
-  private static void insertAfter(net.minecraft.world.item.ItemStack, java.util.Collection<net.minecraft.world.item.ItemStack>, java.util.List<net.minecraft.world.item.ItemStack>);
-  private static void insertBefore(net.minecraft.world.level.ItemLike, java.util.Collection<net.minecraft.world.item.ItemStack>, java.util.List<net.minecraft.world.item.ItemStack>);
-  private static void insertAfter(net.minecraft.world.level.ItemLike, java.util.Collection<net.minecraft.world.item.ItemStack>, java.util.List<net.minecraft.world.item.ItemStack>);
-  private static void checkStacks(java.util.Collection<net.minecraft.world.item.ItemStack>);
-  private static void checkStack(net.minecraft.world.item.ItemStack);
-}
-=== net/fabricmc/fabric/api/creativetab/v1/package-info (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "package-info.java"
-interface net.fabricmc.fabric.api.creativetab.v1.package-info {
-}
-=== net/fabricmc/fabric/impl/creativetab/CreativeModeTabEventsImpl (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "CreativeModeTabEventsImpl.java"
-public class net.fabricmc.fabric.impl.creativetab.CreativeModeTabEventsImpl {
-  private static final java.util.Map<net.minecraft.resources.ResourceKey<net.minecraft.world.item.CreativeModeTab>, net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutput>> CREATIVE_MODE_TAB_EVENT_MAP;
-  public net.fabricmc.fabric.impl.creativetab.CreativeModeTabEventsImpl();
-  public static net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutput> getOrCreateModifyOutputEvent(net.minecraft.resources.ResourceKey<net.minecraft.world.item.CreativeModeTab>);
-  public static net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutput> getModifyOutputEvent(net.minecraft.resources.ResourceKey<net.minecraft.world.item.CreativeModeTab>);
-  private static net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutput> createModifyEvent();
-  static {};
-}
-=== net/fabricmc/fabric/impl/creativetab/FabricCreativeModeTabBuilderImpl (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "FabricCreativeModeTabBuilderImpl.java"
-public final class net.fabricmc.fabric.impl.creativetab.FabricCreativeModeTabBuilderImpl extends net.minecraft.world.item.CreativeModeTab$Builder {
-  private boolean hasDisplayName;
-  public net.fabricmc.fabric.impl.creativetab.FabricCreativeModeTabBuilderImpl();
-  public net.minecraft.world.item.CreativeModeTab$Builder title(net.minecraft.network.chat.Component);
-  public net.minecraft.world.item.CreativeModeTab build();
-}
-=== net/fabricmc/fabric/impl/creativetab/FabricCreativeModeTabImpl (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "FabricCreativeModeTabImpl.java"
-public interface net.fabricmc.fabric.impl.creativetab.FabricCreativeModeTabImpl {
-  public static final int TABS_PER_PAGE;
-  public abstract int fabric_getPage();
-  public abstract void fabric_setPage(int);
-}
-=== net/fabricmc/fabric/impl/creativetab/package-info (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "package-info.java"
-interface net.fabricmc.fabric.impl.creativetab.package-info {
-}
-=== net/fabricmc/fabric/mixin/creativetab/CreativeModeTabAccessor (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "CreativeModeTabAccessor.java"
-public interface net.fabricmc.fabric.mixin.creativetab.CreativeModeTabAccessor {
-  public abstract void setRow(net.minecraft.world.item.CreativeModeTab$Row);
-  public abstract void setColumn(int);
-}
-=== net/fabricmc/fabric/mixin/creativetab/CreativeModeTabMixin (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "CreativeModeTabMixin.java"
-abstract class net.fabricmc.fabric.mixin.creativetab.CreativeModeTabMixin implements net.fabricmc.fabric.impl.creativetab.FabricCreativeModeTabImpl {
-  private java.util.Collection<net.minecraft.world.item.ItemStack> displayItems;
-  private java.util.Set<net.minecraft.world.item.ItemStack> displayItemsSearchTab;
-  private int page;
-  net.fabricmc.fabric.mixin.creativetab.CreativeModeTabMixin();
-  public void getStacks(net.minecraft.world.item.CreativeModeTab$ItemDisplayParameters, org.spongepowered.asm.mixin.injection.callback.CallbackInfo);
-  public int fabric_getPage();
-  public void fabric_setPage(int);
-}
-=== net/fabricmc/fabric/mixin/creativetab/CreativeModeTabsMixin$1CreativeModeTabPosition (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "CreativeModeTabsMixin.java"
-final class net.fabricmc.fabric.mixin.creativetab.CreativeModeTabsMixin$1CreativeModeTabPosition extends java.lang.Record {
-  private final net.minecraft.world.item.CreativeModeTab$Row row;
-  private final int column;
-  private final int page;
-  net.fabricmc.fabric.mixin.creativetab.CreativeModeTabsMixin$1CreativeModeTabPosition(net.minecraft.world.item.CreativeModeTab$Row, int, int);
+=== net.minecraft.world.food.FoodProperties
+public final class net.minecraft.world.food.FoodProperties extends java.lang.Record implements net.minecraft.world.item.component.ConsumableListener {
+  public static final com.mojang.serialization.Codec<net.minecraft.world.food.FoodProperties> DIRECT_CODEC;
+  public static final net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, net.minecraft.world.food.FoodProperties> DIRECT_STREAM_CODEC;
+  public net.minecraft.world.food.FoodProperties(int, float, boolean);
+  public void onConsume(net.minecraft.world.level.Level, net.minecraft.world.entity.LivingEntity, net.minecraft.world.item.ItemStack, net.minecraft.world.item.component.Consumable);
   public final java.lang.String toString();
   public final int hashCode();
   public final boolean equals(java.lang.Object);
-  public net.minecraft.world.item.CreativeModeTab$Row row();
-  public int column();
-  public int page();
-}
-=== net/fabricmc/fabric/mixin/creativetab/CreativeModeTabsMixin (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "CreativeModeTabsMixin.java"
-public class net.fabricmc.fabric.mixin.creativetab.CreativeModeTabsMixin {
-  private static final int TABS_PER_PAGE;
-  public net.fabricmc.fabric.mixin.creativetab.CreativeModeTabsMixin();
-  private static void deferDuplicateCheck(org.spongepowered.asm.mixin.injection.callback.CallbackInfo);
-  private static void paginateTabs(org.spongepowered.asm.mixin.injection.callback.CallbackInfo);
-  private static int compareNamespaceFirst(net.minecraft.resources.Identifier, net.minecraft.resources.Identifier);
-}
-=== net/fabricmc/fabric/mixin/creativetab/package-info (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "package-info.java"
-interface net.fabricmc.fabric.mixin.creativetab.package-info {
-}
-=== net/fabricmc/fabric/api/client/creativetab/v1/FabricCreativeModeInventoryScreen (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "FabricCreativeModeInventoryScreen.java"
-public interface net.fabricmc.fabric.api.client.creativetab.v1.FabricCreativeModeInventoryScreen {
-  public default boolean switchToPage(int);
-  public default boolean switchToNextPage();
-  public default boolean switchToPreviousPage();
-  public default int getCurrentPage();
-  public default int getPageCount();
-  public default java.util.List<net.minecraft.world.item.CreativeModeTab> getTabsOnPage(int);
-  public default int getPage(net.minecraft.world.item.CreativeModeTab);
-  public default boolean hasAdditionalPages();
-  public default net.minecraft.world.item.CreativeModeTab getSelectedTab();
-  public default boolean setSelectedTab(net.minecraft.world.item.CreativeModeTab);
-}
-=== net/fabricmc/fabric/api/client/creativetab/v1/package-info (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "package-info.java"
-interface net.fabricmc.fabric.api.client.creativetab.v1.package-info {
-}
-=== net/fabricmc/fabric/impl/client/creativetab/FabricCreativeGuiComponents$CreativeModeTabButton (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "FabricCreativeGuiComponents.java"
-public class net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$CreativeModeTabButton extends net.minecraft.client.gui.components.Button {
-  final net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen screen;
-  final net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$Type type;
-  public net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$CreativeModeTabButton(int, int, net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$Type, net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen);
-  protected void extractContents(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, float);
-}
-=== net/fabricmc/fabric/impl/client/creativetab/FabricCreativeGuiComponents$Type (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "FabricCreativeGuiComponents.java"
-public final class net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$Type extends java.lang.Enum<net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$Type> {
-  public static final net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$Type NEXT;
-  public static final net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$Type PREVIOUS;
-  final net.minecraft.network.chat.Component component;
-  final java.util.function.Consumer<net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen> clickConsumer;
-  final java.util.function.Predicate<net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen> isEnabled;
-  private static final net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$Type[] $VALUES;
-  public static net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$Type[] values();
-  public static net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$Type valueOf(java.lang.String);
-  private net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$Type(net.minecraft.network.chat.Component, java.util.function.Consumer<net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen>, java.util.function.Predicate<net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen>);
-  private static net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$Type[] $values();
-  static {};
-}
-=== net/fabricmc/fabric/impl/client/creativetab/FabricCreativeGuiComponents (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "FabricCreativeGuiComponents.java"
-public class net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents {
-  private static final net.minecraft.resources.Identifier BUTTON_TEX;
-  private static final double TABS_PER_PAGE;
-  public static final java.util.Set<net.minecraft.world.item.CreativeModeTab> COMMON_TABS;
-  public net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents();
-  public static int getPageCount();
-  static {};
-}
-=== net/fabricmc/fabric/impl/client/creativetab/package-info (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "package-info.java"
-interface net.fabricmc.fabric.impl.client.creativetab.package-info {
-}
-=== net/fabricmc/fabric/mixin/creativetab/client/CreativeModeInventoryScreenMixin (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "CreativeModeInventoryScreenMixin.java"
-public abstract class net.fabricmc.fabric.mixin.creativetab.client.CreativeModeInventoryScreenMixin extends net.minecraft.client.gui.screens.inventory.AbstractContainerScreen<net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen$ItemPickerMenu> implements net.fabricmc.fabric.api.client.creativetab.v1.FabricCreativeModeInventoryScreen {
-  private static net.minecraft.world.item.CreativeModeTab selectedTab;
-  private static int currentPage;
-  public net.fabricmc.fabric.mixin.creativetab.client.CreativeModeInventoryScreenMixin(net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen$ItemPickerMenu, net.minecraft.world.entity.player.Inventory, net.minecraft.network.chat.Component);
-  protected abstract void selectTab(net.minecraft.world.item.CreativeModeTab);
-  private void updateSelection();
-  private void init(org.spongepowered.asm.mixin.injection.callback.CallbackInfo);
-  private void setSelectedTab(net.minecraft.world.item.CreativeModeTab, org.spongepowered.asm.mixin.injection.callback.CallbackInfo);
-  private void renderTabTooltipIfHovered(net.minecraft.client.gui.GuiGraphicsExtractor, net.minecraft.world.item.CreativeModeTab, int, int, org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<java.lang.Boolean>);
-  private void isClickInTab(net.minecraft.world.item.CreativeModeTab, double, double, org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<java.lang.Boolean>);
-  private void extractTabButton(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, net.minecraft.world.item.CreativeModeTab, org.spongepowered.asm.mixin.injection.callback.CallbackInfo);
-  private void keyPressed(net.minecraft.client.input.KeyEvent, org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<java.lang.Boolean>);
-  private boolean isTabVisible(net.minecraft.world.item.CreativeModeTab);
-  public int getPage(net.minecraft.world.item.CreativeModeTab);
-  private boolean hasGroupForPage(int);
-  public boolean switchToPage(int);
-  public int getCurrentPage();
-  public int getPageCount();
-  public java.util.List<net.minecraft.world.item.CreativeModeTab> getTabsOnPage(int);
-  public boolean hasAdditionalPages();
-  public net.minecraft.world.item.CreativeModeTab getSelectedTab();
-  public boolean setSelectedTab(net.minecraft.world.item.CreativeModeTab);
-  static {};
-}
-=== net/fabricmc/fabric/mixin/creativetab/client/package-info (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
-Compiled from "package-info.java"
-interface net.fabricmc.fabric.mixin.creativetab.client.package-info {
-}
-=== net/minecraft/world/item/CreativeModeTab$Row (/home/runner/.gradle/caches/fabric-loom/minecraftMaven/net/minecraft/minecraft-common-deobf/26.3/minecraft-common-deobf-26.3.jar)
-Compiled from "CreativeModeTab.java"
-public final class net.minecraft.world.item.CreativeModeTab$Row extends java.lang.Enum<net.minecraft.world.item.CreativeModeTab$Row> {
-  public static final net.minecraft.world.item.CreativeModeTab$Row TOP;
-  public static final net.minecraft.world.item.CreativeModeTab$Row BOTTOM;
-  private static final net.minecraft.world.item.CreativeModeTab$Row[] $VALUES;
-  public static net.minecraft.world.item.CreativeModeTab$Row[] values();
-  public static net.minecraft.world.item.CreativeModeTab$Row valueOf(java.lang.String);
-  private net.minecraft.world.item.CreativeModeTab$Row();
-  private static net.minecraft.world.item.CreativeModeTab$Row[] $values();
-  static {};
-}
-=== net/minecraft/world/item/CreativeModeTab (/home/runner/.gradle/caches/fabric-loom/minecraftMaven/net/minecraft/minecraft-common-deobf/26.3/minecraft-common-deobf-26.3.jar)
-Compiled from "CreativeModeTab.java"
-public class net.minecraft.world.item.CreativeModeTab {
-  private static final net.minecraft.resources.Identifier DEFAULT_BACKGROUND;
-  private final net.minecraft.network.chat.Component displayName;
-  private net.minecraft.resources.Identifier backgroundTexture;
-  private boolean canScroll;
-  private boolean showTitle;
-  private boolean alignedRight;
-  private final net.minecraft.world.item.CreativeModeTab$Row row;
-  private final int column;
-  private final net.minecraft.world.item.CreativeModeTab$Type type;
-  private net.minecraft.world.item.ItemStack iconItemStack;
-  private java.util.Collection<net.minecraft.world.item.ItemStack> displayItems;
-  private java.util.Set<net.minecraft.world.item.ItemStack> displayItemsSearchTab;
-  private final java.util.function.Supplier<net.minecraft.world.item.ItemStack> iconGenerator;
-  private final net.minecraft.world.item.CreativeModeTab$DisplayItemsGenerator displayItemsGenerator;
-  private net.minecraft.world.item.CreativeModeTab(net.minecraft.world.item.CreativeModeTab$Row, int, net.minecraft.world.item.CreativeModeTab$Type, net.minecraft.network.chat.Component, java.util.function.Supplier<net.minecraft.world.item.ItemStack>, net.minecraft.world.item.CreativeModeTab$DisplayItemsGenerator);
-  public static net.minecraft.resources.Identifier createTextureLocation(java.lang.String);
-  public static net.minecraft.world.item.CreativeModeTab$Builder builder(net.minecraft.world.item.CreativeModeTab$Row, int);
-  public net.minecraft.network.chat.Component getDisplayName();
-  public net.minecraft.world.item.ItemStack getIconItem();
-  public net.minecraft.resources.Identifier getBackgroundTexture();
-  public boolean showTitle();
-  public boolean canScroll();
-  public int column();
-  public net.minecraft.world.item.CreativeModeTab$Row row();
-  public boolean hasAnyItems();
-  public boolean shouldDisplay();
-  public boolean isAlignedRight();
-  public net.minecraft.world.item.CreativeModeTab$Type getType();
-  public void buildContents(net.minecraft.world.item.CreativeModeTab$ItemDisplayParameters);
-  public java.util.Collection<net.minecraft.world.item.ItemStack> getDisplayItems();
-  public java.util.Collection<net.minecraft.world.item.ItemStack> getSearchTabDisplayItems();
-  public boolean contains(net.minecraft.world.item.ItemStack);
-  static {};
-}
-=== net/minecraft/world/item/CreativeModeTab$Builder (/home/runner/.gradle/caches/fabric-loom/minecraftMaven/net/minecraft/minecraft-common-deobf/26.3/minecraft-common-deobf-26.3.jar)
-Compiled from "CreativeModeTab.java"
-public class net.minecraft.world.item.CreativeModeTab$Builder {
-  private static final net.minecraft.world.item.CreativeModeTab$DisplayItemsGenerator EMPTY_GENERATOR;
-  private final net.minecraft.world.item.CreativeModeTab$Row row;
-  private final int column;
-  private net.minecraft.network.chat.Component displayName;
-  private java.util.function.Supplier<net.minecraft.world.item.ItemStack> iconGenerator;
-  private net.minecraft.world.item.CreativeModeTab$DisplayItemsGenerator displayItemsGenerator;
-  private boolean canScroll;
-  private boolean showTitle;
-  private boolean alignedRight;
-  private net.minecraft.world.item.CreativeModeTab$Type type;
-  private net.minecraft.resources.Identifier backgroundTexture;
-  public net.minecraft.world.item.CreativeModeTab$Builder(net.minecraft.world.item.CreativeModeTab$Row, int);
-  public net.minecraft.world.item.CreativeModeTab$Builder title(net.minecraft.network.chat.Component);
-  public net.minecraft.world.item.CreativeModeTab$Builder icon(java.util.function.Supplier<net.minecraft.world.item.ItemStack>);
-  public net.minecraft.world.item.CreativeModeTab$Builder displayItems(net.minecraft.world.item.CreativeModeTab$DisplayItemsGenerator);
-  public net.minecraft.world.item.CreativeModeTab$Builder alignedRight();
-  public net.minecraft.world.item.CreativeModeTab$Builder hideTitle();
-  public net.minecraft.world.item.CreativeModeTab$Builder noScrollBar();
-  protected net.minecraft.world.item.CreativeModeTab$Builder type(net.minecraft.world.item.CreativeModeTab$Type);
-  public net.minecraft.world.item.CreativeModeTab$Builder backgroundTexture(net.minecraft.resources.Identifier);
-  public net.minecraft.world.item.CreativeModeTab build();
-  static {};
-}
-=== net/minecraft/world/item/CreativeModeTab$Builder (/home/runner/.gradle/caches/fabric-loom/minecraftMaven/net/minecraft/minecraft-merged-deobf/26.3/minecraft-merged-deobf-26.3.jar)
-Compiled from "CreativeModeTab.java"
-public class net.minecraft.world.item.CreativeModeTab$Builder {
-  private static final net.minecraft.world.item.CreativeModeTab$DisplayItemsGenerator EMPTY_GENERATOR;
-  private final net.minecraft.world.item.CreativeModeTab$Row row;
-  private final int column;
-  private net.minecraft.network.chat.Component displayName;
-  private java.util.function.Supplier<net.minecraft.world.item.ItemStack> iconGenerator;
-  private net.minecraft.world.item.CreativeModeTab$DisplayItemsGenerator displayItemsGenerator;
-  private boolean canScroll;
-  private boolean showTitle;
-  private boolean alignedRight;
-  private net.minecraft.world.item.CreativeModeTab$Type type;
-  private net.minecraft.resources.Identifier backgroundTexture;
-  public net.minecraft.world.item.CreativeModeTab$Builder(net.minecraft.world.item.CreativeModeTab$Row, int);
-  public net.minecraft.world.item.CreativeModeTab$Builder title(net.minecraft.network.chat.Component);
-  public net.minecraft.world.item.CreativeModeTab$Builder icon(java.util.function.Supplier<net.minecraft.world.item.ItemStack>);
-  public net.minecraft.world.item.CreativeModeTab$Builder displayItems(net.minecraft.world.item.CreativeModeTab$DisplayItemsGenerator);
-  public net.minecraft.world.item.CreativeModeTab$Builder alignedRight();
-  public net.minecraft.world.item.CreativeModeTab$Builder hideTitle();
-  public net.minecraft.world.item.CreativeModeTab$Builder noScrollBar();
-  protected net.minecraft.world.item.CreativeModeTab$Builder type(net.minecraft.world.item.CreativeModeTab$Type);
-  public net.minecraft.world.item.CreativeModeTab$Builder backgroundTexture(net.minecraft.resources.Identifier);
-  public net.minecraft.world.item.CreativeModeTab build();
-  static {};
-}
-=== net/minecraft/world/item/CreativeModeTab$Row (/home/runner/.gradle/caches/fabric-loom/minecraftMaven/net/minecraft/minecraft-merged-deobf/26.3/minecraft-merged-deobf-26.3.jar)
-Compiled from "CreativeModeTab.java"
-public final class net.minecraft.world.item.CreativeModeTab$Row extends java.lang.Enum<net.minecraft.world.item.CreativeModeTab$Row> {
-  public static final net.minecraft.world.item.CreativeModeTab$Row TOP;
-  public static final net.minecraft.world.item.CreativeModeTab$Row BOTTOM;
-  private static final net.minecraft.world.item.CreativeModeTab$Row[] $VALUES;
-  public static net.minecraft.world.item.CreativeModeTab$Row[] values();
-  public static net.minecraft.world.item.CreativeModeTab$Row valueOf(java.lang.String);
-  private net.minecraft.world.item.CreativeModeTab$Row();
-  private static net.minecraft.world.item.CreativeModeTab$Row[] $values();
-  static {};
-}
-=== net/minecraft/world/item/CreativeModeTab (/home/runner/.gradle/caches/fabric-loom/minecraftMaven/net/minecraft/minecraft-merged-deobf/26.3/minecraft-merged-deobf-26.3.jar)
-Compiled from "CreativeModeTab.java"
-public class net.minecraft.world.item.CreativeModeTab {
-  private static final net.minecraft.resources.Identifier DEFAULT_BACKGROUND;
-  private final net.minecraft.network.chat.Component displayName;
-  private net.minecraft.resources.Identifier backgroundTexture;
-  private boolean canScroll;
-  private boolean showTitle;
-  private boolean alignedRight;
-  private final net.minecraft.world.item.CreativeModeTab$Row row;
-  private final int column;
-  private final net.minecraft.world.item.CreativeModeTab$Type type;
-  private net.minecraft.world.item.ItemStack iconItemStack;
-  private java.util.Collection<net.minecraft.world.item.ItemStack> displayItems;
-  private java.util.Set<net.minecraft.world.item.ItemStack> displayItemsSearchTab;
-  private final java.util.function.Supplier<net.minecraft.world.item.ItemStack> iconGenerator;
-  private final net.minecraft.world.item.CreativeModeTab$DisplayItemsGenerator displayItemsGenerator;
-  private net.minecraft.world.item.CreativeModeTab(net.minecraft.world.item.CreativeModeTab$Row, int, net.minecraft.world.item.CreativeModeTab$Type, net.minecraft.network.chat.Component, java.util.function.Supplier<net.minecraft.world.item.ItemStack>, net.minecraft.world.item.CreativeModeTab$DisplayItemsGenerator);
-  public static net.minecraft.resources.Identifier createTextureLocation(java.lang.String);
-  public static net.minecraft.world.item.CreativeModeTab$Builder builder(net.minecraft.world.item.CreativeModeTab$Row, int);
-  public net.minecraft.network.chat.Component getDisplayName();
-  public net.minecraft.world.item.ItemStack getIconItem();
-  public net.minecraft.resources.Identifier getBackgroundTexture();
-  public boolean showTitle();
-  public boolean canScroll();
-  public int column();
-  public net.minecraft.world.item.CreativeModeTab$Row row();
-  public boolean hasAnyItems();
-  public boolean shouldDisplay();
-  public boolean isAlignedRight();
-  public net.minecraft.world.item.CreativeModeTab$Type getType();
-  public void buildContents(net.minecraft.world.item.CreativeModeTab$ItemDisplayParameters);
-  public java.util.Collection<net.minecraft.world.item.ItemStack> getDisplayItems();
-  public java.util.Collection<net.minecraft.world.item.ItemStack> getSearchTabDisplayItems();
-  public boolean contains(net.minecraft.world.item.ItemStack);
-  static {};
-}
+  public int nutrition();
+  public float saturation();
+  public boolean canAlwaysEat();
+=== net.minecraft.world.entity.EntityDimensions
+  public static net.minecraft.world.entity.EntityDimensions scalable(float, float);
+  public static net.minecraft.world.entity.EntityDimensions fixed(float, float);
