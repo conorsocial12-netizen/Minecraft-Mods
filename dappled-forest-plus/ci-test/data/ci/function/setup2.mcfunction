@@ -49,3 +49,13 @@ fill -6 220 -6 -18 220 -18 minecraft:glass
 execute positioned -12 221 -12 run loot spawn ~ ~ ~ loot dappledforest:entities/acorn_squirrel
 schedule function ci:check_squirrel 240t
 schedule function ci:check_squirrel_early 100t
+# 10) Leaf Tornado: lifts a cow, flings it out with Slow Falling, and a short-lived one leaves Leaf Piles
+execute positioned 4 0 -14 positioned over motion_blocking run summon dappledforest:leaf_tornado ~ ~ ~ {Tags:["ci_tornado"]}
+execute positioned 4 0 -14 positioned over motion_blocking run summon minecraft:cow ~0.5 ~ ~ {Tags:["ci_cow"]}
+execute store result score #cy1 ci run data get entity @e[tag=ci_cow,limit=1] Pos[1] 10
+execute if entity @e[type=dappledforest:leaf_tornado,tag=ci_tornado] run say CI_PASS tornado-spawns
+execute unless entity @e[type=dappledforest:leaf_tornado,tag=ci_tornado] run say CI_FAIL tornado-spawns
+execute positioned 14 0 -4 positioned over motion_blocking run summon dappledforest:leaf_tornado ~ ~ ~ {Tags:["ci_tornado2"],Life:40}
+schedule function ci:check_tornado_lift 20t
+schedule function ci:check_tornado_end 120t
+function ci:wind
