@@ -1,0 +1,388 @@
+=== net/fabricmc/fabric/api/creativetab/v1/CreativeModeTabEvents$ModifyOutput (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "CreativeModeTabEvents.java"
+public interface net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutput {
+  public abstract void modifyOutput(net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTabOutput);
+}
+=== net/fabricmc/fabric/api/creativetab/v1/CreativeModeTabEvents$ModifyOutputAll (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "CreativeModeTabEvents.java"
+public interface net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutputAll {
+  public abstract void modifyOutput(net.minecraft.world.item.CreativeModeTab, net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTabOutput);
+}
+=== net/fabricmc/fabric/api/creativetab/v1/CreativeModeTabEvents (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "CreativeModeTabEvents.java"
+public final class net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents {
+  public static final net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutputAll> MODIFY_OUTPUT_ALL;
+  private net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents();
+  public static net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutput> modifyOutputEvent(net.minecraft.resources.ResourceKey<net.minecraft.world.item.CreativeModeTab>);
+  static {};
+}
+=== net/fabricmc/fabric/api/creativetab/v1/FabricCreativeModeTab (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "FabricCreativeModeTab.java"
+public final class net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab {
+  private net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab();
+  public static net.minecraft.world.item.CreativeModeTab$Builder builder();
+}
+=== net/fabricmc/fabric/api/creativetab/v1/FabricCreativeModeTabOutput$1 (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "FabricCreativeModeTabOutput.java"
+class net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTabOutput$1 {
+  static final int[] $SwitchMap$net$minecraft$world$item$CreativeModeTab$TabVisibility;
+  static {};
+}
+=== net/fabricmc/fabric/api/creativetab/v1/FabricCreativeModeTabOutput (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "FabricCreativeModeTabOutput.java"
+public class net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTabOutput implements net.minecraft.world.item.CreativeModeTab$Output {
+  private final net.minecraft.world.item.CreativeModeTab$ItemDisplayParameters context;
+  private final java.util.List<net.minecraft.world.item.ItemStack> displayStacks;
+  private final java.util.List<net.minecraft.world.item.ItemStack> searchTabStacks;
+  public net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTabOutput(net.minecraft.world.item.CreativeModeTab$ItemDisplayParameters, java.util.List<net.minecraft.world.item.ItemStack>, java.util.List<net.minecraft.world.item.ItemStack>);
+  public net.minecraft.world.item.CreativeModeTab$ItemDisplayParameters getContext();
+  public net.minecraft.world.flag.FeatureFlagSet getEnabledFeatures();
+  public boolean shouldShowOpRestrictedItems();
+  public java.util.List<net.minecraft.world.item.ItemStack> getDisplayStacks();
+  public java.util.List<net.minecraft.world.item.ItemStack> getSearchTabStacks();
+  public void accept(net.minecraft.world.item.ItemStack, net.minecraft.world.item.CreativeModeTab$TabVisibility);
+  public void prepend(net.minecraft.world.item.ItemStack);
+  public void prepend(net.minecraft.world.item.ItemStack, net.minecraft.world.item.CreativeModeTab$TabVisibility);
+  public void prepend(net.minecraft.world.level.ItemLike);
+  public void prepend(net.minecraft.world.level.ItemLike, net.minecraft.world.item.CreativeModeTab$TabVisibility);
+  public void insertAfter(net.minecraft.world.level.ItemLike, net.minecraft.world.item.ItemStack...);
+  public void insertAfter(net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemStack...);
+  public void insertAfter(net.minecraft.world.level.ItemLike, net.minecraft.world.level.ItemLike...);
+  public void insertAfter(net.minecraft.world.item.ItemStack, net.minecraft.world.level.ItemLike...);
+  public void insertAfter(net.minecraft.world.level.ItemLike, java.util.Collection<net.minecraft.world.item.ItemStack>);
+  public void insertAfter(net.minecraft.world.item.ItemStack, java.util.Collection<net.minecraft.world.item.ItemStack>);
+  public void insertAfter(net.minecraft.world.level.ItemLike, java.util.Collection<net.minecraft.world.item.ItemStack>, net.minecraft.world.item.CreativeModeTab$TabVisibility);
+  public void insertAfter(net.minecraft.world.item.ItemStack, java.util.Collection<net.minecraft.world.item.ItemStack>, net.minecraft.world.item.CreativeModeTab$TabVisibility);
+  public void insertAfter(java.util.function.Predicate<net.minecraft.world.item.ItemStack>, java.util.Collection<net.minecraft.world.item.ItemStack>, net.minecraft.world.item.CreativeModeTab$TabVisibility);
+  public void insertBefore(net.minecraft.world.level.ItemLike, net.minecraft.world.item.ItemStack...);
+  public void insertBefore(net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemStack...);
+  public void insertBefore(net.minecraft.world.level.ItemLike, net.minecraft.world.level.ItemLike...);
+  public void insertBefore(net.minecraft.world.item.ItemStack, net.minecraft.world.level.ItemLike...);
+  public void insertBefore(net.minecraft.world.level.ItemLike, java.util.Collection<net.minecraft.world.item.ItemStack>);
+  public void insertBefore(net.minecraft.world.item.ItemStack, java.util.Collection<net.minecraft.world.item.ItemStack>);
+  public void insertBefore(net.minecraft.world.level.ItemLike, java.util.Collection<net.minecraft.world.item.ItemStack>, net.minecraft.world.item.CreativeModeTab$TabVisibility);
+  public void insertBefore(net.minecraft.world.item.ItemStack, java.util.Collection<net.minecraft.world.item.ItemStack>, net.minecraft.world.item.CreativeModeTab$TabVisibility);
+  public void insertBefore(java.util.function.Predicate<net.minecraft.world.item.ItemStack>, java.util.Collection<net.minecraft.world.item.ItemStack>, net.minecraft.world.item.CreativeModeTab$TabVisibility);
+  private boolean isEnabled(net.minecraft.world.item.ItemStack);
+  private java.util.Collection<net.minecraft.world.item.ItemStack> getEnabledStacks(java.util.Collection<net.minecraft.world.item.ItemStack>);
+  private static void insertBefore(java.util.function.Predicate<net.minecraft.world.item.ItemStack>, java.util.Collection<net.minecraft.world.item.ItemStack>, java.util.List<net.minecraft.world.item.ItemStack>);
+  private static void insertAfter(java.util.function.Predicate<net.minecraft.world.item.ItemStack>, java.util.Collection<net.minecraft.world.item.ItemStack>, java.util.List<net.minecraft.world.item.ItemStack>);
+  private static void insertBefore(net.minecraft.world.item.ItemStack, java.util.Collection<net.minecraft.world.item.ItemStack>, java.util.List<net.minecraft.world.item.ItemStack>);
+  private static void insertAfter(net.minecraft.world.item.ItemStack, java.util.Collection<net.minecraft.world.item.ItemStack>, java.util.List<net.minecraft.world.item.ItemStack>);
+  private static void insertBefore(net.minecraft.world.level.ItemLike, java.util.Collection<net.minecraft.world.item.ItemStack>, java.util.List<net.minecraft.world.item.ItemStack>);
+  private static void insertAfter(net.minecraft.world.level.ItemLike, java.util.Collection<net.minecraft.world.item.ItemStack>, java.util.List<net.minecraft.world.item.ItemStack>);
+  private static void checkStacks(java.util.Collection<net.minecraft.world.item.ItemStack>);
+  private static void checkStack(net.minecraft.world.item.ItemStack);
+}
+=== net/fabricmc/fabric/api/creativetab/v1/package-info (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "package-info.java"
+interface net.fabricmc.fabric.api.creativetab.v1.package-info {
+}
+=== net/fabricmc/fabric/impl/creativetab/CreativeModeTabEventsImpl (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "CreativeModeTabEventsImpl.java"
+public class net.fabricmc.fabric.impl.creativetab.CreativeModeTabEventsImpl {
+  private static final java.util.Map<net.minecraft.resources.ResourceKey<net.minecraft.world.item.CreativeModeTab>, net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutput>> CREATIVE_MODE_TAB_EVENT_MAP;
+  public net.fabricmc.fabric.impl.creativetab.CreativeModeTabEventsImpl();
+  public static net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutput> getOrCreateModifyOutputEvent(net.minecraft.resources.ResourceKey<net.minecraft.world.item.CreativeModeTab>);
+  public static net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutput> getModifyOutputEvent(net.minecraft.resources.ResourceKey<net.minecraft.world.item.CreativeModeTab>);
+  private static net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutput> createModifyEvent();
+  static {};
+}
+=== net/fabricmc/fabric/impl/creativetab/FabricCreativeModeTabBuilderImpl (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "FabricCreativeModeTabBuilderImpl.java"
+public final class net.fabricmc.fabric.impl.creativetab.FabricCreativeModeTabBuilderImpl extends net.minecraft.world.item.CreativeModeTab$Builder {
+  private boolean hasDisplayName;
+  public net.fabricmc.fabric.impl.creativetab.FabricCreativeModeTabBuilderImpl();
+  public net.minecraft.world.item.CreativeModeTab$Builder title(net.minecraft.network.chat.Component);
+  public net.minecraft.world.item.CreativeModeTab build();
+}
+=== net/fabricmc/fabric/impl/creativetab/FabricCreativeModeTabImpl (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "FabricCreativeModeTabImpl.java"
+public interface net.fabricmc.fabric.impl.creativetab.FabricCreativeModeTabImpl {
+  public static final int TABS_PER_PAGE;
+  public abstract int fabric_getPage();
+  public abstract void fabric_setPage(int);
+}
+=== net/fabricmc/fabric/impl/creativetab/package-info (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "package-info.java"
+interface net.fabricmc.fabric.impl.creativetab.package-info {
+}
+=== net/fabricmc/fabric/mixin/creativetab/CreativeModeTabAccessor (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "CreativeModeTabAccessor.java"
+public interface net.fabricmc.fabric.mixin.creativetab.CreativeModeTabAccessor {
+  public abstract void setRow(net.minecraft.world.item.CreativeModeTab$Row);
+  public abstract void setColumn(int);
+}
+=== net/fabricmc/fabric/mixin/creativetab/CreativeModeTabMixin (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "CreativeModeTabMixin.java"
+abstract class net.fabricmc.fabric.mixin.creativetab.CreativeModeTabMixin implements net.fabricmc.fabric.impl.creativetab.FabricCreativeModeTabImpl {
+  private java.util.Collection<net.minecraft.world.item.ItemStack> displayItems;
+  private java.util.Set<net.minecraft.world.item.ItemStack> displayItemsSearchTab;
+  private int page;
+  net.fabricmc.fabric.mixin.creativetab.CreativeModeTabMixin();
+  public void getStacks(net.minecraft.world.item.CreativeModeTab$ItemDisplayParameters, org.spongepowered.asm.mixin.injection.callback.CallbackInfo);
+  public int fabric_getPage();
+  public void fabric_setPage(int);
+}
+=== net/fabricmc/fabric/mixin/creativetab/CreativeModeTabsMixin$1CreativeModeTabPosition (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "CreativeModeTabsMixin.java"
+final class net.fabricmc.fabric.mixin.creativetab.CreativeModeTabsMixin$1CreativeModeTabPosition extends java.lang.Record {
+  private final net.minecraft.world.item.CreativeModeTab$Row row;
+  private final int column;
+  private final int page;
+  net.fabricmc.fabric.mixin.creativetab.CreativeModeTabsMixin$1CreativeModeTabPosition(net.minecraft.world.item.CreativeModeTab$Row, int, int);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.world.item.CreativeModeTab$Row row();
+  public int column();
+  public int page();
+}
+=== net/fabricmc/fabric/mixin/creativetab/CreativeModeTabsMixin (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "CreativeModeTabsMixin.java"
+public class net.fabricmc.fabric.mixin.creativetab.CreativeModeTabsMixin {
+  private static final int TABS_PER_PAGE;
+  public net.fabricmc.fabric.mixin.creativetab.CreativeModeTabsMixin();
+  private static void deferDuplicateCheck(org.spongepowered.asm.mixin.injection.callback.CallbackInfo);
+  private static void paginateTabs(org.spongepowered.asm.mixin.injection.callback.CallbackInfo);
+  private static int compareNamespaceFirst(net.minecraft.resources.Identifier, net.minecraft.resources.Identifier);
+}
+=== net/fabricmc/fabric/mixin/creativetab/package-info (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "package-info.java"
+interface net.fabricmc.fabric.mixin.creativetab.package-info {
+}
+=== net/fabricmc/fabric/api/client/creativetab/v1/FabricCreativeModeInventoryScreen (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "FabricCreativeModeInventoryScreen.java"
+public interface net.fabricmc.fabric.api.client.creativetab.v1.FabricCreativeModeInventoryScreen {
+  public default boolean switchToPage(int);
+  public default boolean switchToNextPage();
+  public default boolean switchToPreviousPage();
+  public default int getCurrentPage();
+  public default int getPageCount();
+  public default java.util.List<net.minecraft.world.item.CreativeModeTab> getTabsOnPage(int);
+  public default int getPage(net.minecraft.world.item.CreativeModeTab);
+  public default boolean hasAdditionalPages();
+  public default net.minecraft.world.item.CreativeModeTab getSelectedTab();
+  public default boolean setSelectedTab(net.minecraft.world.item.CreativeModeTab);
+}
+=== net/fabricmc/fabric/api/client/creativetab/v1/package-info (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "package-info.java"
+interface net.fabricmc.fabric.api.client.creativetab.v1.package-info {
+}
+=== net/fabricmc/fabric/impl/client/creativetab/FabricCreativeGuiComponents$CreativeModeTabButton (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "FabricCreativeGuiComponents.java"
+public class net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$CreativeModeTabButton extends net.minecraft.client.gui.components.Button {
+  final net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen screen;
+  final net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$Type type;
+  public net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$CreativeModeTabButton(int, int, net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$Type, net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen);
+  protected void extractContents(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, float);
+}
+=== net/fabricmc/fabric/impl/client/creativetab/FabricCreativeGuiComponents$Type (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "FabricCreativeGuiComponents.java"
+public final class net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$Type extends java.lang.Enum<net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$Type> {
+  public static final net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$Type NEXT;
+  public static final net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$Type PREVIOUS;
+  final net.minecraft.network.chat.Component component;
+  final java.util.function.Consumer<net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen> clickConsumer;
+  final java.util.function.Predicate<net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen> isEnabled;
+  private static final net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$Type[] $VALUES;
+  public static net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$Type[] values();
+  public static net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$Type valueOf(java.lang.String);
+  private net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$Type(net.minecraft.network.chat.Component, java.util.function.Consumer<net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen>, java.util.function.Predicate<net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen>);
+  private static net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents$Type[] $values();
+  static {};
+}
+=== net/fabricmc/fabric/impl/client/creativetab/FabricCreativeGuiComponents (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "FabricCreativeGuiComponents.java"
+public class net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents {
+  private static final net.minecraft.resources.Identifier BUTTON_TEX;
+  private static final double TABS_PER_PAGE;
+  public static final java.util.Set<net.minecraft.world.item.CreativeModeTab> COMMON_TABS;
+  public net.fabricmc.fabric.impl.client.creativetab.FabricCreativeGuiComponents();
+  public static int getPageCount();
+  static {};
+}
+=== net/fabricmc/fabric/impl/client/creativetab/package-info (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "package-info.java"
+interface net.fabricmc.fabric.impl.client.creativetab.package-info {
+}
+=== net/fabricmc/fabric/mixin/creativetab/client/CreativeModeInventoryScreenMixin (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "CreativeModeInventoryScreenMixin.java"
+public abstract class net.fabricmc.fabric.mixin.creativetab.client.CreativeModeInventoryScreenMixin extends net.minecraft.client.gui.screens.inventory.AbstractContainerScreen<net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen$ItemPickerMenu> implements net.fabricmc.fabric.api.client.creativetab.v1.FabricCreativeModeInventoryScreen {
+  private static net.minecraft.world.item.CreativeModeTab selectedTab;
+  private static int currentPage;
+  public net.fabricmc.fabric.mixin.creativetab.client.CreativeModeInventoryScreenMixin(net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen$ItemPickerMenu, net.minecraft.world.entity.player.Inventory, net.minecraft.network.chat.Component);
+  protected abstract void selectTab(net.minecraft.world.item.CreativeModeTab);
+  private void updateSelection();
+  private void init(org.spongepowered.asm.mixin.injection.callback.CallbackInfo);
+  private void setSelectedTab(net.minecraft.world.item.CreativeModeTab, org.spongepowered.asm.mixin.injection.callback.CallbackInfo);
+  private void renderTabTooltipIfHovered(net.minecraft.client.gui.GuiGraphicsExtractor, net.minecraft.world.item.CreativeModeTab, int, int, org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<java.lang.Boolean>);
+  private void isClickInTab(net.minecraft.world.item.CreativeModeTab, double, double, org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<java.lang.Boolean>);
+  private void extractTabButton(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, net.minecraft.world.item.CreativeModeTab, org.spongepowered.asm.mixin.injection.callback.CallbackInfo);
+  private void keyPressed(net.minecraft.client.input.KeyEvent, org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<java.lang.Boolean>);
+  private boolean isTabVisible(net.minecraft.world.item.CreativeModeTab);
+  public int getPage(net.minecraft.world.item.CreativeModeTab);
+  private boolean hasGroupForPage(int);
+  public boolean switchToPage(int);
+  public int getCurrentPage();
+  public int getPageCount();
+  public java.util.List<net.minecraft.world.item.CreativeModeTab> getTabsOnPage(int);
+  public boolean hasAdditionalPages();
+  public net.minecraft.world.item.CreativeModeTab getSelectedTab();
+  public boolean setSelectedTab(net.minecraft.world.item.CreativeModeTab);
+  static {};
+}
+=== net/fabricmc/fabric/mixin/creativetab/client/package-info (/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc.fabric-api/fabric-creative-tab-api-v1/5.0.21+fcdff87f5d/c0d1736c1f7b6166f1925eb0bd79f9c97cd1494/fabric-creative-tab-api-v1-5.0.21+fcdff87f5d.jar)
+Compiled from "package-info.java"
+interface net.fabricmc.fabric.mixin.creativetab.client.package-info {
+}
+=== net/minecraft/world/item/CreativeModeTab$Row (/home/runner/.gradle/caches/fabric-loom/minecraftMaven/net/minecraft/minecraft-common-deobf/26.3/minecraft-common-deobf-26.3.jar)
+Compiled from "CreativeModeTab.java"
+public final class net.minecraft.world.item.CreativeModeTab$Row extends java.lang.Enum<net.minecraft.world.item.CreativeModeTab$Row> {
+  public static final net.minecraft.world.item.CreativeModeTab$Row TOP;
+  public static final net.minecraft.world.item.CreativeModeTab$Row BOTTOM;
+  private static final net.minecraft.world.item.CreativeModeTab$Row[] $VALUES;
+  public static net.minecraft.world.item.CreativeModeTab$Row[] values();
+  public static net.minecraft.world.item.CreativeModeTab$Row valueOf(java.lang.String);
+  private net.minecraft.world.item.CreativeModeTab$Row();
+  private static net.minecraft.world.item.CreativeModeTab$Row[] $values();
+  static {};
+}
+=== net/minecraft/world/item/CreativeModeTab (/home/runner/.gradle/caches/fabric-loom/minecraftMaven/net/minecraft/minecraft-common-deobf/26.3/minecraft-common-deobf-26.3.jar)
+Compiled from "CreativeModeTab.java"
+public class net.minecraft.world.item.CreativeModeTab {
+  private static final net.minecraft.resources.Identifier DEFAULT_BACKGROUND;
+  private final net.minecraft.network.chat.Component displayName;
+  private net.minecraft.resources.Identifier backgroundTexture;
+  private boolean canScroll;
+  private boolean showTitle;
+  private boolean alignedRight;
+  private final net.minecraft.world.item.CreativeModeTab$Row row;
+  private final int column;
+  private final net.minecraft.world.item.CreativeModeTab$Type type;
+  private net.minecraft.world.item.ItemStack iconItemStack;
+  private java.util.Collection<net.minecraft.world.item.ItemStack> displayItems;
+  private java.util.Set<net.minecraft.world.item.ItemStack> displayItemsSearchTab;
+  private final java.util.function.Supplier<net.minecraft.world.item.ItemStack> iconGenerator;
+  private final net.minecraft.world.item.CreativeModeTab$DisplayItemsGenerator displayItemsGenerator;
+  private net.minecraft.world.item.CreativeModeTab(net.minecraft.world.item.CreativeModeTab$Row, int, net.minecraft.world.item.CreativeModeTab$Type, net.minecraft.network.chat.Component, java.util.function.Supplier<net.minecraft.world.item.ItemStack>, net.minecraft.world.item.CreativeModeTab$DisplayItemsGenerator);
+  public static net.minecraft.resources.Identifier createTextureLocation(java.lang.String);
+  public static net.minecraft.world.item.CreativeModeTab$Builder builder(net.minecraft.world.item.CreativeModeTab$Row, int);
+  public net.minecraft.network.chat.Component getDisplayName();
+  public net.minecraft.world.item.ItemStack getIconItem();
+  public net.minecraft.resources.Identifier getBackgroundTexture();
+  public boolean showTitle();
+  public boolean canScroll();
+  public int column();
+  public net.minecraft.world.item.CreativeModeTab$Row row();
+  public boolean hasAnyItems();
+  public boolean shouldDisplay();
+  public boolean isAlignedRight();
+  public net.minecraft.world.item.CreativeModeTab$Type getType();
+  public void buildContents(net.minecraft.world.item.CreativeModeTab$ItemDisplayParameters);
+  public java.util.Collection<net.minecraft.world.item.ItemStack> getDisplayItems();
+  public java.util.Collection<net.minecraft.world.item.ItemStack> getSearchTabDisplayItems();
+  public boolean contains(net.minecraft.world.item.ItemStack);
+  static {};
+}
+=== net/minecraft/world/item/CreativeModeTab$Builder (/home/runner/.gradle/caches/fabric-loom/minecraftMaven/net/minecraft/minecraft-common-deobf/26.3/minecraft-common-deobf-26.3.jar)
+Compiled from "CreativeModeTab.java"
+public class net.minecraft.world.item.CreativeModeTab$Builder {
+  private static final net.minecraft.world.item.CreativeModeTab$DisplayItemsGenerator EMPTY_GENERATOR;
+  private final net.minecraft.world.item.CreativeModeTab$Row row;
+  private final int column;
+  private net.minecraft.network.chat.Component displayName;
+  private java.util.function.Supplier<net.minecraft.world.item.ItemStack> iconGenerator;
+  private net.minecraft.world.item.CreativeModeTab$DisplayItemsGenerator displayItemsGenerator;
+  private boolean canScroll;
+  private boolean showTitle;
+  private boolean alignedRight;
+  private net.minecraft.world.item.CreativeModeTab$Type type;
+  private net.minecraft.resources.Identifier backgroundTexture;
+  public net.minecraft.world.item.CreativeModeTab$Builder(net.minecraft.world.item.CreativeModeTab$Row, int);
+  public net.minecraft.world.item.CreativeModeTab$Builder title(net.minecraft.network.chat.Component);
+  public net.minecraft.world.item.CreativeModeTab$Builder icon(java.util.function.Supplier<net.minecraft.world.item.ItemStack>);
+  public net.minecraft.world.item.CreativeModeTab$Builder displayItems(net.minecraft.world.item.CreativeModeTab$DisplayItemsGenerator);
+  public net.minecraft.world.item.CreativeModeTab$Builder alignedRight();
+  public net.minecraft.world.item.CreativeModeTab$Builder hideTitle();
+  public net.minecraft.world.item.CreativeModeTab$Builder noScrollBar();
+  protected net.minecraft.world.item.CreativeModeTab$Builder type(net.minecraft.world.item.CreativeModeTab$Type);
+  public net.minecraft.world.item.CreativeModeTab$Builder backgroundTexture(net.minecraft.resources.Identifier);
+  public net.minecraft.world.item.CreativeModeTab build();
+  static {};
+}
+=== net/minecraft/world/item/CreativeModeTab$Builder (/home/runner/.gradle/caches/fabric-loom/minecraftMaven/net/minecraft/minecraft-merged-deobf/26.3/minecraft-merged-deobf-26.3.jar)
+Compiled from "CreativeModeTab.java"
+public class net.minecraft.world.item.CreativeModeTab$Builder {
+  private static final net.minecraft.world.item.CreativeModeTab$DisplayItemsGenerator EMPTY_GENERATOR;
+  private final net.minecraft.world.item.CreativeModeTab$Row row;
+  private final int column;
+  private net.minecraft.network.chat.Component displayName;
+  private java.util.function.Supplier<net.minecraft.world.item.ItemStack> iconGenerator;
+  private net.minecraft.world.item.CreativeModeTab$DisplayItemsGenerator displayItemsGenerator;
+  private boolean canScroll;
+  private boolean showTitle;
+  private boolean alignedRight;
+  private net.minecraft.world.item.CreativeModeTab$Type type;
+  private net.minecraft.resources.Identifier backgroundTexture;
+  public net.minecraft.world.item.CreativeModeTab$Builder(net.minecraft.world.item.CreativeModeTab$Row, int);
+  public net.minecraft.world.item.CreativeModeTab$Builder title(net.minecraft.network.chat.Component);
+  public net.minecraft.world.item.CreativeModeTab$Builder icon(java.util.function.Supplier<net.minecraft.world.item.ItemStack>);
+  public net.minecraft.world.item.CreativeModeTab$Builder displayItems(net.minecraft.world.item.CreativeModeTab$DisplayItemsGenerator);
+  public net.minecraft.world.item.CreativeModeTab$Builder alignedRight();
+  public net.minecraft.world.item.CreativeModeTab$Builder hideTitle();
+  public net.minecraft.world.item.CreativeModeTab$Builder noScrollBar();
+  protected net.minecraft.world.item.CreativeModeTab$Builder type(net.minecraft.world.item.CreativeModeTab$Type);
+  public net.minecraft.world.item.CreativeModeTab$Builder backgroundTexture(net.minecraft.resources.Identifier);
+  public net.minecraft.world.item.CreativeModeTab build();
+  static {};
+}
+=== net/minecraft/world/item/CreativeModeTab$Row (/home/runner/.gradle/caches/fabric-loom/minecraftMaven/net/minecraft/minecraft-merged-deobf/26.3/minecraft-merged-deobf-26.3.jar)
+Compiled from "CreativeModeTab.java"
+public final class net.minecraft.world.item.CreativeModeTab$Row extends java.lang.Enum<net.minecraft.world.item.CreativeModeTab$Row> {
+  public static final net.minecraft.world.item.CreativeModeTab$Row TOP;
+  public static final net.minecraft.world.item.CreativeModeTab$Row BOTTOM;
+  private static final net.minecraft.world.item.CreativeModeTab$Row[] $VALUES;
+  public static net.minecraft.world.item.CreativeModeTab$Row[] values();
+  public static net.minecraft.world.item.CreativeModeTab$Row valueOf(java.lang.String);
+  private net.minecraft.world.item.CreativeModeTab$Row();
+  private static net.minecraft.world.item.CreativeModeTab$Row[] $values();
+  static {};
+}
+=== net/minecraft/world/item/CreativeModeTab (/home/runner/.gradle/caches/fabric-loom/minecraftMaven/net/minecraft/minecraft-merged-deobf/26.3/minecraft-merged-deobf-26.3.jar)
+Compiled from "CreativeModeTab.java"
+public class net.minecraft.world.item.CreativeModeTab {
+  private static final net.minecraft.resources.Identifier DEFAULT_BACKGROUND;
+  private final net.minecraft.network.chat.Component displayName;
+  private net.minecraft.resources.Identifier backgroundTexture;
+  private boolean canScroll;
+  private boolean showTitle;
+  private boolean alignedRight;
+  private final net.minecraft.world.item.CreativeModeTab$Row row;
+  private final int column;
+  private final net.minecraft.world.item.CreativeModeTab$Type type;
+  private net.minecraft.world.item.ItemStack iconItemStack;
+  private java.util.Collection<net.minecraft.world.item.ItemStack> displayItems;
+  private java.util.Set<net.minecraft.world.item.ItemStack> displayItemsSearchTab;
+  private final java.util.function.Supplier<net.minecraft.world.item.ItemStack> iconGenerator;
+  private final net.minecraft.world.item.CreativeModeTab$DisplayItemsGenerator displayItemsGenerator;
+  private net.minecraft.world.item.CreativeModeTab(net.minecraft.world.item.CreativeModeTab$Row, int, net.minecraft.world.item.CreativeModeTab$Type, net.minecraft.network.chat.Component, java.util.function.Supplier<net.minecraft.world.item.ItemStack>, net.minecraft.world.item.CreativeModeTab$DisplayItemsGenerator);
+  public static net.minecraft.resources.Identifier createTextureLocation(java.lang.String);
+  public static net.minecraft.world.item.CreativeModeTab$Builder builder(net.minecraft.world.item.CreativeModeTab$Row, int);
+  public net.minecraft.network.chat.Component getDisplayName();
+  public net.minecraft.world.item.ItemStack getIconItem();
+  public net.minecraft.resources.Identifier getBackgroundTexture();
+  public boolean showTitle();
+  public boolean canScroll();
+  public int column();
+  public net.minecraft.world.item.CreativeModeTab$Row row();
+  public boolean hasAnyItems();
+  public boolean shouldDisplay();
+  public boolean isAlignedRight();
+  public net.minecraft.world.item.CreativeModeTab$Type getType();
+  public void buildContents(net.minecraft.world.item.CreativeModeTab$ItemDisplayParameters);
+  public java.util.Collection<net.minecraft.world.item.ItemStack> getDisplayItems();
+  public java.util.Collection<net.minecraft.world.item.ItemStack> getSearchTabDisplayItems();
+  public boolean contains(net.minecraft.world.item.ItemStack);
+  static {};
+}
