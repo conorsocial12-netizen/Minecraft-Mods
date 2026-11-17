@@ -3,12 +3,13 @@
   "id": "skinglow",
   "version": "${version}",
   "name": "Skin Glow",
-  "description": "Adds an adjustable colored glow outline to player skins and mobs so they stand out. Client-side only. Live-reloads config/skinglow.json.",
+  "description": "Adds a subtle, adjustable outline to player skins (and optionally mobs) so they stand out. Open the menu with /skinglow or from Mod Menu. Client-side only.",
   "authors": ["Conor"],
   "license": "MIT",
   "environment": "client",
   "entrypoints": {
-    "client": ["com.skinglow.SkinGlowClient"]
+    "client": ["com.skinglow.SkinGlowClient"],
+    "modmenu": ["com.skinglow.SkinGlowModMenu"]
   },
   "mixins": [
     { "config": "skinglow.mixins.json", "environment": "client" }
@@ -16,6 +17,7 @@
   "depends": {
     "fabricloader": ">=0.19.5",
     "minecraft": "~26.3",
-    "java": ">=25"
+    "java": ">=25",
+    "fabric-api": "*"
   }
 }

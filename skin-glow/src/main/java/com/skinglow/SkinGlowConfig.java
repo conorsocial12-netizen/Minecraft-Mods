@@ -29,21 +29,21 @@ public class SkinGlowConfig {
 	// ---- who gets an outline ----
 	public boolean players = true;          // other players
 	public boolean self = true;             // you (visible in F5 / third person)
-	public boolean hostileMobs = true;
-	public boolean passiveMobs = true;
+	public boolean hostileMobs = false;
+	public boolean passiveMobs = false;
 	public boolean otherEntities = false;   // items, armor stands, boats, ...
 	public boolean includeInvisible = false;
 	public double maxDistance = 0;          // blocks, 0 = unlimited
 
 	// ---- color ----
 	public ColorMode colorMode = ColorMode.SOLID;
-	public String color = "#00E5FF";        // SOLID color / GRADIENT start
+	public String color = "#FFFFFF";        // SOLID color / GRADIENT start
 	public String color2 = "#FF00E5";       // GRADIENT end
 	public double gradientSpeed = 0.5;      // cycles per second
 	public double rainbowSpeed = 0.25;      // cycles per second
 	public double rainbowSaturation = 1.0;  // 0..1
 	public boolean rainbowOffsetPerEntity = true; // each entity a different hue
-	public double brightness = 1.0;         // 0..1 multiplier on the final color
+	public double brightness = 0.6;         // 0..1 intensity; lower = more subtle
 
 	// ---- optional per-category color (empty = use main color settings) ----
 	public String playerColor = "";
@@ -94,6 +94,11 @@ public class SkinGlowConfig {
 			} catch (IOException ignored) {
 			}
 		}
+	}
+
+	public static void reset() {
+		instance = new SkinGlowConfig();
+		save();
 	}
 
 	public static void save() {

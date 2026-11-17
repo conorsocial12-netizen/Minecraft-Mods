@@ -1,0 +1,12 @@
+package com.skinglow;
+
+import com.terraformersmc.modmenu.api.ConfigScreenFactory;
+import com.terraformersmc.modmenu.api.ModMenuApi;
+
+/** Adds the "Configure" button for Skin Glow in Mod Menu. Only loaded when Mod Menu is installed. */
+public class SkinGlowModMenu implements ModMenuApi {
+	@Override
+	public ConfigScreenFactory<?> getModConfigScreenFactory() {
+		return SkinGlowScreen::new;
+	}
+}

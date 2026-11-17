@@ -72,7 +72,7 @@ public final class GlowLogic {
 			rgb = parseHex(perKind, 0xFFFFFF);
 		} else {
 			rgb = switch (c.colorMode) {
-				case SOLID -> parseHex(c.color, 0x00E5FF);
+				case SOLID -> parseHex(c.color, 0xFFFFFF);
 				case RAINBOW -> {
 					double offset = c.rainbowOffsetPerEntity ? (e.getId() * 0.137) : 0.0;
 					float hue = (float) (((t * c.rainbowSpeed) + offset) % 1.0);
@@ -82,7 +82,7 @@ public final class GlowLogic {
 				case GRADIENT -> {
 					// smooth back-and-forth between color and color2
 					double phase = 0.5 - 0.5 * Math.cos(t * c.gradientSpeed * 2 * Math.PI);
-					yield lerp(parseHex(c.color, 0x00E5FF), parseHex(c.color2, 0xFF00E5), phase);
+					yield lerp(parseHex(c.color, 0xFFFFFF), parseHex(c.color2, 0xFF00E5), phase);
 				}
 			};
 		}

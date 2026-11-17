@@ -1,14 +1,13 @@
 # Skin Glow (Fabric, Minecraft 26.3, client-side)
 
-Adds an adjustable colored glow outline to players (others + yourself in F5), and optionally mobs.
-Works by turning on the game's own entity outline and supplying your color, so it runs on any server (client-only).
+A subtle white outline around player skins (and optionally mobs) so they stand out.
+Runs on any server. Needs Fabric API; Mod Menu is optional.
 
-## Build
-Built automatically by GitHub Actions (see repo README).
+## Adjusting it in game
+- `/skinglow` opens the settings menu (also reachable from Mod Menu -> Skin Glow -> Configure).
+- `/skinglow toggle` turns it on/off, `/skinglow reset` restores defaults.
+- Menu: on/off, other players, yourself (F5), hostile/passive mobs, color mode (solid/rainbow/gradient),
+  intensity (lower = more subtle), red/green/blue, pulse and pulse speed, max distance.
 
-## Settings (config/skinglow.json, created on first launch, live-reloads while the game runs)
-- enabled, players, self, hostileMobs, passiveMobs, otherEntities, includeInvisible, maxDistance
-- colorMode: SOLID | RAINBOW | GRADIENT, color, color2, rainbowSpeed, rainbowSaturation, rainbowOffsetPerEntity, gradientSpeed
-- brightness (0..1), pulse, pulseSpeed, pulseMinBrightness
-- playerColor / selfColor / hostileColor / passiveColor (hex, blank = use main color)
-- respectTeamColors, swapRedBlue (flip if red/blue look swapped)
+Everything is also in `config/skinglow.json`, which live-reloads while the game runs
+(extra options there: gradient color2, rainbow speed, per-type colors, team colors, swapRedBlue).
