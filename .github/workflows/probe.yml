@@ -1,0 +1,37 @@
+name: Probe
+on:
+  push:
+    branches: [probe-skin-layers]
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '25' }
+      - uses: gradle/actions/setup-gradle@v4
+        with: { gradle-version: '9.8.2' }
+      - name: Probe
+        run: |
+          cd skin-glow && gradle compileJava --no-daemon -q || true
+          cd ..
+          find ~/.gradle skin-glow/.gradle -name '*.jar' 2>/dev/null | grep -iE 'minecraft|fabric-(rendering|api)' | grep -v sources | head -40
+          MC=$(find ~/.gradle skin-glow/.gradle -name '*.jar' 2>/dev/null | grep -iE 'minecraft-(merged|client|clientOnly|common)' | grep -v sources | head -5)
+          echo "MC=$MC"
+          for J in $MC; do unzip -l $J | awk '{print $4}' | grep '\.class$' | sed 's/\.class$//' > /tmp/cls_$(basename $J).txt; done
+          cat /tmp/cls_*.txt | sort -u > /tmp/all.txt
+          wc -l /tmp/all.txt
+          grep -E 'Avatar|PlayerModel|/RenderLayer|SubmitNodeCollector|RenderTypes?$|DynamicTexture|NativeImage$|PlayerSkin|/ModelPart|LivingEntityRenderer$|HumanoidRenderState|/EntityRenderState|/TextureManager$|OverlayTexture|VertexConsumer$|PoseStack|ClientAsset|SkinManager|SkinTextureDownloader|ReloadableTexture|AbstractTexture|EntityRenderersEvent|LivingEntityRenderState$|PlayerRenderer|SimpleTexture' /tmp/all.txt | grep -v '\$[0-9]' | grep -v 'lambda'
+          CP=$(echo $MC | tr ' ' ':')
+          for C in $(grep -E 'entity/player/AvatarRenderer$|entity/player/PlayerRenderer$|model/player/PlayerModel$|model/PlayerModel$|state/AvatarRenderState$|state/PlayerRenderState$|state/HumanoidRenderState$|state/LivingEntityRenderState$|state/EntityRenderState$|layers/RenderLayer$|renderer/SubmitNodeCollector$|renderer/SubmitNodeCollector\$CustomGeometryRenderer$|/RenderTypes$|texture/DynamicTexture$|platform/NativeImage$|/PlayerSkin$|geom/ModelPart$|geom/ModelPart\$Cube$|entity/LivingEntityRenderer$|texture/TextureManager$|texture/OverlayTexture$|vertex/VertexConsumer$|vertex/PoseStack$|vertex/PoseStack\$Pose$|core/ClientAsset\$Texture$|core/ClientAsset$|ClientAsset\$ResourceTexture$|ClientAsset\$DownloadedTexture$|resources/SkinTextureDownloader$|texture/AbstractTexture$|texture/ReloadableTexture$|texture/SimpleTexture$|model/HumanoidModel$|client/model/Model$|layers/CustomHeadLayer$' /tmp/all.txt); do
+            echo "=================== $C"; javap -p -cp "$CP" "$C" | grep -v 'lambda\$' | head -120
+          done
+          echo "=========== CustomHeadLayer bytecode submit"
+          javap -c -p -cp "$CP" $(grep -E 'layers/CustomHeadLayer$' /tmp/all.txt) | grep -A60 ' submit(' | grep -E 'invoke|getfield' | head -40
+          echo "=========== SkinTextureDownloader bytecode"
+          javap -c -p -cp "$CP" $(grep -E 'SkinTextureDownloader$' /tmp/all.txt) | grep -E 'invoke|new ' | head -60
+          echo "=========== Avatar renderer bytecode"
+          javap -c -p -cp "$CP" $(grep -E 'entity/player/AvatarRenderer$|entity/player/PlayerRenderer$' /tmp/all.txt) | grep -E 'Method |invoke|putfield|getfield' | head -150
+          echo "=========== FABRIC"
+          for J in $(find ~/.gradle -name 'fabric-rendering-v1*.jar' | grep -v sources | head -1); do unzip -l $J | awk '{print $4}' | grep class | head -60; FJ=$J; done
+          for C in $(unzip -l $FJ | awk '{print $4}' | grep -E 'LivingEntity.*Callback\.class|RenderLayer.*\.class|FeatureRenderer.*\.class' | grep -v impl | sed 's/\.class$//'); do echo "== $C"; javap -cp "$FJ:$CP" "$C"; done
