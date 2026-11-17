@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "skinglow",
+  "version": "${version}",
+  "name": "Skin Glow",
+  "description": "Adds an adjustable colored glow outline to player skins and mobs so they stand out. Client-side only. Live-reloads config/skinglow.json.",
+  "authors": ["Conor"],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["com.skinglow.SkinGlowClient"]
+  },
+  "mixins": [
+    { "config": "skinglow.mixins.json", "environment": "client" }
+  ],
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~26.3",
+    "java": ">=25"
+  }
+}
