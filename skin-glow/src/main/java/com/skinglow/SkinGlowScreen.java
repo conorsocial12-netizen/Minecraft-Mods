@@ -66,7 +66,7 @@ public class SkinGlowScreen extends Screen {
 		int by = top + row * 7 + 6;
 		addRenderableWidget(Button.builder(Component.literal("Reset to defaults"), b -> {
 			SkinGlowConfig.reset();
-			Minecraft.getInstance().setScreen(new SkinGlowScreen(parent));
+			Minecraft.getInstance().gui.setScreen(new SkinGlowScreen(parent));
 		}).bounds(left, by, colW, 20).build());
 		addRenderableWidget(Button.builder(Component.literal("Done"), b -> onClose())
 				.bounds(right, by, colW, 20).build());
@@ -96,7 +96,7 @@ public class SkinGlowScreen extends Screen {
 	@Override
 	public void onClose() {
 		SkinGlowConfig.save();
-		Minecraft.getInstance().setScreen(parent);
+		Minecraft.getInstance().gui.setScreen(parent);
 	}
 
 	private static class Slider extends AbstractSliderButton {

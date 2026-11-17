@@ -17,7 +17,7 @@ public class SkinGlowClient implements ClientModInitializer {
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			if (openMenuNextTick) {
 				openMenuNextTick = false;
-				client.setScreen(new SkinGlowScreen(null));
+				client.gui.setScreen(new SkinGlowScreen(null));
 			}
 		});
 
