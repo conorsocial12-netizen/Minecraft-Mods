@@ -21,8 +21,9 @@ public final class MeshBuilder {
 
 	/**
 	 * @param opaque [x][y] in 64x64 skin-pixel space: true if that pixel is (at least partly) visible
+	 * @param thicknessScale 1 = normal depth, smaller = flatter pixels
 	 */
-	public static PartMesh build(SkinPart part, boolean slim, boolean[][] opaque) {
+	public static PartMesh build(SkinPart part, boolean slim, boolean[][] opaque, float thicknessScale) {
 		int w = part.width(slim), h = part.h, d = part.d;
 		int gx = w + 2, gy = h + 2, gz = d + 2;
 		int[] cell = new int[gx * gy * gz];
@@ -61,7 +62,7 @@ public final class MeshBuilder {
 		fillEdges(cell, rect, gx, gy, gz);
 
 		// grid cell boundaries -> model coordinates (pixels); the shell is `thickness` deep
-		float t = part.thickness;
+		float t = part.thickness * thicknessScale;
 		float[] bx = bounds(part.minX(slim), w, t);
 		float[] by = bounds(part.y, h, t);
 		float[] bz = bounds(part.z, d, t);

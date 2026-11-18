@@ -20,8 +20,10 @@ public class VoxelSkinsConfig {
 	public boolean pants = true;
 	/** Show 3D layers on yourself (F5 / inventory). */
 	public boolean self = true;
-	/** Go back to the flat layer where armor is worn, so pixels don't poke through it. */
-	public boolean flatUnderArmor = true;
+	/** Keep the 3D pixels when armor is worn: they're lifted out to sit on top of the armor. Off = flat layer under armor. */
+	public boolean overArmor = true;
+	/** How thick your own 3D pixels are, in percent of normal (others always use 100%). Thinner looks less chunky up close. */
+	public int selfThickness = 50;
 	/** Beyond this many blocks the normal flat layer is used (it looks the same from far away). 0 = always 3D. */
 	public double renderDistance = 16;
 
@@ -33,7 +35,10 @@ public class VoxelSkinsConfig {
 		try {
 			if (Files.exists(PATH)) {
 				VoxelSkinsConfig c = GSON.fromJson(Files.readString(PATH), VoxelSkinsConfig.class);
-				if (c != null) instance = c;
+				if (c != null) {
+					c.selfThickness = Math.max(10, Math.min(100, c.selfThickness));
+					instance = c;
+				}
 			}
 		} catch (Exception e) {
 			instance = new VoxelSkinsConfig();

@@ -41,7 +41,8 @@ public class VoxelSkinsScreen extends Screen {
 
 		y = top;
 		addRenderableWidget(toggle(right, y, colW, "Me (F5 view)", () -> c.self, v -> c.self = v)); y += row;
-		addRenderableWidget(toggle(right, y, colW, "Flat under armor", () -> c.flatUnderArmor, v -> c.flatUnderArmor = v)); y += row;
+		addRenderableWidget(new ThicknessSlider(right, y, colW, c)); y += row;
+		addRenderableWidget(toggle(right, y, colW, "Show over armor", () -> c.overArmor, v -> c.overArmor = v)); y += row;
 		addRenderableWidget(new DistanceSlider(right, y, colW, c));
 
 		int by = top + row * 5 + 6;
@@ -90,6 +91,32 @@ public class VoxelSkinsScreen extends Screen {
 		@Override
 		protected void applyValue() {
 			config.renderDistance = Math.round(this.value * MAX);
+		}
+	}
+
+	/** How thick your own 3D pixels are (10% - 100%). */
+	private static class ThicknessSlider extends AbstractSliderButton {
+		private final VoxelSkinsConfig config;
+
+		ThicknessSlider(int x, int y, int w, VoxelSkinsConfig config) {
+			super(x, y, w, 20, Component.empty(), (config.selfThickness - 10) / 90.0);
+			this.config = config;
+			updateMessage();
+		}
+
+		@Override
+		protected void updateMessage() {
+			if (config == null) return; // called from super constructor
+			setMessage(Component.literal("My thickness: " + percent() + "%"));
+		}
+
+		@Override
+		protected void applyValue() {
+			config.selfThickness = percent();
+		}
+
+		private int percent() {
+			return (int) (Math.round((10 + this.value * 90) / 5.0) * 5);
 		}
 	}
 }

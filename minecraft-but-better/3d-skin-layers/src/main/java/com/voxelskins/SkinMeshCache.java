@@ -29,7 +29,7 @@ public final class SkinMeshCache {
 		}
 	}
 
-	private record Key(Identifier texture, boolean slim) {}
+	private record Key(Identifier texture, boolean slim, int thickness) {}
 
 	private static final Map<Key, SkinMeshes> CACHE = new LinkedHashMap<>(64, 0.75f, true) {
 		@Override
@@ -42,8 +42,8 @@ public final class SkinMeshCache {
 	private SkinMeshCache() {}
 
 	/** Returns the meshes, or null if the skin can't be read (yet). */
-	public static SkinMeshes get(Identifier texture, boolean slim) {
-		Key key = new Key(texture, slim);
+	public static SkinMeshes get(Identifier texture, boolean slim, int thicknessPercent) {
+		Key key = new Key(texture, slim, thicknessPercent);
 		SkinMeshes cached = CACHE.get(key);
 		if (cached != null) return cached;
 
@@ -60,7 +60,7 @@ public final class SkinMeshCache {
 		FAILED.remove(key);
 		PartMesh[] parts = new PartMesh[SkinPart.values().length];
 		for (SkinPart part : SkinPart.values()) {
-			parts[part.ordinal()] = MeshBuilder.build(part, slim, opaque);
+			parts[part.ordinal()] = MeshBuilder.build(part, slim, opaque, thicknessPercent / 100f);
 		}
 		SkinMeshes meshes = new SkinMeshes(parts);
 		CACHE.put(key, meshes);
