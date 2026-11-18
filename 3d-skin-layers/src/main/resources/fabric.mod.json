@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "voxelskins",
+  "version": "${version}",
+  "name": "3D Skin Layers",
+  "description": "Turns the outer layer of player skins (hat, jacket, sleeves, pants) into real 3D pixels instead of flat panels. Open the menu with /skinlayers or from Mod Menu. Client-side only.",
+  "authors": ["Conor"],
+  "license": "MIT",
+  "icon": "assets/voxelskins/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["com.voxelskins.VoxelSkinsClient"],
+    "modmenu": ["com.voxelskins.VoxelSkinsModMenu"]
+  },
+  "mixins": [
+    { "config": "voxelskins.mixins.json", "environment": "client" }
+  ],
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~26.3",
+    "java": ">=25",
+    "fabric-api": "*"
+  },
+  "breaks": {
+    "skinlayers3d": "*"
+  }
+}
