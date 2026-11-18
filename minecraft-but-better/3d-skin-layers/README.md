@@ -14,7 +14,7 @@ Needs Fabric API; Mod Menu is optional.
 Settings are saved in `config/voxelskins.json`.
 
 ## Notes
-- With armor on, the 3D pixels are lifted out to sit on top of the armor, so you always see them. Turn "Show over armor" off to go back to the flat layer under armor.
+- Where armor is worn, the armor covers the layer like in vanilla. "Show over armor" puts the 3D pixels on top of the armor instead, but on skins with a full outer layer that mostly hides the armor, so it's off by default.
 - Your own skin uses thinner 3D pixels (50% by default, "My thickness" slider) so it doesn't look chunky up close in F5 or the inventory. Other players stay at full thickness.
 - Past the 3D distance (16 blocks by default) the normal flat layer is drawn; it looks the same from far away and is cheaper.
 - Your first-person arm still uses the flat sleeve.

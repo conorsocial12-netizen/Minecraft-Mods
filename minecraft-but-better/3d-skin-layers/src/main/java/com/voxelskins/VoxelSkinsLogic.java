@@ -47,12 +47,12 @@ public final class VoxelSkinsLogic {
 		float legs = leggings ? INNER_ARMOR : 0; // boots alone only cover the feet; pants stay on the leg above them
 
 		int mask = 0;
-		mask |= part(meshes, armor, SkinPart.HAT, c.hat && s.showHat, head, c.overArmor);
-		mask |= part(meshes, armor, SkinPart.JACKET, c.jacket && s.showJacket, body, c.overArmor);
-		mask |= part(meshes, armor, SkinPart.RIGHT_SLEEVE, c.sleeves && s.showRightSleeve, arms, c.overArmor);
-		mask |= part(meshes, armor, SkinPart.LEFT_SLEEVE, c.sleeves && s.showLeftSleeve, arms, c.overArmor);
-		mask |= part(meshes, armor, SkinPart.RIGHT_PANTS, c.pants && s.showRightPants, legs, c.overArmor);
-		mask |= part(meshes, armor, SkinPart.LEFT_PANTS, c.pants && s.showLeftPants, legs, c.overArmor);
+		mask |= part(meshes, armor, SkinPart.HAT, c.hat && s.showHat, head, c.layersOverArmor);
+		mask |= part(meshes, armor, SkinPart.JACKET, c.jacket && s.showJacket, body, c.layersOverArmor);
+		mask |= part(meshes, armor, SkinPart.RIGHT_SLEEVE, c.sleeves && s.showRightSleeve, arms, c.layersOverArmor);
+		mask |= part(meshes, armor, SkinPart.LEFT_SLEEVE, c.sleeves && s.showLeftSleeve, arms, c.layersOverArmor);
+		mask |= part(meshes, armor, SkinPart.RIGHT_PANTS, c.pants && s.showRightPants, legs, c.layersOverArmor);
+		mask |= part(meshes, armor, SkinPart.LEFT_PANTS, c.pants && s.showLeftPants, legs, c.layersOverArmor);
 		return mask;
 	}
 
@@ -61,10 +61,10 @@ public final class VoxelSkinsLogic {
 	}
 
 	private static int part(SkinMeshCache.SkinMeshes meshes, float[] armor, SkinPart part, boolean wanted,
-							float armorDepth, boolean overArmor) {
+							float armorDepth, boolean layersOverArmor) {
 		if (!wanted || meshes.get(part).isEmpty()) return 0; // nothing to replace
 		if (armorDepth > 0) {
-			if (!overArmor) return 0; // old behaviour: flat layer under armor
+			if (!layersOverArmor) return 0; // old behaviour: flat layer under armor
 			armor[part.ordinal()] = armorDepth + GAP;
 		}
 		return part.bit();

@@ -42,7 +42,7 @@ public class VoxelSkinsScreen extends Screen {
 		y = top;
 		addRenderableWidget(toggle(right, y, colW, "Me (F5 view)", () -> c.self, v -> c.self = v)); y += row;
 		addRenderableWidget(new ThicknessSlider(right, y, colW, c)); y += row;
-		addRenderableWidget(toggle(right, y, colW, "Show over armor", () -> c.overArmor, v -> c.overArmor = v)); y += row;
+		addRenderableWidget(toggle(right, y, colW, "Show over armor", () -> c.layersOverArmor, v -> c.layersOverArmor = v)); y += row;
 		addRenderableWidget(new DistanceSlider(right, y, colW, c));
 
 		int by = top + row * 5 + 6;

@@ -20,8 +20,11 @@ public class VoxelSkinsConfig {
 	public boolean pants = true;
 	/** Show 3D layers on yourself (F5 / inventory). */
 	public boolean self = true;
-	/** Keep the 3D pixels when armor is worn: they're lifted out to sit on top of the armor. Off = flat layer under armor. */
-	public boolean overArmor = true;
+	/**
+	 * Off (default): where armor is worn the flat layer is used and the armor covers it, like vanilla.
+	 * On: the 3D pixels are lifted out to sit on top of the armor (covers the armor with your skin).
+	 */
+	public boolean layersOverArmor = false;
 	/** How thick your own 3D pixels are, in percent of normal (others always use 100%). Thinner looks less chunky up close. */
 	public int selfThickness = 50;
 	/** Beyond this many blocks the normal flat layer is used (it looks the same from far away). 0 = always 3D. */
