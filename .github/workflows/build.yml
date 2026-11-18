@@ -19,13 +19,14 @@ jobs:
         with:
           gradle-version: '9.8.2'
 
-      # Builds every mod folder (any top-level folder with a build.gradle)
+      # Builds every mod folder (any folder with a build.gradle, top-level or one level down,
+      # e.g. minecraft-but-better/3d-skin-layers)
       - name: Build all mods
         run: |
           set -e
           mkdir -p jars
-          for dir in */; do
-            if [ -f "$dir/build.gradle" ]; then
+          for dir in */ */*/; do
+            if [ -f "$dir/build.gradle" ] && [ "${dir%%/*}" != "jars" ]; then
               echo "::group::Building $dir"
               (cd "$dir" && gradle build --no-daemon --stacktrace)
               find "$dir/build/libs" -name '*.jar' ! -name '*-sources.jar' -exec cp {} jars/ \;
