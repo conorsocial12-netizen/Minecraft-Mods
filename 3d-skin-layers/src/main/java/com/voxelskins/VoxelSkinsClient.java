@@ -16,7 +16,7 @@ public class VoxelSkinsClient implements ClientModInitializer {
 		VoxelSkinsConfig.load();
 
 		// Add the 3D layer to every player-shaped renderer (players and mannequins).
-		LivingEntityRenderLayerRegistrationCallback.EVENT.register((entityType, renderer, helper) -> {
+		LivingEntityRenderLayerRegistrationCallback.EVENT.register((entityType, renderer, helper, context) -> {
 			if (renderer instanceof AvatarRenderer<?> avatarRenderer) {
 				helper.register(new VoxelSkinLayer(avatarRenderer));
 			}
