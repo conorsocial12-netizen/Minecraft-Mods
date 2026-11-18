@@ -13,17 +13,12 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with: { gradle-version: '9.8.2' }
       - run: sudo apt-get update -qq && sudo apt-get install -y -qq xvfb mesa-utils libgl1-mesa-dri mesa-vulkan-drivers >/dev/null
-      - name: Run client
+      - name: Run client gametest
         working-directory: 3d-skin-layers
         run: |
-          mkdir -p run
-          export LIBGL_ALWAYS_SOFTWARE=1
-          (xvfb-run -s "-screen 0 1280x720x24" gradle runClient --no-daemon > client.log 2>&1) &
-          for i in $(seq 1 120); do
-            grep -qE "Sound engine started|Created: .*textures|Backend library|crash report|Exception in thread|Game crashed" client.log && sleep 20 && break
-            sleep 5
-          done
-          echo "----- mod / mixin -----"; grep -iE "voxelskins|mixin.*(error|fail)|3D Skin" client.log | head -40
-          echo "----- errors -----"; grep -nE "ERROR|Exception|Caused by|crash" client.log | head -40
-          echo "----- tail -----"; tail -40 client.log
-          pkill -f runClient || true
+          xvfb-run -s "-screen 0 1280x720x24" gradle runClientGameTest --no-daemon > gt.log 2>&1 || true
+          grep -nE "voxelskins|Mixin|ERROR|Exception|Caused by|FAIL|screenshot|Screenshot" gt.log | cut -c1-300 | head -80
+          tail -30 gt.log | cut -c1-300
+          mkdir -p /tmp/shots; find . -name '*.png' -path '*screenshot*' -exec cp {} /tmp/shots/ \; ; ls -la /tmp/shots
+      - uses: actions/upload-artifact@v4
+        with: { name: shots, path: /tmp/shots }
