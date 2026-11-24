@@ -22,7 +22,7 @@ import java.util.function.IntSupplier;
  */
 public class VividScreen extends Screen {
 	public enum Page {
-		PRESETS("Presets"), COLOUR("Colour"), SKY("Sky & Fog"), WATER("Water & Light"), EFFECTS("Effects"), HUD("HUD");
+		PRESETS("Presets"), COLOUR("Colour"), SKY("Sky & Fog"), WATER("Water"), EFFECTS("Effects"), PARTICLES("Particles"), HUD("HUD");
 
 		final String label;
 
@@ -179,11 +179,31 @@ public class VividScreen extends Screen {
 				add(y, 1, left, right, slider("End mood", 0, 1, () -> c.endMood, v -> c.endMood = v, "%.2f",
 						"Purple, otherworldly tint in the End"));
 			}
+			case PARTICLES -> {
+				add(y, 0, left, right, toggle(0, 0, COL_W, "Combat particles", () -> c.particlesEnabled, v -> c.particlesEnabled = v,
+						"All of Vivid's combat particles on/off"));
+				add(y, 1, left, right, toggle(0, 0, COL_W, "Mob hit particles", () -> c.hitParticles, v -> c.hitParticles = v,
+						"Bits fly off mobs when hit: feathers from chickens, gunpowder from creepers, bones from skeletons, wool from sheep..."));
+				add(y, 0, left, right, plainSlider("Hit particle amount", 0, 4, () -> c.hitAmount, v -> c.hitAmount = v, "x%.1f",
+						"How many bits fly off"));
+				add(y, 1, left, right, toggle(0, 0, COL_W, "Only my hits", () -> c.ownHitsOnly, v -> c.ownHitsOnly = v,
+						"ON = only when you hit something. OFF = any damage (other players, arrows, lava...)"));
+				add(y, 0, left, right, toggle(0, 0, COL_W, "Death burst", () -> c.deathBurst, v -> c.deathBurst = v,
+						"A bigger burst of the mob's particles when it dies"));
+				add(y, 1, left, right, toggle(0, 0, COL_W, "Fancy crits", () -> c.fancyCrits, v -> c.fancyCrits = v,
+						"Critical hits get a spinning ring and sparkles"));
+				add(y, 0, left, right, plainSlider("Crit & spark amount", 0, 4, () -> c.critAmount, v -> c.critAmount = v, "x%.1f",
+						"How big crit and impact effects are"));
+				add(y, 1, left, right, toggle(0, 0, COL_W, "Impact sparks", () -> c.impactSparks, v -> c.impactSparks = v,
+						"Sparks where your hit lands"));
+				add(y, 0, left, right, toggle(0, 0, COL_W, "Puff for other mobs", () -> c.genericPuff, v -> c.genericPuff = v,
+						"Mobs without their own particles (like players) give a small puff"));
+			}
 			case HUD -> {
 				int[] accent = rgb(c.accentColor, 0x4FE0FF);
 				add(y, 0, left, right, toggle(0, 0, COL_W, "Smooth hotbar", () -> c.smoothHotbar, v -> c.smoothHotbar = v,
 						"The selection box slides between slots"));
-				add(y, 1, left, right, slider("Hotbar speed", 2, 60, () -> c.hotbarSpeed, v -> c.hotbarSpeed = v, "%.0f",
+				add(y, 1, left, right, plainSlider("Hotbar speed", 2, 60, () -> c.hotbarSpeed, v -> c.hotbarSpeed = v, "%.0f",
 						"How fast the selection box slides"));
 				add(y, 0, left, right, toggle(0, 0, COL_W, "Accent on hotbar", () -> c.accentHotbar, v -> c.accentHotbar = v,
 						"Tint the hotbar selection with your accent colour"));
@@ -277,6 +297,13 @@ public class VividScreen extends Screen {
 			set.accept(v);
 			markCustom();
 		});
+		s.setTooltip(Tooltip.create(Component.literal(tip)));
+		return s;
+	}
+
+	/** Slider for settings that presets don't touch (doesn't switch the preset to Custom). */
+	private static Slider plainSlider(String label, double min, double max, DoubleSupplier get, DoubleConsumer set, String fmt, String tip) {
+		Slider s = new Slider(label, min, max, get.getAsDouble(), fmt, 1, set);
 		s.setTooltip(Tooltip.create(Component.literal(tip)));
 		return s;
 	}

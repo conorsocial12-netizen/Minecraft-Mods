@@ -9,6 +9,9 @@
     "GameRendererMixin",
     "HudMixin",
     "LightmapExtractorMixin",
+    "LivingEntityMixin",
+    "LocalPlayerMixin",
+    "MultiPlayerGameModeMixin",
     "PostPassMixin",
     "SkyRendererMixin"
   ],

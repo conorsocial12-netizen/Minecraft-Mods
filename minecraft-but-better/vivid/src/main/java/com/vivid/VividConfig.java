@@ -69,6 +69,17 @@ public class VividConfig {
 	public double netherMood = 0.3;
 	public double endMood = 0.3;
 
+	// ---- combat particles ----
+	public boolean particlesEnabled = true;
+	public boolean hitParticles = true;    // feathers from chickens, gunpowder from creepers...
+	public double hitAmount = 1.0;
+	public boolean ownHitsOnly = false;    // only when you did the damage
+	public boolean deathBurst = true;      // big burst when a mob dies
+	public boolean fancyCrits = true;      // ring + sparkles on critical hits
+	public double critAmount = 1.0;
+	public boolean impactSparks = true;    // sparks where your hit lands
+	public boolean genericPuff = false;    // puff of smoke for mobs without their own particles
+
 	// ---- HUD ----
 	public boolean smoothHotbar = true;
 	public double hotbarSpeed = 18;
@@ -137,6 +148,8 @@ public class VividConfig {
 		hazeStart = clamp(hazeStart, 0.2, 1);
 		waterClarity = clamp(waterClarity, 0.5, 5);
 		hotbarSpeed = clamp(hotbarSpeed, 2, 60);
+		hitAmount = clamp(hitAmount, 0, 4);
+		critAmount = clamp(critAmount, 0, 4);
 	}
 
 	public static double clamp(double v, double lo, double hi) {
