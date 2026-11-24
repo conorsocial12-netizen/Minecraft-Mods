@@ -16,6 +16,24 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with: { gradle-version: '9.8.2' }
       - run: sudo apt-get update -qq && sudo apt-get install -y -qq xvfb mesa-utils libgl1-mesa-dri mesa-vulkan-drivers >/dev/null
+      - name: Check mixin targets against the real game jar
+        working-directory: minecraft-but-better/vivid
+        run: |
+          gradle compileJava --no-daemon -q > /dev/null 2>&1 || true
+          JAR=""
+          for j in $(find ~/.gradle /home/runner/work -name '*.jar' 2>/dev/null | grep -i minecraft | grep -v sources); do
+            if unzip -l "$j" 2>/dev/null | grep -q 'net/minecraft/client/renderer/CloudRenderer.class'; then JAR="$j"; break; fi
+          done
+          echo "JAR=$JAR"
+          for c in net.minecraft.client.renderer.CloudRenderer net.minecraft.client.renderer.SkyRenderer net.minecraft.client.renderer.fog.FogRenderer \
+                   net.minecraft.client.renderer.PostPass net.minecraft.client.renderer.GameRenderer net.minecraft.client.renderer.BiomeColors \
+                   net.minecraft.client.renderer.LightmapRenderStateExtractor net.minecraft.client.gui.Hud net.minecraft.world.entity.LivingEntity \
+                   net.minecraft.client.player.LocalPlayer net.minecraft.client.multiplayer.MultiPlayerGameMode \
+                   net.minecraft.client.renderer.entity.layers.EquipmentLayerRenderer net.minecraft.client.renderer.entity.player.AvatarRenderer \
+                   net.minecraft.client.model.player.PlayerModel; do
+            echo "=== $c"
+            javap -p -cp "$JAR" $c | grep -E "prepare|extractRenderState|setupFog|addToFrame| close\(|update\(|getAverageWaterColor| extract\(|extractItemHotbar|handleDamageEvent|handleEntityEvent| crit\(|magicCrit|attack\(|renderLayers|setupAnim|customUniforms|requestedPostEffects| name;| minecraft;|equipmentAssets"
+          done
       - name: Run client gametest
         working-directory: minecraft-but-better/vivid
         run: |
