@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 /** Clouds pick up the sunrise/sunset colour, and get a cool blue tint at night. */
 @Mixin(CloudRenderer.class)
 public abstract class CloudRendererMixin {
-	@ModifyVariable(method = "prepare", at = @At("HEAD"), argsOnly = true, ordinal = 0)
+	@ModifyVariable(method = "prepare(ILnet/minecraft/client/CloudStatus;FILnet/minecraft/world/phys/Vec3;JF)V", at = @At("HEAD"), argsOnly = true, ordinal = 0)
 	private int vivid$tintClouds(int color) {
 		VividConfig c = VividConfig.get();
 		if (!c.enabled || !c.skyEnabled || c.cloudTint <= 0) return color;
