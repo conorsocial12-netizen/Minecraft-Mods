@@ -41,3 +41,12 @@ java {
 	sourceCompatibility = JavaVersion.VERSION_25
 	targetCompatibility = JavaVersion.VERSION_25
 }
+
+fabricApi {
+	configureTests {
+		createSourceSet = true
+		modId = "vivid-test"
+		enableGameTests = false
+		eula = true
+	}
+}
