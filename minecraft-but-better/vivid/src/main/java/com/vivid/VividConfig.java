@@ -80,6 +80,28 @@ public class VividConfig {
 	public boolean impactSparks = true;    // sparks where your hit lands
 	public boolean genericPuff = false;    // puff of smoke for mobs without their own particles
 
+	// ---- 3D skins ----
+	public boolean skins3d = true;
+	public boolean skinHat = true;
+	public boolean skinJacket = true;
+	public boolean skinSleeves = true;
+	public boolean skinPants = true;
+	public boolean skinsOnOthers = true;
+	public boolean skinsOnSelf = true;      // you, in F5 / inventory
+	public double selfThickness = 50;       // % thickness of your own 3D pixels
+	public double skinDistance = 16;        // blocks; further away uses the flat layer (0 = always)
+	public String armorMode = "UNDER";      // UNDER, OVER or FLAT
+
+	// ---- skin outline ----
+	public boolean pixelEdges = true;       // light edge on every 3D pixel
+	public double pixelEdgeWidth = 0.15;    // skin pixels
+	public double pixelEdgeStrength = 0.35;
+	public boolean bodyRim = true;          // light rim round the edges of the body
+	public double bodyRimWidth = 0.25;
+	public double bodyRimStrength = 0.3;
+	public String rimColor = "#FFFFFF";
+	public boolean rimGlow = false;         // outline stays bright in the dark
+
 	// ---- HUD ----
 	public boolean smoothHotbar = true;
 	public double hotbarSpeed = 18;
@@ -149,6 +171,14 @@ public class VividConfig {
 		waterClarity = clamp(waterClarity, 0.5, 5);
 		hotbarSpeed = clamp(hotbarSpeed, 2, 60);
 		hitAmount = clamp(hitAmount, 0, 4);
+		selfThickness = clamp(selfThickness, 10, 100);
+		if (skinDistance < 0) skinDistance = 0;
+		pixelEdgeWidth = clamp(pixelEdgeWidth, 0.05, 0.5);
+		bodyRimWidth = clamp(bodyRimWidth, 0.05, 1);
+		pixelEdgeStrength = clamp(pixelEdgeStrength, 0, 1);
+		bodyRimStrength = clamp(bodyRimStrength, 0, 1);
+		if (armorMode == null) armorMode = "UNDER";
+		if (rimColor == null) rimColor = "#FFFFFF";
 		critAmount = clamp(critAmount, 0, 4);
 	}
 

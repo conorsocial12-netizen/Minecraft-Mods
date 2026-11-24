@@ -3,6 +3,8 @@
   "package": "com.vivid.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
+    "AvatarRenderStateMixin",
+    "AvatarRendererMixin",
     "BiomeColorsMixin",
     "CloudRendererMixin",
     "FogRendererMixin",
@@ -12,6 +14,7 @@
     "LivingEntityMixin",
     "LocalPlayerMixin",
     "MultiPlayerGameModeMixin",
+    "PlayerModelMixin",
     "PostPassMixin",
     "SkyRendererMixin"
   ],

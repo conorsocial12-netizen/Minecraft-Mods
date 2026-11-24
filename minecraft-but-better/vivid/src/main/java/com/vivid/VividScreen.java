@@ -8,6 +8,8 @@ import net.minecraft.client.gui.components.StringWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import com.vivid.skins.SkinMeshCache;
+import com.vivid.skins.SkinsLogic;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
@@ -22,7 +24,8 @@ import java.util.function.IntSupplier;
  */
 public class VividScreen extends Screen {
 	public enum Page {
-		PRESETS("Presets"), COLOUR("Colour"), SKY("Sky & Fog"), WATER("Water"), EFFECTS("Effects"), PARTICLES("Particles"), HUD("HUD");
+		PRESETS("Presets"), COLOUR("Colour"), SKY("Sky & Fog"), WATER("Water"), EFFECTS("Effects"),
+		PARTICLES("Particles"), SKINS("3D Skins"), OUTLINE("Outline"), HUD("HUD");
 
 		final String label;
 
@@ -60,17 +63,20 @@ public class VividScreen extends Screen {
 
 		// ---- page tabs ----
 		Page[] pages = Page.values();
-		int tabW = Math.min(76, (this.width - 20) / pages.length - 2);
-		int tabsX = center - (pages.length * (tabW + 2)) / 2;
+		int perRow = (pages.length + 1) / 2;
+		int tabW = Math.min(76, (this.width - 20) / perRow - 2);
 		for (int i = 0; i < pages.length; i++) {
 			Page p = pages[i];
-			Button tab = Button.builder(Component.literal(p == page ? "> " + p.label + " <" : p.label), b -> open(p))
-					.bounds(tabsX + i * (tabW + 2), 22, tabW, 20).build();
+			int row = i / perRow, col = i % perRow;
+			int inRow = row == 0 ? perRow : pages.length - perRow;
+			int rowX = center - (inRow * (tabW + 2)) / 2;
+			Button tab = Button.builder(Component.literal(p.label), b -> open(p))
+					.bounds(rowX + col * (tabW + 2), 20 + row * 21, tabW, 20).build();
 			tab.active = p != page;
 			addRenderableWidget(tab);
 		}
 
-		int top = 50;
+		int top = 70;
 		int[] y = {top, top};
 
 		switch (page) {
@@ -199,6 +205,56 @@ public class VividScreen extends Screen {
 				add(y, 0, left, right, toggle(0, 0, COL_W, "Puff for other mobs", () -> c.genericPuff, v -> c.genericPuff = v,
 						"Mobs without their own particles (like players) give a small puff"));
 			}
+			case SKINS -> {
+				add(y, 0, left, right, toggle(0, 0, COL_W, "3D skin layers", () -> c.skins3d, v -> c.skins3d = v,
+						"Hat/hair, jacket, sleeves and pants become real 3D pixels"));
+				Button armour = Button.builder(armourLabel(c), b -> {
+					SkinsLogic.ArmorMode[] all = SkinsLogic.ArmorMode.values();
+					c.armorMode = all[(SkinsLogic.ArmorMode.parse(c.armorMode).ordinal() + 1) % all.length].name();
+					b.setMessage(armourLabel(c));
+				}).bounds(0, 0, COL_W, 20).tooltip(Tooltip.create(Component.literal(
+						"Under armour: pixels get thinner so they stay 3D inside armour and peek through gaps. "
+								+ "On top: your skin covers the armour. Flat: armoured parts use the normal flat layer."))).build();
+				add(y, 1, left, right, armour);
+				add(y, 0, left, right, toggle(0, 0, COL_W, "Hat / hair", () -> c.skinHat, v -> c.skinHat = v, "3D hat layer"));
+				add(y, 1, left, right, toggle(0, 0, COL_W, "Jacket", () -> c.skinJacket, v -> c.skinJacket = v, "3D jacket layer"));
+				add(y, 0, left, right, toggle(0, 0, COL_W, "Sleeves", () -> c.skinSleeves, v -> c.skinSleeves = v, "3D sleeve layers"));
+				add(y, 1, left, right, toggle(0, 0, COL_W, "Pants", () -> c.skinPants, v -> c.skinPants = v, "3D pants layers"));
+				add(y, 0, left, right, toggle(0, 0, COL_W, "Other players", () -> c.skinsOnOthers, v -> c.skinsOnOthers = v,
+						"3D skins and outline on everyone else"));
+				add(y, 1, left, right, toggle(0, 0, COL_W, "Me (F5 / inventory)", () -> c.skinsOnSelf, v -> c.skinsOnSelf = v,
+						"3D skins and outline on your own skin"));
+				add(y, 0, left, right, plainSlider("My thickness", 10, 100, () -> c.selfThickness, v -> c.selfThickness = v, "%.0f%%",
+						"How thick your own 3D pixels are. Thinner looks less chunky up close"));
+				add(y, 1, left, right, plainSlider("3D distance", 0, 64, () -> c.skinDistance, v -> c.skinDistance = v, "%.0f blocks",
+						"Further than this, the normal flat layer is used (0 = always 3D)"));
+				if (VividClient.STANDALONE_SKIN_LAYERS) {
+					addRenderableWidget(new StringWidget(center - 160, Math.max(y[0], y[1]) + 4, 320, 12,
+							Component.literal("The separate 3D Skin Layers mod is installed, so it does the 3D layers.").withColor(0xFFAA55), this.font));
+				}
+			}
+			case OUTLINE -> {
+				int[] rim = rgb(c.rimColor, 0xFFFFFF);
+				add(y, 0, left, right, toggle(0, 0, COL_W, "Pixel edges", () -> c.pixelEdges, v -> c.pixelEdges = v,
+						"A light edge on every 3D skin pixel, for a bevelled look"));
+				add(y, 1, left, right, toggle(0, 0, COL_W, "Body rim", () -> c.bodyRim, v -> c.bodyRim = v,
+						"A light rim along the edges of the head, body, arms and legs"));
+				add(y, 0, left, right, plainSlider("Edge width", 0.05, 0.5, () -> c.pixelEdgeWidth, v -> c.pixelEdgeWidth = v, "%.2f px",
+						"How wide the pixel edges are"));
+				add(y, 1, left, right, plainSlider("Rim width", 0.05, 1, () -> c.bodyRimWidth, v -> c.bodyRimWidth = v, "%.2f px",
+						"How wide the body rim is"));
+				add(y, 0, left, right, plainSlider("Edge brightness", 0, 1, () -> c.pixelEdgeStrength, v -> c.pixelEdgeStrength = v, "%.0f%%", 100,
+						"How light the pixel edges are"));
+				add(y, 1, left, right, plainSlider("Rim brightness", 0, 1, () -> c.bodyRimStrength, v -> c.bodyRimStrength = v, "%.0f%%", 100,
+						"How light the body rim is"));
+				add(y, 0, left, right, toggle(0, 0, COL_W, "Glow in the dark", () -> c.rimGlow, v -> c.rimGlow = v,
+						"Outline stays bright even in dark places"));
+				add(y, 1, left, right, colourSlider("Outline red", () -> rim[0], v -> { rim[0] = v; c.rimColor = hex(rim); }));
+				add(y, 0, left, right, colourSlider("Outline green", () -> rim[1], v -> { rim[1] = v; c.rimColor = hex(rim); }));
+				add(y, 1, left, right, colourSlider("Outline blue", () -> rim[2], v -> { rim[2] = v; c.rimColor = hex(rim); }));
+				addRenderableWidget(new StringWidget(left, y[0] + 6, COL_W, 12,
+						Component.literal("\u2588\u2588\u2588 outline colour").withColor(VividConfig.parseHex(c.rimColor, 0xFFFFFF)), this.font));
+			}
 			case HUD -> {
 				int[] accent = rgb(c.accentColor, 0x4FE0FF);
 				add(y, 0, left, right, toggle(0, 0, COL_W, "Smooth hotbar", () -> c.smoothHotbar, v -> c.smoothHotbar = v,
@@ -216,7 +272,7 @@ public class VividScreen extends Screen {
 		}
 
 		// ---- bottom buttons ----
-		int by = this.height - 28;
+		int by = Math.max(this.height - 28, Math.max(y[0], y[1]) + 6);
 		addRenderableWidget(Button.builder(Component.literal("Reset to " + (Presets.NAMES.contains(c.preset) ? c.preset : "Vibrant")), b -> {
 			String p = Presets.NAMES.contains(c.preset) ? c.preset : "Vibrant";
 			Presets.apply(p, c);
@@ -263,6 +319,10 @@ public class VividScreen extends Screen {
 		y[col] += ROW;
 	}
 
+	private static Component armourLabel(VividConfig c) {
+		return Component.literal("Armour: " + SkinsLogic.ArmorMode.parse(c.armorMode).label);
+	}
+
 	private static void markCustom() {
 		VividConfig.get().preset = "Custom";
 	}
@@ -303,7 +363,12 @@ public class VividScreen extends Screen {
 
 	/** Slider for settings that presets don't touch (doesn't switch the preset to Custom). */
 	private static Slider plainSlider(String label, double min, double max, DoubleSupplier get, DoubleConsumer set, String fmt, String tip) {
-		Slider s = new Slider(label, min, max, get.getAsDouble(), fmt, 1, set);
+		return plainSlider(label, min, max, get, set, fmt, 1, tip);
+	}
+
+	private static Slider plainSlider(String label, double min, double max, DoubleSupplier get, DoubleConsumer set, String fmt,
+			double displayScale, String tip) {
+		Slider s = new Slider(label, min, max, get.getAsDouble(), fmt, displayScale, set);
 		s.setTooltip(Tooltip.create(Component.literal(tip)));
 		return s;
 	}
