@@ -32,6 +32,14 @@ public final class MeshBuilder {
 	 * @param edgeWidth      width of the edge highlight strips, in skin pixels (0 = none)
 	 */
 	public static Built build(SkinPart part, boolean slim, boolean[][] opaque, float thicknessScale, float edgeWidth) {
+		return build(part, slim, opaque, thicknessScale, edgeWidth, -1);
+	}
+
+	/**
+	 * @param coverRows if >= 0, the top face and this many rows at the top of each side are left out
+	 *                  (they're under the minimal helmet's crown, which would otherwise cut through them)
+	 */
+	public static Built build(SkinPart part, boolean slim, boolean[][] opaque, float thicknessScale, float edgeWidth, int coverRows) {
 		int w = part.width(slim), h = part.h, d = part.d;
 		int gx = w + 2, gy = h + 2, gz = d + 2;
 		int[] cell = new int[gx * gy * gz];
@@ -49,13 +57,14 @@ public final class MeshBuilder {
 		for (int i = 0; i < w; i++) {
 			for (int k = 0; k < d; k++) {
 				int zc = 1 + (d - 1 - k);
-				if (!part.skipTop)
+				if (!part.skipTop && coverRows < 0)
 					put(cell, rect, opaque, u1 + i, v0 + k, idx(1 + i, 0, zc, gy, gz), false);
 				if (!part.skipBottom)
 					put(cell, rect, opaque, u2 + i, v0 + k, idx(1 + i, h + 1, zc, gy, gz), true);
 			}
 		}
 		for (int j = 0; j < h; j++) {
+			if (j < coverRows) continue;
 			int yc = 1 + j;
 			for (int i = 0; i < d; i++) {
 				put(cell, rect, opaque, u0 + i, v1 + j, idx(0, yc, 1 + (d - 1 - i), gy, gz), false); // west (right side)

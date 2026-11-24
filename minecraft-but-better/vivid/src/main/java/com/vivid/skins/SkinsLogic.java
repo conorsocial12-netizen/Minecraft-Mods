@@ -57,12 +57,16 @@ public final class SkinsLogic {
 		SkinsState st = (SkinsState) s;
 		st.vivid$setMask(0);
 		st.vivid$setOutline(false);
+		st.vivid$setMinimalArmor(false);
+		st.vivid$setHatCover(-1);
 		Arrays.fill(st.vivid$getOverArmor(), 0f);
 		Arrays.fill(st.vivid$getThickness(), 100);
 
 		VividConfig c = VividConfig.get();
 		if (!c.enabled || s.isSpectator || s.isInvisible || s.skin == null) return;
 		if (!(entity instanceof Player)) return; // real players only (not mannequins)
+		boolean minimal = c.minimalArmor;
+		st.vivid$setMinimalArmor(minimal);
 		if (c.skinDistance > 0 && s.distanceToCameraSq > c.skinDistance * c.skinDistance) return;
 		Minecraft mc = Minecraft.getInstance();
 		boolean self = mc.player != null && mc.player.getId() == s.id;
@@ -74,6 +78,7 @@ public final class SkinsLogic {
 		int base = self ? (int) Math.round(c.selfThickness) : 100;
 		boolean slim = isSlim(s.skin);
 		SkinMeshCache.SkinMeshes meshes = SkinMeshCache.get(s.skin.body().texturePath(), slim, base, edgeWidthHundredths(c));
+		// (emptiness checks below only need to know which parts have pixels at all)
 		if (meshes == null) return;
 
 		boolean helmet = !isEmpty(s.headEquipment);
@@ -85,6 +90,15 @@ public final class SkinsLogic {
 		float body = chestplate ? OUTER_ARMOR : leggings ? INNER_ARMOR : 0;
 		float arms = chestplate ? OUTER_ARMOR : 0;
 		float legs = leggings ? INNER_ARMOR : 0; // boots only cover the feet; their armour box is further out anyway
+		if (minimal) {
+			// Minimal armour: everything it doesn't cover stays fully 3D.
+			boolean shownLeggings = leggings && c.minimalLeggings;
+			head = 0;   // the crown only covers the top: those hat pixels are left out instead (hatCover)
+			arms = 0;   // shoulder pads sit just outside the sleeve pixels, no need to squash them
+			body = chestplate && c.minimalChestBody ? OUTER_ARMOR : shownLeggings ? INNER_ARMOR : 0;
+			legs = shownLeggings ? INNER_ARMOR : 0;
+			if (helmet) st.vivid$setHatCover((int) Math.round(c.helmetRows));
+		}
 
 		ArmorMode mode = ArmorMode.parse(c.armorMode);
 		int mask = 0;

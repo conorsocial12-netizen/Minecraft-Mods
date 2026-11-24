@@ -92,6 +92,13 @@ public class VividConfig {
 	public double skinDistance = 16;        // blocks; further away uses the flat layer (0 = always)
 	public String armorMode = "UNDER";      // UNDER, OVER or FLAT
 
+	// ---- minimal armour (players) ----
+	public boolean minimalArmor = true;     // crown + shoulder pads + boots, so skins show
+	public double helmetRows = 2;           // how far the crown comes down the head (0-8 pixels)
+	public double shoulderRows = 4;         // how far the shoulder pads come down the arm (0-12 pixels)
+	public boolean minimalChestBody = false; // keep the chestplate's body part
+	public boolean minimalLeggings = false;  // keep the leggings
+
 	// ---- skin outline ----
 	public boolean pixelEdges = true;       // light edge on every 3D pixel
 	public double pixelEdgeWidth = 0.15;    // skin pixels
@@ -178,6 +185,8 @@ public class VividConfig {
 		pixelEdgeStrength = clamp(pixelEdgeStrength, 0, 1);
 		bodyRimStrength = clamp(bodyRimStrength, 0, 1);
 		if (armorMode == null) armorMode = "UNDER";
+		helmetRows = Math.round(clamp(helmetRows, 0, 8));
+		shoulderRows = Math.round(clamp(shoulderRows, 0, 12));
 		if (rimColor == null) rimColor = "#FFFFFF";
 		critAmount = clamp(critAmount, 0, 4);
 	}

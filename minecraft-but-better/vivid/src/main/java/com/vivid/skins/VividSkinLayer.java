@@ -67,7 +67,7 @@ public class VividSkinLayer extends RenderLayer<AvatarRenderState, PlayerModel> 
 
 			if (is3d) {
 				int i = part.ordinal();
-				SkinMeshCache.SkinMeshes meshes = SkinMeshCache.get(texture, slim, st.vivid$getThickness()[i], edgeW);
+				SkinMeshCache.SkinMeshes meshes = SkinMeshCache.get(texture, slim, st.vivid$getThickness()[i], edgeW, st.vivid$getHatCover());
 				if (meshes != null) {
 					float over = st.vivid$getOverArmor()[i];
 					if (over > 0) onTopOfArmor(poseStack, part, slim, over);

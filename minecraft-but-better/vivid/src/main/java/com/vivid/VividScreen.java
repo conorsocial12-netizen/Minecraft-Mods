@@ -25,7 +25,7 @@ import java.util.function.IntSupplier;
 public class VividScreen extends Screen {
 	public enum Page {
 		PRESETS("Presets"), COLOUR("Colour"), SKY("Sky & Fog"), WATER("Water"), EFFECTS("Effects"),
-		PARTICLES("Particles"), SKINS("3D Skins"), OUTLINE("Outline"), HUD("HUD");
+		PARTICLES("Particles"), SKINS("3D Skins"), ARMOUR("Armour"), OUTLINE("Outline"), HUD("HUD");
 
 		final String label;
 
@@ -208,14 +208,7 @@ public class VividScreen extends Screen {
 			case SKINS -> {
 				add(y, 0, left, right, toggle(0, 0, COL_W, "3D skin layers", () -> c.skins3d, v -> c.skins3d = v,
 						"Hat/hair, jacket, sleeves and pants become real 3D pixels"));
-				Button armour = Button.builder(armourLabel(c), b -> {
-					SkinsLogic.ArmorMode[] all = SkinsLogic.ArmorMode.values();
-					c.armorMode = all[(SkinsLogic.ArmorMode.parse(c.armorMode).ordinal() + 1) % all.length].name();
-					b.setMessage(armourLabel(c));
-				}).bounds(0, 0, COL_W, 20).tooltip(Tooltip.create(Component.literal(
-						"Under armour: pixels get thinner so they stay 3D inside armour and peek through gaps. "
-								+ "On top: your skin covers the armour. Flat: armoured parts use the normal flat layer."))).build();
-				add(y, 1, left, right, armour);
+				add(y, 1, left, right, armourModeButton(c));
 				add(y, 0, left, right, toggle(0, 0, COL_W, "Hat / hair", () -> c.skinHat, v -> c.skinHat = v, "3D hat layer"));
 				add(y, 1, left, right, toggle(0, 0, COL_W, "Jacket", () -> c.skinJacket, v -> c.skinJacket = v, "3D jacket layer"));
 				add(y, 0, left, right, toggle(0, 0, COL_W, "Sleeves", () -> c.skinSleeves, v -> c.skinSleeves = v, "3D sleeve layers"));
@@ -232,6 +225,23 @@ public class VividScreen extends Screen {
 					addRenderableWidget(new StringWidget(center - 160, Math.max(y[0], y[1]) + 4, 320, 12,
 							Component.literal("The separate 3D Skin Layers mod is installed, so it does the 3D layers.").withColor(0xFFAA55), this.font));
 				}
+			}
+			case ARMOUR -> {
+				add(y, 0, left, right, toggle(0, 0, COL_W, "Minimal armour", () -> c.minimalArmor, v -> c.minimalArmor = v,
+						"Players' armour becomes a crown, shoulder pads and boots so skins show. Everything it doesn't cover stays 3D"));
+				add(y, 1, left, right, armourModeButton(c));
+				add(y, 0, left, right, rowsSlider("Crown height", 0, 8, () -> c.helmetRows, v -> c.helmetRows = v,
+						"How far the helmet comes down the head (pixels)"));
+				add(y, 1, left, right, rowsSlider("Shoulder pad size", 0, 12, () -> c.shoulderRows, v -> c.shoulderRows = v,
+						"How far the shoulder pads come down the arms (pixels)"));
+				add(y, 0, left, right, toggle(0, 0, COL_W, "Chestplate body", () -> c.minimalChestBody, v -> c.minimalChestBody = v,
+						"Keep the chest part of the chestplate"));
+				add(y, 1, left, right, toggle(0, 0, COL_W, "Leggings", () -> c.minimalLeggings, v -> c.minimalLeggings = v,
+						"Keep the leggings"));
+				addRenderableWidget(new StringWidget(center - 160, Math.max(y[0], y[1]) + 4, 320, 12,
+						Component.literal("Armour trims are hidden while minimal armour is on.").withColor(0x999999), this.font));
+				addRenderableWidget(new StringWidget(center - 160, Math.max(y[0], y[1]) + 18, 320, 12,
+						Component.literal("\"Armour\" decides how 3D skins sit under any armour that's left.").withColor(0x999999), this.font));
 			}
 			case OUTLINE -> {
 				int[] rim = rgb(c.rimColor, 0xFFFFFF);
@@ -317,6 +327,21 @@ public class VividScreen extends Screen {
 		w.setY(y[col]);
 		addRenderableWidget(w);
 		y[col] += ROW;
+	}
+
+	private static Button armourModeButton(VividConfig c) {
+		return Button.builder(armourLabel(c), b -> {
+			SkinsLogic.ArmorMode[] all = SkinsLogic.ArmorMode.values();
+			c.armorMode = all[(SkinsLogic.ArmorMode.parse(c.armorMode).ordinal() + 1) % all.length].name();
+			b.setMessage(armourLabel(c));
+		}).bounds(0, 0, COL_W, 20).tooltip(Tooltip.create(Component.literal(
+				"Under armour: pixels get thinner so they stay 3D inside armour and peek through gaps. "
+						+ "On top: your skin covers the armour. Flat: armoured parts use the normal flat layer."))).build();
+	}
+
+	/** Whole-pixel slider (rounds as you drag). */
+	private static Slider rowsSlider(String label, double min, double max, DoubleSupplier get, DoubleConsumer set, String tip) {
+		return plainSlider(label, min, max, get, v -> set.accept(Math.round(v)), "%.0f px", tip);
 	}
 
 	private static Component armourLabel(VividConfig c) {

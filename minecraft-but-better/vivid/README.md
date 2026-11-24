@@ -15,6 +15,7 @@ Vibrant (default) · Cinematic · Realistic · Dreamy · Vanilla+ — tweak any 
 - **Effects** – red hurt flash / low-health pulse, Nether and End colour moods
 - **Particles** – mob hit particles (feathers from chickens, gunpowder from creepers, bones from skeletons, rotten flesh from zombies, string from spiders, wool in the sheep's colour, ink from squid, portal sparkles from endermen, and more), bigger death bursts, fancy critical hits (spinning ring + sparkles), impact sparks where your hit lands, amount sliders, and an "only my hits" option
 - **3D Skins** – hat/hair, jacket, sleeves and pants become real 3D pixels. Works with armour: by default the pixels get thinner so they stay 3D *inside* the armour (peeking through gaps, never poking through). You can switch to "on top of armour" or "flat under armour". Separate toggles for each part, other players / yourself, your own thickness and the 3D distance. `/vivid reloadskins` rebuilds skins.
+- **Armour** – *Minimal armour* (on by default): players' armour becomes a crown, shoulder pads and boots so skins show, and everything it doesn't cover stays fully 3D. Works with every armour material and resource pack. Sliders for crown height and shoulder pad size, and toggles to keep the chestplate body or the leggings. Trims are hidden while it's on.
 - **Outline** – a light edge on every 3D skin pixel (bevelled look) and a light rim along the edges of the head, body, arms and legs, with width, brightness, colour and glow-in-the-dark settings
 - **HUD** – smooth sliding hotbar selector, accent colour
 

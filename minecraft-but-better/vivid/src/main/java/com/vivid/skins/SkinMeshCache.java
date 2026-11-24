@@ -33,7 +33,7 @@ public final class SkinMeshCache {
 		}
 	}
 
-	private record Key(Identifier texture, boolean slim, int thickness, int edgeWidth) {}
+	private record Key(Identifier texture, boolean slim, int thickness, int edgeWidth, int hatCover) {}
 
 	private static final Map<Key, SkinMeshes> CACHE = new LinkedHashMap<>(64, 0.75f, true) {
 		@Override
@@ -47,7 +47,12 @@ public final class SkinMeshCache {
 
 	/** Returns the meshes, or null if the skin can't be read (yet). */
 	public static SkinMeshes get(Identifier texture, boolean slim, int thicknessPercent, int edgeWidthHundredths) {
-		Key key = new Key(texture, slim, thicknessPercent, edgeWidthHundredths);
+		return get(texture, slim, thicknessPercent, edgeWidthHundredths, -1);
+	}
+
+	/** @param hatCover rows at the top of the hat left out for the minimal helmet (-1 = none) */
+	public static SkinMeshes get(Identifier texture, boolean slim, int thicknessPercent, int edgeWidthHundredths, int hatCover) {
+		Key key = new Key(texture, slim, thicknessPercent, edgeWidthHundredths, hatCover);
 		SkinMeshes cached = CACHE.get(key);
 		if (cached != null) return cached;
 
@@ -65,7 +70,8 @@ public final class SkinMeshCache {
 		PartMesh[] parts = new PartMesh[SkinPart.values().length];
 		PartMesh[] edges = new PartMesh[SkinPart.values().length];
 		for (SkinPart part : SkinPart.values()) {
-			MeshBuilder.Built built = MeshBuilder.build(part, slim, opaque, thicknessPercent / 100f, edgeWidthHundredths / 100f);
+			MeshBuilder.Built built = MeshBuilder.build(part, slim, opaque, thicknessPercent / 100f, edgeWidthHundredths / 100f,
+					part == SkinPart.HAT ? hatCover : -1);
 			parts[part.ordinal()] = built.voxels();
 			edges[part.ordinal()] = built.edges();
 		}

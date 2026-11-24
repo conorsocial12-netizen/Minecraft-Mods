@@ -21,6 +21,8 @@ public class AvatarRendererMixin {
 		} catch (RuntimeException e) {
 			((SkinsState) state).vivid$setMask(0); // never break player rendering
 			((SkinsState) state).vivid$setOutline(false);
+			((SkinsState) state).vivid$setMinimalArmor(false);
+			((SkinsState) state).vivid$setHatCover(-1);
 		}
 	}
 }

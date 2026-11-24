@@ -11,6 +11,8 @@ import org.spongepowered.asm.mixin.Unique;
 public class AvatarRenderStateMixin implements SkinsState {
 	@Unique private int vivid$mask;
 	@Unique private boolean vivid$outline;
+	@Unique private boolean vivid$minimalArmor;
+	@Unique private int vivid$hatCover = -1;
 	@Unique private final int[] vivid$thickness = new int[SkinPart.values().length];
 	@Unique private final float[] vivid$overArmor = new float[SkinPart.values().length];
 
@@ -42,5 +44,25 @@ public class AvatarRenderStateMixin implements SkinsState {
 	@Override
 	public void vivid$setOutline(boolean outline) {
 		vivid$outline = outline;
+	}
+
+	@Override
+	public boolean vivid$getMinimalArmor() {
+		return vivid$minimalArmor;
+	}
+
+	@Override
+	public void vivid$setMinimalArmor(boolean minimal) {
+		vivid$minimalArmor = minimal;
+	}
+
+	@Override
+	public int vivid$getHatCover() {
+		return vivid$hatCover;
+	}
+
+	@Override
+	public void vivid$setHatCover(int rows) {
+		vivid$hatCover = rows;
 	}
 }

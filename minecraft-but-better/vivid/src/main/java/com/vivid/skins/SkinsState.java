@@ -17,4 +17,14 @@ public interface SkinsState {
 	boolean vivid$getOutline();
 
 	void vivid$setOutline(boolean outline);
+
+	/** Draw this player's armour as minimal armour. */
+	boolean vivid$getMinimalArmor();
+
+	void vivid$setMinimalArmor(boolean minimal);
+
+	/** Rows of the 3D hat covered by the minimal helmet's crown (top face + this many side rows); -1 = none. */
+	int vivid$getHatCover();
+
+	void vivid$setHatCover(int rows);
 }

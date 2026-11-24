@@ -67,6 +67,7 @@ public class VividClient implements ClientModInitializer {
 						}))
 						.then(ClientCommands.literal("reloadskins").executes(ctx -> {
 							SkinMeshCache.clear();
+							com.vivid.skins.MinimalArmor.clear();
 							ctx.getSource().sendFeedback(Component.literal("Vivid: 3D skins rebuilt"));
 							return 1;
 						}))
