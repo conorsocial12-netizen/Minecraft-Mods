@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "package": "com.vivid.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "BiomeColorsMixin",
+    "CloudRendererMixin",
+    "FogRendererMixin",
+    "GameRendererMixin",
+    "HudMixin",
+    "LightmapExtractorMixin",
+    "PostPassMixin",
+    "SkyRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

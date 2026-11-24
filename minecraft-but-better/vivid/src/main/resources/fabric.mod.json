@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "vivid",
+  "version": "${version}",
+  "name": "Vivid",
+  "description": "Makes Minecraft look better: colour grading, bloom, deeper skies, orange sunsets, brighter stars, tinted clouds, clear tropical water, softer haze, warm torchlight, dimension moods and a smooth hotbar. Everything is adjustable: press V (or /vivid, or Mod Menu). Client-side only.",
+  "authors": ["Conor"],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["com.vivid.VividClient"],
+    "modmenu": ["com.vivid.VividModMenu"]
+  },
+  "mixins": [
+    { "config": "vivid.mixins.json", "environment": "client" }
+  ],
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~26.3",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}
